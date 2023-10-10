@@ -1,0 +1,403 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block scripts %}
+    <script src="{% static 'smartVNS.js' %}" defer></script>
+{% endblock scripts %}
+
+{% block title %}
+    Homepage
+{% endblock title %}
+
+
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="jumbotron m-1 rounded-3 jumbo-back" >
+            <div class="container text-dark">
+                <div class="webapp">
+                    <br><br>
+                    <br><br>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-xl-6 webapp">
+                        <br><br><br>
+                        <h1 class="mx-5"><b>SmartVNS</b></h1>
+                    </div>
+                    <div class="col-xl-6 mobile">
+                        <br><br><br>
+                        <h1 class="mx-5" style="text-align: center;"><b>SmartVNS</b></h1>
+                    </div>
+                    <div class="col-xl-6">
+                        <div style="text-align: center;" class="m-2">
+                            <img src="{% static 'skaaltec.png'%}" style="object-fit: contain;" height="200"> 
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <hr class="my-4">
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-xl-10">
+                        <br>
+                        <p class="text">Are you or a loved one grappling with the aftermath of a stroke, 
+                            searching for an innovative and effective solution to aid in your recovery? 
+                            SmartVNS, proudly developed in Switzerland within the prestigious ETH Lab, 
+                            is here to transform your rehabilitation journey. Utilizing state-of-the-art 
+                            sensor technology, SmartVNS offers a comprehensive approach to stroke recovery like no other.</p>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+
+        <div class="row m-2">
+            <div class="col-xl-2 ">
+            </div>
+            <div class="col-xl-8 ">
+                <br>
+                <h1 class="title" style="text-align: center;"><b>Why SmartVNS?</b></h1>
+                <br>
+                <p class="text">
+                    Discover how SmartVNS revolutionizes your network management, enhancing efficiency and security 
+                    while reducing costs, to propel your business to new heights.
+                </p>
+            </div>
+            <div class="col-xl-2 ">
+            </div>
+        </div>
+
+        <div class="container webapp">
+            
+            <div class="row m-4">
+                <hr class="my-5"> 
+            </div>
+
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="container product-advantages"> 
+                        <div class="advantages__container">
+                            <div class="advantages__content">
+                                <h3 class="advantages__title title">
+                                    <i>Engaging & Interactive</i>
+                                <hr style="color: black;">
+                                </h3>
+                        
+                                <div class="advantages__desc">
+                                    
+                                    <ul>
+                                    <li style="color: grey;">Connect with therapists remotely.</li>
+                                    <li style="color: grey;">Regain your independence.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br>
+                    <div class="container product-advantages"> 
+                        <div class="advantages__container">
+                            <div class="advantages__content">
+                                <h3 class="advantages__title title" >
+                                    <i>Seamless Integration</i>
+                                <hr style="color: black;">
+                                </h3>
+                        
+                                <div class="advantages__desc">
+                                    
+                                    <ul>
+                                    <li style="color: grey;">Easy and quick integration</li>
+                                    <li style="color: grey;">Save changes in the clinic or at home</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xl-6"><br><br>
+                    <div class="smartVNS-div">
+                        <img class="smartVNS-img" src="{% static 'imu.png'%}" style="object-fit: contain;" height="600px">
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="container product-advantages"> 
+                        <div class="advantages__container">
+                            <div class="advantages__content">
+                                <h3 class="advantages__title title">
+                                    <i>Anywhere, Anytime</i>
+                                <hr style="color: black;">
+                                </h3>
+                        
+                                <div class="advantages__desc">
+                                    
+                                    <ul>
+                                    <li style="color: grey;">Rehabilitation at home or in the clinic.</li>
+                                    <li style="color: grey;">Track progress on the portal</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="container product-advantages"> 
+                        <div class="advantages__container">
+                            <div class="advantages__content">
+                                <h3 class="advantages__title title" >
+                                    <i>Safe & Affordable</i>
+                                <hr style="color: black;">
+                                </h3>
+                        
+                                <div class="advantages__desc">
+                                    
+                                    <ul>
+                                    <li style="color: grey;">Cutting-edge care without the high costs.</li>
+                                    <li style="color: grey;">Not invasive and safe.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row rounded-3">
+                <div class="col-xl-4">
+                    
+                </div>
+                <div class="col-xl-4">
+                    <div class="row">
+                        <div class="col-xl-1"></div>
+                        <div class="col-xl-10">
+                            <div class="container product-advantages"> 
+                                <div class="advantages__container">
+                                    <div class="advantages__content">
+                                        <h3 class="advantages__title title" >
+                                            <i>Personalised Solutions</i>
+                                        <hr style="color: black;">
+                                        </h3>
+                                
+                                        <div class="advantages__desc">
+                                            
+                                            <ul>
+                                            <li style="color: grey;">Tailored therapy plans.</li>
+                                            <li style="color: grey;">We believe every patient is unique</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-1"></div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    
+                </div>
+            </div>
+
+            <div class="row m-4">
+                <hr class="my-4">
+            </div>
+        </div>
+
+        <div class="container mobile">
+
+            <div class="row rounded-3">
+                <div class="col-xl-12 mb-5">
+                    <br>
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'imu.png'%}" class="rounded-total" style="object-fit: contain;" width="100%"> 
+                    </div>
+                    <br>
+                    <h3 style="text-align: center;" class="title">Advantages</h3>
+                    <p style="text-align: center;"><i style="color: gray;">Engaging & Interactive</i></p>
+                    <p style="text-align: center;"><i style="color: gray;">Seamless Integration</i></p>
+                    <p style="text-align: center;"><i style="color: gray;">Anywher, Anytime</i></p>
+                    <p style="text-align: center;"><i style="color: gray;">Safe & Affordable</i></p>
+                    <p style="text-align: center;"><i style="color: gray;">Personalised Solutions</i></p>
+                    <br>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <div class="jumbotron m-1 rounded-3 jumbo-back" >
+            <div class="container text-dark">
+                <div class="webapp">
+                    <br><br>
+                    <br><br>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-xl-6 webapp">
+                        <br><br><br>
+                        <h1 class="mx-5"><b>Portal Integration</b></h1>
+                    </div>
+                    <div class="col-xl-6 mobile">
+                        <br><br><br>
+                        <h1 class="mx-5" style="text-align: center;"><b>Portal Integration</b></h1>
+                    </div>
+                    <div class="col-xl-6">
+                        <div style="text-align: center;" class="m-2">
+                            <img src="{% static 'skaaltec.png'%}" style="object-fit: contain;" height="200"> 
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <hr class="my-4">
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-xl-10">
+                        <br>
+                        <p class="text">
+                            Our patient and therapist portals are seamlessly integrated into the SmartVNS solution, 
+                            providing a holistic and user-friendly experience for both sides of your healthcare journey.
+                        </p>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+
+            <div class="row m-4">
+                <br>
+            </div>
+        </div>
+
+        <div class="container webapp">
+
+            
+            <div class="row gx-5">
+                <div class="col-xl-6">
+                    <div class="layered-therapist-r" >
+                        <div class="space-fixed"></div>
+                        <div class="text-area">
+                            <div class="row">
+                                <div class="col-xl-1"></div>
+                                <div class="col-xl-10 my-5">
+                                    <h3 class="title">Therapist Portal</h3>
+                                    <hr class="my-3">
+                                    <p class="text">
+                                        Our integrated portal within SmartVNS offers unparalleled advantages. Streamline your 
+                                        practice with effortless appointment scheduling, secure patient records management, 
+                                        and enhanced communication tools. Boost your productivity, focus on patient care, 
+                                        and expand your reach with the SmartVNS therapist portal - the ultimate solution for 
+                                        modern healthcare professionals.
+                                    </p>
+                                    <div style="text-align: center;">
+                                        <a class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Go to Therapist Portal</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="layered-patient-r">
+                        <div class="space-fixed"></div>
+                        <div class="text-area">
+                            <div class="row">
+                                <div class="col-xl-1">
+                                </div>
+                                <div class="col-xl-10 my-5">
+                                    <h3 class="title">Patient Portal</h3>
+                                    <hr class="my-3">
+                                    <p class="text">
+                                        Our integrated portal within SmartVNS brings convenience to your healthcare journey. 
+                                        Easily schedule appointments, access your medical records securely, and communicate 
+                                        with your therapist effortlessly. Take control of your well-being with the SmartVNS 
+                                        patient portal, designed to simplify your experience and empower you to achieve your 
+                                        health goals.
+                                    </p>
+                                    <div style="text-align: center;">
+                                        <a class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Go to Patient Portal</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </div>
+
+        <div class="container mobile">
+
+            <div class="row m-4">
+            </div>
+
+            <div class="row my-4 rounded-3">
+                <div class="col-xl-12">
+                    <h3 class="title" style="text-align: center;">
+                        <b>Therapist Portal</b>
+                    </h3>
+                    <br>
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'therapist.png'%}" class="rounded-total" style="object-fit: contain;" width="100%"> 
+                    </div>
+                    <br>
+                    <p class="m-2" style="text-align: center;">
+                        Our integrated portal within SmartVNS offers unparalleled advantages. Streamline your 
+                        practice with effortless appointment scheduling, secure patient records management, 
+                        and enhanced communication tools. Boost your productivity, focus on patient care, 
+                        and expand your reach with the SmartVNS therapist portal - the ultimate solution for 
+                        modern healthcare professionals.
+                    </p>
+                    <br>
+                    <div style="text-align: center;">
+                        <a class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Go to Therapist Portal</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                <hr class="my-4">
+            </div>
+
+            <div class="row my-5 rounded-3">
+                <div class="col-xl-12">
+                    <h3 class="title" style="text-align: center;">
+                        <b>Patient Portal</b>
+                    </h3>
+                    <br>
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'patient.png'%}" class="rounded-total" style="object-fit: contain;" width="100%"> 
+                    </div>
+                    <br>
+                    <p class="m-2" style="text-align: center;">
+                        Our integrated portal within SmartVNS brings convenience to your healthcare journey. 
+                        Easily schedule appointments, access your medical records securely, and communicate 
+                        with your therapist effortlessly. Take control of your well-being with the SmartVNS 
+                        patient portal, designed to simplify your experience and empower you to achieve your 
+                        health goals.
+                    </p>
+                    <br>
+                    <div style="text-align: center;">
+                        <a class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Go to Patient Portal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-4"></div>
+
+    </div>
+
+{% endblock content %}

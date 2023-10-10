@@ -1,0 +1,404 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block scripts %}
+{% endblock scripts %}
+
+{% block title %}
+    Homepage
+{% endblock title %}
+
+
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="jumbotron m-1 rounded-3 jumbo-back" >
+            <div class="container text-dark">
+                <div class="webapp">
+                    <br><br>
+                    <br><br>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-xl-6 webapp">
+                        <br><br><br>
+                        <h1 class="mx-5 webapp"><b>We are SKAALTEC</b></h1>
+                    </div>
+                    <div class="col-xl-6 mobile">
+                        <br><br><br>
+                        <h1 class="mobile" style="text-align: center;"><b>We are SKAALTEC</b></h1>
+                    </div>
+                    <div class="col-xl-6">
+                        <div style="text-align: center;" class="m-2">
+                            <img src="{% static 'skaaltec.png'%}" style="object-fit: contain;" height="200"> 
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <hr class="my-4">
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-xl-10">
+                        <br>
+                        <p class="text">The company name “Skaaltec” combines a cheerful wish 
+                            (in Scandinavian) for good health with the technology. This is 
+                            exactly the mission of Skaaltec - to provide advanced neuroscience-inspired technology 
+                            solutions for improved health in an accessible way for everyone.</p>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+
+        <div class="row m-5">
+
+        </div>
+
+        <div class="container webapp">
+            
+            <div class="row m-4">
+                
+            </div>
+
+            <div class="row gx-2 my-4">
+                <div class="col-xl-8 col-md-12">
+                    <br>
+                    <h3 class="title">
+                        <b>Our Vision</b>
+                    </h3>
+                    <br>
+                    <p class="text m-2">
+                        Our journey begins with a profound realization - the existing landscape of stroke recovery is fraught with 
+                        challenges and limitations. Conventional neural stimulation therapies have proven ineffective, invasive, exorbitant, 
+                        or impractical, leaving patients and healthcare professionals yearning for a transformative solution.
+                        As a collective of pioneering neuroscientists and visionary engineers, we are driven by a mission to bridge the 
+                        chasm that has long separated stroke survivors from their dreams of recovery. We have tapped into a network of 
+                        clinical experts in brain physiology and neuroengineering, each of whom shares our passion for reshaping the 
+                        future of rehabilitation.
+                    </p>
+                    <br>
+                </div>
+                <div class="col-xl-4 col-md-12">
+                   
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'image_1_vision.png'%}" style="object-fit: contain; max-height: 400px;" width="100%" class="rounded-total"> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                
+            </div>
+
+            <div class="row gx-2 my-4 rounded-3">
+                <div class="col-xl-4 col-md-12">
+                   
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'image_2_problemsolution.png'%}" style="object-fit: contain; max-height: 400px;" width="100%" class="rounded-total"> 
+                    </div>
+                </div>
+                <div class="col-xl-8 col-md-12">
+                    <br>
+                    <h3 class="title">
+                        <b>Problems and Solution</b>
+                    </h3>
+                    <br>
+                    <p class="text m-2">
+                        Our quest unveils a striking void in the current approach to stroke recovery - the absence of a seamless integration 
+                        between neural stimulation and the brain's own signals for motor learning and recovery. The missing link, we 
+                        believe, is a conduit that unites these elements, propelling patients toward holistic healing.
+                        Furthermore, we've identified the scarcity of devices that not only expedite neural plasticity but also harness 
+                        alternative motor control pathways crucial for regaining motor function. Traditional solutions often fall short, failing 
+                        to initiate therapy until months or years after the initial stroke, a critical window of opportunity slipping through the 
+                        cracks.
+                    </p>
+                    <br>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                
+            </div>
+
+            <div class="row my-5 layered-image3-r rounded-5">
+                <div class="col-xl-6">
+                    
+                </div>
+                <div class="col-xl-6">
+                    <br>
+                    <br>
+                    <br>
+                    <h3 class="title" style="text-align: center;">
+                        <b>SmartVNS</b>
+                    </h3>
+                    <br>
+                    <p class="text m-2">
+                        SmartVNS is the embodiment of our vision. It emerges as a visionary leap forward in the realm of stroke 
+                        neurorehabilitation and represents a paradigm shift, a breakthrough that promises to redefine the future of stroke 
+                        neurorehabilitation. Our solution seamlessly marries neural stimulation with neurally-relevant movement-derived 
+                        signals, offering a transformative approach to motor learning and recovery. We are pioneers in promoting long-term 
+                        neural plasticity and activating essential motor control pathways, all within the early stages of recovery, harnessing 
+                        the full potential of the brain's healing capabilities.
+                    </p>
+                    <br>
+                    <br>
+                    <div style="text-align: center;" class="m-2">
+                        <a href="{% url 'smartVNS' %}" class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">SmartVNS</a>
+                    </div>
+                    <br>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                
+            </div>
+        </div>
+
+        <div class="container mobile">
+
+            <div class="row m-4">
+            </div>
+
+            <div class="row my-4 rounded-3">
+                <div class="col-xl-12">
+                    <h3 class="title" style="text-align: center;">
+                        <b>Our Vision</b>
+                    </h3>
+                    <br>
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'image_1_vision.png'%}" style="object-fit: contain;" width="100%" class="rounded-total"> 
+                    </div>
+                    <br>
+                    <p class="text m-2">
+                        Our journey begins with a profound realization - the existing landscape of stroke recovery is fraught with 
+                        challenges and limitations. Conventional neural stimulation therapies have proven ineffective, invasive, exorbitant, 
+                        or impractical, leaving patients and healthcare professionals yearning for a transformative solution.
+                        As a collective of pioneering neuroscientists and visionary engineers, we are driven by a mission to bridge the 
+                        chasm that has long separated stroke survivors from their dreams of recovery. We have tapped into a network of 
+                        clinical experts in brain physiology and neuroengineering, each of whom shares our passion for reshaping the 
+                        future of rehabilitation.
+                    </p>
+                    <br>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                <hr class="my-4">
+            </div>
+
+            <div class="row my-5 rounded-3">
+                <div class="col-xl-12">
+                    <h3 class="title" style="text-align: center;">
+                        <b>Problems and Solution</b>
+                    </h3>
+                    <br>
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'image_2_problemsolution.png'%}" style="object-fit: contain;" width="100%" class="rounded-total"> 
+                    </div>
+                    <br>
+                    <p class="text m-2">
+                        Our quest unveils a striking void in the current approach to stroke recovery - the absence of a seamless integration 
+                        between neural stimulation and the brain's own signals for motor learning and recovery. The missing link, we 
+                        believe, is a conduit that unites these elements, propelling patients toward holistic healing.
+                        Furthermore, we've identified the scarcity of devices that not only expedite neural plasticity but also harness 
+                        alternative motor control pathways crucial for regaining motor function. Traditional solutions often fall short, failing 
+                        to initiate therapy until months or years after the initial stroke, a critical window of opportunity slipping through the 
+                        cracks.
+                    </p>
+                    <br>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                <hr class="my-4">
+            </div>
+
+            <div class="row my-5 rounded-3">
+                <div class="col-xl-12">
+                    <h3 class="title" style="text-align: center;">
+                        <b>SmartVNS</b>
+                    </h3>
+                    <br>
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'image_3_smartVNS.png'%}" style="object-fit: contain;" width="100%" class="rounded-total"> 
+                    </div>
+                    <br>
+                    <p class="text m-2">
+                        SmartVNS is the embodiment of our vision. It emerges as a visionary leap forward in the realm of stroke 
+                        neurorehabilitation and represents a paradigm shift, a breakthrough that promises to redefine the future of stroke 
+                        neurorehabilitation. Our solution seamlessly marries neural stimulation with neurally-relevant movement-derived 
+                        signals, offering a transformative approach to motor learning and recovery. We are pioneers in promoting long-term 
+                        neural plasticity and activating essential motor control pathways, all within the early stages of recovery, harnessing 
+                        the full potential of the brain's healing capabilities.
+                    </p>
+                    <br>
+                    <div style="text-align: center;" class="m-2">
+                        <a href="{% url 'smartVNS' %}" class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">SmartVNS</a>
+                    </div>
+                    <br>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                
+            </div>
+        </div>
+
+        <div class="jumbotron m-1 rounded-3 jumbo-back">
+            <div class="container text-dark">
+                <div class="webapp">
+                    <br><br>
+                    <br><br>
+                </div>
+                <br>
+                <br>
+                <div class="m-2 webapp" style="text-align: left;">
+                    <img src="{% static 'relab.png' %}" style="object-fit: contain;" width="300">
+                </div>
+                <div class="m-2 mobile" style="text-align: center;">
+                    <br><br>
+                    <img src="{% static 'relab.png' %}" style="object-fit: contain;" width="300">
+                </div>
+                <br>
+                <br>
+                <hr class="my-4">
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-xl-8">
+                        <p class="text">
+                            In this journey, the Rehabilitation Engineering Laboratory serves as our incubator of innovation, a crucible where 
+                            mechanical and electrical engineering converge with movement science, psychology, and neuroscience. Our 
+                            arsenal comprises cutting-edge robotics, wearable sensors, and non-invasive neuroimaging, all poised to 
+                            revolutionize the sensorimotor recovery landscape. Together, we envision a world where stroke survivors not only 
+                            regain their mobility but also rediscover their lives, empowered by SmartVNS to rewrite the story of their recovery.</p>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="row m-4">
+                
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            
+            <div class="row m-4">
+                <div class="col-xl-4"></div>
+                <div class="col-xl-4">
+                    <h1 class="title" style="text-align: center;"><b>Partners</b></h1>
+                </div>
+                <div class="col-xl-4"></div>
+            </div>
+
+            <div class="row my-2">
+                <div class="col-xl-4">
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'ethfoun.png'%}" style="object-fit: contain;" width="250" class="rounded-total"> 
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'bridge.png'%}" style="object-fit: contain;" width="250" class="rounded-total"> 
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'innosuisse.png'%}" style="object-fit: contain;" width="250" class="rounded-total"> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                
+            </div>
+
+            <div class="row my-2">
+                <div class="col-xl-4">
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'venturekick.png'%}" style="object-fit: contain;" width="250" class="rounded-total"> 
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'venturelab.png'%}" style="object-fit: contain;" width="250" class="rounded-total"> 
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div style="text-align: center;" class="m-2">
+                        <img src="{% static 'zuhlke.png'%}" style="object-fit: contain;" width="250" class="rounded-total"> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                
+            </div>
+
+        </div>
+
+        <div class="jumbotron m-1 rounded-3 jumbo-back" >
+            <div class="container text-dark">
+                <div class="webapp">
+                    <br><br>
+                    <br><br>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-xl-6 webapp">
+                        <br><br><br>
+                        <h1 class="mx-5 webapp"><b>Awards</b></h1>
+                    </div>
+                    <div class="col-xl-6 mobile">
+                        <br><br><br>
+                        <h1 class="mobile" style="text-align: center;"><b>Awards</b></h1>
+                    </div>
+                    <div class="col-xl-6">
+                        <div style="text-align: center;" class="m-2">
+                            <img src="{% static 'skaaltec.png'%}" style="object-fit: contain;" height="200"> 
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <hr class="my-4">
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-xl-10">
+                        <br>
+                        <p class="text">Join our remarkable journey as we proudly emerge as winners in prestigious programs like the Pioneer Fellowship from ETH Zürich, 
+                            the Bridge proof of concept grant sponsored by the Swiss National Science Foundation and Innosuisse, 
+                            and stages 1 and 2 of the game-changing Venture Kick model. Our commitment to innovation doesn't stop there 
+                            - we've also received invaluable initial coaching support from Innosuisse, and secured a substantial 20,000 
+                            CHF worth of product scale-up assistance at Zuhlke. Discover how we're turning groundbreaking ideas into 
+                            thriving successes, and be part of our exciting story.</p>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xl-10">
+                        <div class="my-2" style="text-align: center;">
+                            <a href="{% url 'contactus' %}" class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Contact us</a>
+                        </div>
+                    </div>
+                    <div class="col-xl-2"></div>
+                </div>
+                <br>
+                <br>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}
