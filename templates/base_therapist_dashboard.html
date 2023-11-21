@@ -1,0 +1,217 @@
+{% load static %}
+
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/png" href="{% static 'favicon.ico' %}">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="{% static 'style_td.css' %}">
+
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Maven+Pro" />
+
+        <script src="https://kit.fontawesome.com/21241e7778.js" crossorigin="anonymous"></script>
+
+        <script src="{% static 'functions.js' %}" defer></script>
+        {% block scripts %} 
+        {% endblock scripts %}
+
+        <title>Skaaltec | {% block title %}{% endblock title %}</title>
+
+    </head>
+    <body>
+      <div class="mobile mt-2" style="text-align: center;">
+        <img width="50" src="{% static 'skaaltec.png' %}">
+      </div>
+      <nav class="navbar navbar-expand-md
+                bg-light navbar-light m-4 rounded-3 topnav desktop tablet">
+
+          <button class="navbar-toggler m-2"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#mynav">
+              <span class="navbar-toggler-icon">
+              </span>
+          </button>
+          <div class="container collapse navbar-collapse" id="mynav" style="justify-content: space-between;">
+                <div class="navbar-nav ml-auto text-center ">
+                  <div class="row">
+                    <div class="desktop tablet mt-2" style="text-align: center;">
+                      <img width="50" src="{% static 'skaaltec.png' %}">
+                    </div>
+                  </div>
+                </div>
+              <ul class="navbar-nav ml-auto text-center ">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'main' %}" id="home"> Home </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'smartVNS' %}" id="solu"> SmartVNS </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'aboutus' %}" id="team"> About us </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'news' %}" id="team"> News </a>
+                </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'contactus' %}" id="cont"> Contact Us </a>
+                  </li>
+                  
+              </ul>
+          </div>
+      </nav>
+      <nav class="navbar navbar-expand-md
+                bg-light navbar-light m-4 rounded-3 topnav mobile">
+
+          <button class="navbar-toggler m-2"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#mynav">
+              <span class="navbar-toggler-icon">
+              </span>
+          </button>
+          <div class="collapse navbar-collapse" id="mynav" style="justify-content: space-between;">
+                <div class="navbar-nav ml-auto text-center ">
+                  <div class="row">
+                    <div class="desktop tablet mt-2" style="text-align: center;">
+                      <img width="50" src="{% static 'skaaltec.png' %}">
+                    </div>
+                    <h3 class="mt-1">SKAALTEC</h3>
+                  </div>
+                </div>
+              <ul class="navbar-nav ml-auto text-center ">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'main' %}" id="home"> Home </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'smartVNS' %}" id="solu"> SmartVNS </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'aboutus' %}" id="team"> About us </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'news' %}" id="team"> News </a>
+                </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'contactus' %}" id="cont"> Contact Us </a>
+                  </li>
+                  
+              </ul>
+          </div>
+      </nav>
+    
+        <div class="container-fluid">
+            {% block content %}
+    
+            {% endblock %}
+        </div>
+
+        <footer class="text-center text-lg-start bg-light text-muted">
+          <!-- Section: Social media -->
+          <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <!-- Left -->
+            <div class="me-5 d-none d-lg-block">
+              <span>Get connected with us on social networks:</span>
+            </div>
+            <!-- Left -->
+        
+            <!-- Right -->
+            <div>
+              <a href="" class="me-4 text-reset">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="" class="me-4 text-reset">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="" class="me-4 text-reset">
+                <i class="fab fa-google"></i>
+              </a>
+              <a href="" class="me-4 text-reset">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="" class="me-4 text-reset">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="" class="me-4 text-reset">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+            <!-- Right -->
+          </section>
+          <!-- Section: Social media -->
+        
+          <!-- Section: Links  -->
+          <section class="">
+            <div class="container text-center text-md-start mt-5">
+              <!-- Grid row -->
+              <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                  <!-- Content -->
+                  <h6 class="text-uppercase fw-bold mb-4 footer-h6">
+                    <i class="fas fa-gem me-3"></i>Skaaltec
+                  </h6>
+                  <p class="footer-p">
+                    Empowering healthcare through advanced sensor technology, we're your trusted partner in precision and innovation.
+                  </p>
+                </div>
+                <!-- Grid column -->
+        
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                  <!-- Links -->
+                  <h6 class="text-uppercase fw-bold mb-4 footer-h6">
+                    Products
+                  </h6>
+                  <p class="footer-p">
+                    <a href="{% url 'smartVNS' %}" class="text-reset">Smart VNS</a>
+                  </p>
+                  <p class="footer-p">
+                    <a href="#" class="text-reset">Personalised Plan</a>
+                  </p>
+                </div>
+                <!-- Grid column -->
+        
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                  <!-- Links -->
+                  <h6 class="text-uppercase fw-bold mb-4 footer-h6">
+                    Portals
+                  </h6>
+                  <p class="footer-p">
+                    <a href="{% url 'login_therapist' %}" class="text-reset">Therapists</a>
+                  </p>
+                  <p class="footer-p">
+                    <a href="{% url 'login_patient' %}" class="text-reset">Patients</a>
+                  </p>
+                  <!-- <p class="footer-p">
+                    <a href="#" class="text-reset">Other</a>
+                  </p> -->
+                </div>
+                <!-- Grid column -->
+        
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                  <h6 class="text-uppercase fw-bold mb-4 footer-h6">Contact</h6>
+                  <p class="footer-p"><i class="fas fa-home me-3"></i> Lengghalde 5, 8008 Zürich, Switzerland</p>
+                  <p class="footer-p">
+                    <i class="fas fa-envelope me-3"></i>
+                    skaaltec@example.com
+                  </p>
+                  <p class="footer-p"><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                  <p class="footer-p"><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </footer>
+
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    </body>
+
+
+</html>

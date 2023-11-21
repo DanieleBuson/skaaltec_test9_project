@@ -1,0 +1,194 @@
+ /* The side navigation menu */
+ .sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #117c6f; /* Gradient background with a healthcare-themed blue */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #f5f5f5;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f5f5f5;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+} 
+
+
+ /* Dropdown Button */
+ .dropbtn {
+  padding: 16px;
+  font-size: 16px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: rgba(192, 0,14, 0.6);}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: rgba(192, 0,14, 0.3);} 
+
+.message-input {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.message-input input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.message-input button {
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-left: 10px;
+}
+
+.containerIntro {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.containerIntro h6 {
+  margin-right: 10px; /* Add spacing between the label and the value */
+  font-weight: bold;
+}
+
+.containerIntro p {
+  margin: 0;
+}
+
+.background-radial-gradient {
+  background-color: #f5f5f5; /* A neutral gray background */
+  background-image: linear-gradient(135deg, #2fc4b2, #2fc4b2 50%, #289c8e 50%); /* Gradient background with a healthcare-themed blue */
+  color: #333; /* Dark gray text color for readability */
+  font-family: Arial, sans-serif; /* Choose a suitable font-family */
+  padding: 20px; /* Add padding for content */
+}
+
+.bg-element {
+  background-color: #f5f5f5; /* A neutral gray background */
+  background-image: linear-gradient(135deg, white, white 50%, #e4e4e4 50%); /* Gradient background with a healthcare-themed blue */
+  color: #333; /* Dark gray text color for readability */
+  font-family: Arial, sans-serif; /* Choose a suitable font-family */
+  padding: 20px; /* Add padding for content */
+}
+
+.complementary-background {
+  background-color: #117c6f; /* A complementary blue background color */
+  color: #fff; /* White text for contrast */
+  padding: 20px; /* Add padding for content */
+}
+
+/* .background-radial-gradient2{
+  background-color: hsl(356, 41%, 15%);
+  background-image: radial-gradient(650px circle at 0% 0%,
+      hsl(356, 41%, 35%) 15%,
+      hsl(356, 41%, 30%) 35%,
+      hsl(356, 41%, 20%) 75%,
+      hsl(356, 41%, 19%) 80%,
+      transparent 100%),
+    radial-gradient(1250px circle at 100% 100%,
+      hsl(356, 41%, 45%) 15%,
+      hsl(356, 41%, 30%) 35%,
+      hsl(356, 41%, 20%) 75%,
+      hsl(356, 41%, 19%) 80%,
+      transparent 100%);
+} */
+
+#radius-shape-1 {
+  height: 220px;
+  width: 220px;
+  top: -60px;
+  left: -130px;
+  background: radial-gradient(blue, black);
+  overflow: hidden;
+}
+
+#radius-shape-2 {
+  border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+  bottom: -60px;
+  right: -110px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(blue, black);
+  overflow: hidden;
+}
+
+.bg-glass {
+  background-color: hsla(0, 0%, 100%, 0.9) !important;
+  backdrop-filter: saturate(200%) blur(25px);
+}
+
+.bg-overflow{
+  background-color: #2fc4b2;
+}

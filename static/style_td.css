@@ -1,0 +1,568 @@
+@media screen and (min-width: 1306px) {
+    .tablet,
+    .mobile{
+        display: none;
+      }
+  
+    .desktop{
+    display: block;
+    }
+
+    #patient_list_label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px; /* Add padding for spacing */
+    }
+
+    .message-div{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px; /* Add padding for spacing */
+    }
+
+    .rounded-total{
+        border-radius: 30px 30px 30px 30px;
+    }
+
+    .patient-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px; /* Add margin to separate patient info blocks */
+    }
+    
+    .card {
+        height: 300px;
+        width: 300px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .card-title {
+        margin-bottom: 10px;
+        font-size: 22;
+        text-align: center;
+    }
+    
+    .card-big-number{
+        font-size: 8rem;
+        font-weight: bold;
+    }
+
+    .fc-col-header-cell-cushion{
+        color: rgb(192, 0, 14) !important;
+    }
+
+    #noa-box{
+        height: 450px;
+    }
+
+    .centered-image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Add custom CSS to style the button */
+    /* Add custom CSS to style the button */
+    .dashboard-button {
+        background-color: rgb(192, 0, 14);
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .dashboard-button:hover {
+        background-color: rgba(192, 0, 14, 0.7);;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .dashboard-button:active {
+        background-color: rgba(192, 0, 14, 0.5);;
+    }
+    
+    .dashboard-button:focus {
+        outline: none;
+    }
+    
+    .dashboard-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .fc-toolbar-title{
+        font-family: 'Maven Pro';
+    }
+
+    .new-messages {
+        background-color: rgb(192, 0, 14); /* Background color */
+        color: #fff; /* Text color */
+        border-radius: 50%; /* Make it round */
+        width: 25px; /* Set the width */
+        height: 25px; /* Set the height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px; /* Font size */
+    }
+
+    .dropdown-toggle::after {
+        content: none;
+    }
+
+    /* Make the icon black */
+    .dropdown-toggle svg {
+    fill: black;
+    }
+  
+    
+}
+
+
+@media screen and (max-width: 769px) {
+    .desktop,
+    .tablet{
+        display:none;
+    }
+    .mobile{
+    display:block;
+    }
+
+    .rounded-total-mobile{
+        border-radius: 20px 20px 20px 20px;
+    }
+
+    .patient-info-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px; /* Add padding for spacing */
+    }
+    
+    .patient-info-mobile h4 {
+        font-size: 20px; /* Adjust the font size for h4 */
+    }
+    
+    .patient-info-mobile h6 {
+        color: grey;
+        font-size: 14px; /* Adjust the font size for h6 */
+    }
+
+    .card {
+        height: 200px;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .card-title {
+        margin-bottom: 10px;
+        font-size: 20;
+        text-align: center;
+    }
+    
+    .card-big-number{
+        font-size: 5rem;
+        font-weight: bold;
+    }
+
+    .centered-image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dashboard-button {
+        background-color: rgb(192, 0, 14);
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .dashboard-button:hover {
+        background-color: rgba(192, 0, 14, 0.7);;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .dashboard-button:active {
+        background-color: rgba(192, 0, 14, 0.5);;
+    }
+    
+    .dashboard-button:focus {
+        outline: none;
+    }
+    
+    .dashboard-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .fc-toolbar-title{
+        font-family: 'Maven Pro'; /* Change font family to Maven */
+        font-size: 18px !important;
+    }
+
+    .fc-col-header-cell-cushion{
+        color: rgb(192, 0, 14) !important;
+        font-size: 14px !important;
+    }
+
+    .new-messages {
+        background-color: rgb(192, 0, 14); /* Background color */
+        color: #fff; /* Text color */
+        border-radius: 50%; /* Make it round */
+        width: 25px; /* Set the width */
+        height: 25px; /* Set the height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px; /* Font size */
+    }
+
+    .dropdown-toggle::after {
+        content: none;
+    }
+
+    /* Make the icon black */
+    .dropdown-toggle svg {
+    fill: black;
+    }
+
+}
+
+
+/* Tablet */
+@media screen and (min-width: 770px) and (max-width: 1305px) {
+    .desktop,
+    .mobile {
+        display: none;
+    }
+
+    .tablet {
+        display: block;
+    }
+
+    .rounded-total{
+        border-radius: 30px 30px 30px 30px;
+    }
+
+
+    .patient-info-tablet {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px; /* Add padding for spacing */
+    }
+    
+    .patient-info-tablet h4 {
+        font-size: 18px; /* Adjust the font size for h4 */
+    }
+    
+    .patient-info-tablet h6 {
+        color: grey;
+        font-size: 14px; /* Adjust the font size for h6 */
+    }
+
+    .fc-col-header-cell-cushion{
+        color: rgb(192, 0, 14) !important;
+    }
+
+    .card {
+        height: 180px;
+        width: 180px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .card-title {
+        margin-bottom: 10px;
+        font-size: 20;
+        text-align: center;
+    }
+    
+    .card-big-number{
+        font-size: 6rem;
+        font-weight: bold;
+    }
+
+    .centered-image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dashboard-button {
+        background-color: rgb(192, 0, 14);
+        color: #ffffff;
+        border: none;
+        font-size: 12px; /* Smaller font size for smaller screens */
+        padding: 6px 12px; /* Smaller padding for smaller screens */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .dashboard-button:hover {
+        background-color: rgba(192, 0, 14, 0.7);;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .dashboard-button:active {
+        background-color: rgba(192, 0, 14, 0.5);;
+    }
+    
+    .dashboard-button:focus {
+        outline: none;
+    }
+    
+    .dashboard-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .fc-toolbar-title{
+        font-family: 'Maven Pro';
+    }
+
+    .new-messages {
+        background-color: rgb(192, 0, 14); /* Background color */
+        color: #fff; /* Text color */
+        border-radius: 50%; /* Make it round */
+        width: 25px; /* Set the width */
+        height: 25px; /* Set the height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px; /* Font size */
+    }
+
+    .dropdown-toggle::after {
+        content: none;
+    }
+
+    /* Make the icon black */
+    .dropdown-toggle svg {
+    fill: black;
+    }
+}
+
+
+/* for all */
+
+.not-visible{
+    display:none;
+}
+
+.fc-dayGridMonth-button{
+    background-color: rgb(192, 0, 14) !important; /* Change button background color */
+    color: white !important; /* Change button text color */
+    border: none !important; /* Remove button border */
+}
+
+.fc-dayGridMonth-button:hover {
+    background-color: rgba(192, 0, 14, 0.7);;
+}
+
+/* Optional: Add more styles to make it even cooler */
+.fc-dayGridMonth-button:active {
+    background-color: rgba(192, 0, 14, 0.5);;
+}
+
+.fc-dayGridMonth-button:focus {
+    outline: none;
+}
+
+.fc-dayGridMonth-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.fc-timeGridWeek-button{
+    background-color: rgb(192, 0, 14) !important; /* Change button background color */
+    color: white !important; /* Change button text color */
+    border: none !important; /* Remove button border */
+}
+
+.fc-timeGridWeek-button:hover {
+    background-color: rgba(192, 0, 14, 0.7);;
+}
+
+/* Optional: Add more styles to make it even cooler */
+.fc-timeGridWeek-button:active {
+    background-color: rgba(192, 0, 14, 0.5);;
+}
+
+.fc-timeGridWeek-button:focus {
+    outline: none;
+}
+
+.fc-timeGridWeek-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.fc-timeGridDay-button{
+    background-color: rgb(192, 0, 14) !important; /* Change button background color */
+    color: white !important; /* Change button text color */
+    border: none !important; /* Remove button border */
+}
+
+.fc-timeGridDay-button:hover {
+    background-color: rgba(192, 0, 14, 0.7);;
+}
+
+/* Optional: Add more styles to make it even cooler */
+.fc-timeGridDay-button:active {
+    background-color: rgba(192, 0, 14, 0.5);;
+}
+
+.fc-timeGridDay-button:focus {
+    outline: none;
+}
+
+.fc-timeGridDay-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.fc-listMonth-button{
+    background-color: rgb(192, 0, 14) !important; /* Change button background color */
+    color: white !important; /* Change button text color */
+    border: none !important; /* Remove button border */
+}
+
+.fc-listMonth-button:hover {
+    background-color: rgba(192, 0, 14, 0.7);;
+}
+
+/* Optional: Add more styles to make it even cooler */
+.fc-listMonth-button:active {
+    background-color: rgba(192, 0, 14, 0.5);;
+}
+
+.fc-listMonth-button:focus {
+    outline: none;
+}
+
+.fc-listMonth-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.fc-prev-button{
+    background-color: rgb(192, 0, 14) !important; /* Change button background color */
+    color: white !important; /* Change button text color */
+    border: none !important; /* Remove button border */
+}
+
+.fc-prev-button:hover {
+    background-color: rgba(192, 0, 14, 0.7);;
+}
+
+/* Optional: Add more styles to make it even cooler */
+.fc-prev-button:active {
+    background-color: rgba(192, 0, 14, 0.5);;
+}
+
+.fc-prev-button:focus {
+    outline: none;
+}
+
+.fc-prev-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.fc-next-button{
+    background-color: rgb(192, 0, 14) !important; /* Change button background color */
+    color: white !important; /* Change button text color */
+    border: none !important; /* Remove button border */
+}
+
+.fc-next-button:hover {
+    background-color: rgba(192, 0, 14, 0.7);;
+}
+
+/* Optional: Add more styles to make it even cooler */
+.fc-next-button:active {
+    background-color: rgba(192, 0, 14, 0.5);;
+}
+
+.fc-next-button:focus {
+    outline: none;
+}
+
+.fc-next-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.fc-today-button{
+    background-color: rgb(192, 0, 14) !important; /* Change button background color */
+    color: white !important; /* Change button text color */
+    border: none !important; /* Remove button border */
+}
+
+.fc-today-button:hover {
+    background-color: rgba(192, 0, 14, 0.7);;
+}
+
+/* Optional: Add more styles to make it even cooler */
+.fc-today-button:active {
+    background-color: rgba(192, 0, 14, 0.5);;
+}
+
+.fc-today-button:focus {
+    outline: none;
+}
+
+.fc-today-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+.fc-daygrid-day-number{
+    color: rgb(192, 0, 14) !important;
+    text-decoration:  none !important;
+}
+
+.fc-list-day-text{
+    color: rgb(192, 0, 14) !important;
+    text-decoration: none;
+}
+
+.fc-list-day-side-text{
+    color: rgb(192, 0, 14) !important;
+    text-decoration: none;
+}
+
+.fc-event-time{
+    color: black !important;
+}
+
+.fc-event-title{
+    color: black !important;
+}
+
+.dropdown-menu li a {
+    cursor: pointer;
+  }
+
+  .active-patient{
+    color: rgb(192, 0, 14);
+    font-weight: bolder;
+}

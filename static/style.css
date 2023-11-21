@@ -270,4 +270,6 @@
     border-radius: 30px 30px 30px 30px;
   }
 
-
+.not-visible{
+  display:none;
+}

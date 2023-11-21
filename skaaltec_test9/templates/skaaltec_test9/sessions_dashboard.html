@@ -1,0 +1,181 @@
+{% extends 'base_therapist.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+    
+
+{% block scripts %}
+    <script src="{% static 'skaaltec_test9/session_therapist.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'style_dashboard.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    
+{% endblock scripts %}
+
+{% block title %}
+    Sessions Dashboard
+{% endblock title %}
+
+
+
+{% block content %}
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="{% url 'main_therapist' %}">Main Dashboard</a>
+        <a href="{% url 'analysis_dashboard' %}">Analysis</a>
+        <a href="{% url 'upload_dashboard' %}">Upload Data</a>
+        <a href="{% url 'messages_dashboard' %}">Message</a>
+        <a href="{% url 'sessions_dashboard' %}">Book a session</a>
+        <hr style="color: hsl(356, 81%, 95%);">
+        <div style="text-align: center;">
+            {% if user.is_authenticated %}
+            <p style="color: hsl(356, 81%, 95%);">Logged in as {{ user.username }}</p>
+            <form method="POST" action="{% url 'logout_user' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light btn-block gradient-custom-2 text-white rounded-3"><i>Logout</i></button>
+            </form>
+            {% endif %}
+        </div>
+    </div> 
+  
+  <div id="main" class="webapp">
+    
+    <div class="row mx-2 complementary-background border border-light rounded-total">
+        <div class="col-xl-2">
+            <a id="menuButton" type="button" class="btn btn-light btn-block background-radial-gradient text-light rounded-3 mx-3" onclick="openNav()" style="font-size: 18;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list mx-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>Portal Menu 
+            </a>
+        </div>
+        <div class="col-xl-2">
+            <div class="dropdown">
+                <button class="btn btn-light btn-block background-radial-gradient text-light rounded-3 mx-3 dropbtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                    </svg>
+                    Patients</button>
+                <div id="patients-dropdown-box" class="dropdown-content rounded-total">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row gx-2">
+
+        <div class="col-xl-8">
+            <div class="complementary-background border border-light my-2 rounded-total" style="height: 905px;">
+                <div class="row my-2">
+                    <div class="col-xl-1"></div>
+                    <div class="col-xl-10">
+                        <section class="h-100 gradient-form">
+                            <div class="container py-5 h-100">
+                              <div class="row d-flex justify-content-center align-items-center h-100">
+                                <div class="col-xl-10">
+                                  <div class="card rounded-3 text-black">
+                                    <div class="row g-0">
+                                        <div class="card-body p-md-5 mx-md-4">
+                          
+                                          <div class="text-center">
+                                            
+                                            <img src="{% static 'skaaltec.png' %}"
+                                              style="width: 185px;" alt="logo">
+                                            <h1>Book a session</h1>
+                                            <hr>
+                                            <div class="card-body" id="booking-box">
+                                                <form id="p-form">
+                                                    <div id="booking-info">
+                                                        <div class="alert alert-warning mx-2 shadow" role="alert">
+                                                            <h5>Select the patient and book a therapy session.</h5>
+                                                        </div> 
+                                                    </div>
+                                                    
+                                                    <div id="alert-box">
+                                                    </div> 
+                                                    <div class="form-outline m-4">
+                                                        
+                                                        {% csrf_token %}
+                                                        <table class="center">{{ form|crispy }}</table>
+                                                        
+                                                    </div>
+                                  
+                                                    <div class="text-center pt-1 mb-5 pb-1">
+                                                      <button id="submit-form-button" disabled="true" class="btn btn-light btn-block background-radial-gradient text-light rounded-3 mx-3" type="submit"><i>Upload</i></button>
+                                                    </div>
+                                  
+                                                </form>
+                                            </div>
+                                            
+                                          </div>
+                        
+                                          
+                          
+                                        </div>
+                                      
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-xl-1"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 " >
+            
+            <div class="complementary-background my-2 border border-light rounded-total" style="height: 450px;">
+                <div class="row">
+                    <div class="col-xl-12 my-2">
+                        <div class="row m-3" style="justify-content: space-around;">
+                            <h1>Patient Information</h1>
+                            <hr>
+                            <br>
+                        </div>
+                        <div class="border border-light bg-overflow rounded-total" style="height: 220px; overflow: auto;">
+                            <div class="row mx-1" >
+                                <div id="patient-info-box" class="center my-3">
+                                    <div class="alert alert-warning m-2 shadow" role="alert">
+                                        <h5>Select a patient.</h5>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="complementary-background my-2 border border-light rounded-total" style="height: 450px;">
+                <div class="row">
+                    <div class="col-xl-12 my-2">
+                        <div class="row m-3" style="justify-content: space-around;">
+                            <h1>Sessions</h1>
+                            <div id="session-handler-box"></div>
+                            <hr>
+                        </div>
+                        <div id="sessions-count-box" class="m-2"></div>
+                        <div class="bg-overflow border border-light rounded-total" style="height: 220px; overflow: auto;">
+                            <div class="row mx-1" >
+                                <div id="sessions-info-box" class="center">
+                                    <div class="alert alert-warning m-2 shadow" role="alert">
+                                        <h5>Select a patient.</h5>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+  </div>
+  
+  
+{% endblock content %}
+                        

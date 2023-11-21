@@ -4,3 +4,5 @@ db.sqlite3
 /env
 *.env
 .vscode
+package-lock.json
+package.json

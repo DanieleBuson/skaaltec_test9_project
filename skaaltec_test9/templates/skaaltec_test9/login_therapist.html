@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block scripts %}
+{% endblock scripts %}
+
+{% block title %}
+    Therapist Login
+{% endblock title %}
+
+
+
+{% block content %}
+
+    <!-- Section: Design Block -->
+<section class="background-radial-gradient overflow-hidden">
+    <style>
+      .background-radial-gradient {
+        background-color: #f5f5f5; /* A neutral gray background */
+        background-image: linear-gradient(135deg, #2fc4b2, #2fc4b2 50%, #289c8e 50%);/* Gradient background with a healthcare-themed blue */
+        color: #333; /* Dark gray text color for readability */
+        font-family: Arial, sans-serif; /* Choose a suitable font-family */
+        padding: 20px; /* Add padding for content */
+      }
+  
+      #radius-shape-1 {
+        height: 220px;
+        width: 220px;
+        top: -60px;
+        left: -130px;
+        background: radial-gradient(#117c6f, black);
+        overflow: hidden;
+      }
+  
+      #radius-shape-2 {
+        border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+        bottom: -60px;
+        right: -110px;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(#117c6f, black);
+        overflow: hidden;
+      }
+  
+      .bg-glass {
+        background-color: hsla(0, 0%, 100%, 0.9) !important;
+        backdrop-filter: saturate(200%) blur(25px);
+      }
+    </style>
+  
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+      <div class="row gx-lg-5 align-items-center mb-5">
+        <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+          <h1 class="my-5 display-5 fw-bold ls-tight" style="color: #0f6b60">
+            Therapist portal <br />
+            <span style="color: #76f3e4">A smart way to work</span>
+          </h1>
+          <p class="mb-4 opacity-70" style="color:  #000000">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            Temporibus, expedita iusto veniam atque, magni tempora mollitia
+            dolorum consequatur nulla, neque debitis eos reprehenderit quasi
+            ab ipsum nisi dolorem modi. Quos?
+          </p>
+        </div>
+  
+        <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+          <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+          <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+  
+          <div class="card bg-glass">
+            <div class="card-body px-4 py-5 px-md-5">
+                <div class="text-center">
+                    <img src="{% static 'skaaltec.png' %}"
+                      style="width: 185px;" alt="logo">
+                    <h4 class="mt-1 mb-5 pb-1">PORTAL LOGIN</h4>
+                </div>
+
+                {% if error %}
+                      <div class="alert alert-danger" role="alert">
+                          <p class="card-text">{{ error }}</p>
+                      </div>  
+                {% endif %}  
+
+                <form method="POST" action="{% url 'login_therapist' %}">
+                    <p>Login to your account</p>
+
+                    <div class="form-outline mb-4">
+                            
+                        {% csrf_token %}
+                            
+                        {{ form_in.as_p }}
+                    
+                    </div>
+                    <div style="text-align: center;">
+                      <button type="submit" class="btn btn-light btn-block background-radial-gradient text-white rounded-3">
+                          Log in
+                      </button>
+                  </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Section: Design Block -->
+
+{% endblock content %}
+
+

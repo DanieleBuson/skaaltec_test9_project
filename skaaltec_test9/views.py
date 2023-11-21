@@ -1,7 +1,18 @@
-from django.shortcuts import render
-import datetime
-from .models import News
-from .forms import ContactForm
+import os
+from operator import attrgetter
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.contrib.auth.decorators import login_required
+from datetime import datetime
+
+from skaaltec_test9.functions import Kinematics, extract_dates, patient_data, analysis_code_generator
+from webapp_test9.settings import MEDIA_URL
+from .models import Analysis, News, Therapist, Patient, PatientHasTherapist, Message, Session
+from .forms import ContactForm, AnalysisForm, MessageForm, SessionForm
+import pytz
+
 
 # Create your views here.
 def main(request):
@@ -31,11 +42,1016 @@ def contactus(request):
             #     recipient_list=[form.email],
             #     fail_silently=False,
             # )
-            print(form.cleaned_data['name'])
             file = open('message_' + form.cleaned_data['name'] + str(datetime.date.today().strftime("%d%m%Y")) + ".txt", 'w')
-            file.write("Subject:  " + form.cleaned_data['subject'] + "\n" + "Message: " + form.cleaned_data['message'])
+            file.write("Message from " + form.cleaned_data['email'] + "Subject:  " + form.cleaned_data['subject'] + "\n" + "Message: " + form.cleaned_data['message'])
             file.close()
             return render(request, 'skaaltec_test9/main.html', {'message': 'We received your message, we will answer as soon as possible. Thanks for you patient!'})
     else:
         form = ContactForm()
     return render(request, "skaaltec_test9/contactus.html", {'form': form})
+
+
+def login_therapist(request):
+    if request.method == 'GET':
+        return render(request, 'skaaltec_test9/login_therapist.html', {'form_in': AuthenticationForm()})
+    else:
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request, 'skaaltec_test9/login_therapist.html', {'form_in': AuthenticationForm(), 'error': 'Username and Password did not match!'})
+        else:
+            try:
+                therapist = get_object_or_404(Therapist, user=user)
+                if therapist:
+                    login(request, user)
+                    return redirect("therapist_dashboard")
+            except:
+                return render(request, 'skaaltec_test9/login_therapist.html', {'form_in': AuthenticationForm(), 'error': 'Username and Password did not match!'})
+            
+@login_required
+def logout_user(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('main')
+
+# #############################################################################################################
+
+# @login_required
+# def main_therapist(request):
+#     return render(request, 'skaaltec_test9/main_therapist.html')
+
+
+# @login_required
+# def patients_data(request):
+#     therapist = get_object_or_404(Therapist, user=request.user)
+#     print(therapist)
+#     patient_list = PatientHasTherapist.objects.filter(therapist=therapist)
+#     print(patient_list)
+#     patients = []
+#     for patient in patient_list:
+#         patients.append(get_object_or_404(Patient, id = patient.patient.id))
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         size = len(patients)
+#         data = []
+#         for patient in patients:
+#             item = {
+#                 'id':patient.id,
+#                 'patient_name':patient.name + " " + patient.surname,
+#                 'age': patient.age,
+#                 'height': patient.height,
+#                 'weight': patient.weight
+#             }
+#             data.append(item)
+        
+#         context = {
+#             'data':data,
+#             'size': size,
+#         }
+#         return JsonResponse(context)
+
+# @login_required
+# def load_messages_therapist(request):
+#     therapist = get_object_or_404(Therapist, user=request.user)
+#     print(therapist)
+#     patientsHaveTherapist = PatientHasTherapist.objects.filter(therapist=therapist)
+#     messages = []
+#     messages_and_count = []
+#     for patientHasTherapist in patientsHaveTherapist:
+#         message_list = Message.objects.filter(patientAndTherapist = patientHasTherapist).order_by("-date")
+#         count = 0
+#         temp_list = []
+#         for message in message_list:
+#             if (message.sender != therapist.name + " " + therapist.surname) and message.new_message:
+#                 messages.append(get_object_or_404(Message, id = message.id))
+#                 temp_list.append(get_object_or_404(Message, id = message.id))
+#                 count += 1
+#         if count > 0:
+#             messages_and_count.append((temp_list, count))
+
+#     print("messages: ", messages, "\n")
+#     print("messages & count: ", messages_and_count, "\n")
+
+
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         size = len(messages)
+#         data = []
+#         for message in messages:
+#             item = {
+#                 'id':message.id,
+#                 'sender': message.patientAndTherapist.patient.name + " " + message.patientAndTherapist.patient.surname,
+#                 'receiver': message.patientAndTherapist.therapist.name + " " + message.patientAndTherapist.therapist.surname,
+#                 'text': message.textMessage if len(message.textMessage)<100 else message.textMessage[0:100] + "...",
+#                 'new_message': message.new_message,
+#                 'date': ":".join(str(message.date).split(":")[0:2])
+#             }
+#             data.append(item)
+        
+#         context = {
+#             'data':data,
+#             'size': size,
+#         }
+#         return JsonResponse(context)
+
+# @login_required
+# def load_session_therapist(request):
+#     therapist = get_object_or_404(Therapist, user=request.user)
+#     print(therapist)
+#     patientsHaveTherapist = PatientHasTherapist.objects.filter(therapist=therapist)
+#     sessions = []
+#     for patientHasTherapist in patientsHaveTherapist:
+#         session_list = Session.objects.filter(patientAndTherapist = patientHasTherapist).order_by("-date")
+#         for session in session_list:
+#             if not session.completed:
+#                 sessions.append(get_object_or_404(Session, id = session.id))
+
+#     print("sessions: ", sessions, "\n")
+
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         size = len(sessions)
+#         data = []
+#         today = datetime.datetime.now(pytz.UTC)
+#         for session in sessions:
+#             item = {
+#                 'id':session.id,
+#                 'patient': session.patientAndTherapist.patient.name + " " + session.patientAndTherapist.patient.surname,
+#                 'therapist': session.patientAndTherapist.therapist.name + " " + session.patientAndTherapist.therapist.surname,
+#                 'completed': session.completed,
+#                 'color_text': 'black' if session.date > today else 'red',
+#                 'date': ":".join(str(session.date).split(":")[0:2])
+#             }
+#             data.append(item)
+
+#         context = {
+#             'data':data,
+#             'size': size,
+#         }
+#         return JsonResponse(context)
+
+# ##############################################################################################################
+
+# @login_required
+# def load_patients_analysis(request):
+#     therapist = get_object_or_404(Therapist, user=request.user)
+#     print(therapist)
+#     patient_list = PatientHasTherapist.objects.filter(therapist=therapist)
+#     print(patient_list)
+#     patients = []
+#     for patient in patient_list:
+#         patients.append(get_object_or_404(Patient, id = patient.patient.id))
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         data = []
+#         for patient in patients:
+#             item = {
+#                 'id':patient.id,
+#                 'patient_name':patient.name + " " + patient.surname,
+#                 'age': patient.age,
+#                 'height': patient.height,
+#                 'weight': patient.weight
+#             }
+#             data.append(item)
+        
+#         context = {
+#             'data':data,
+#         }
+#         return JsonResponse(context)
+
+# @login_required
+# def load_graphs(request, patient_pk):
+#     therapist = get_object_or_404(Therapist, user=request.user)
+#     patient = get_object_or_404(Patient, pk=patient_pk)
+#     patient_list = PatientHasTherapist.objects.filter(therapist=therapist)
+#     for element in patient_list:
+#         if patient == element.patient:
+#             patientAndTherapist = element
+#             print("Fino a qui tutto bene")
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         list_of_files = os.listdir(MEDIA_URL + "static/skaaltec_test9/IMU/")
+#         size = Analysis.objects.filter(patientAndTherapist=patientAndTherapist).count()
+#         list_of_patient_files = patient_data(list_of_files, int(patient_pk))
+#         date_files = extract_dates(list_of_patient_files)
+#         dates = list(sorted(date_files.keys()))
+#         timestamps = []
+#         for date in dates:
+#             element = datetime.datetime.strptime(date,"%Y-%m-%d")
+#             timestamps.append(datetime.datetime.timestamp(element))
+#         files = list(sorted(date_files.values()))
+#         calibration_file = MEDIA_URL + "static/skaaltec_test9/IMU/calibration.csv"
+        
+#         general_data = []
+#         for file in files:
+#             print(file)
+#             kinematic = Kinematics()
+#             input_file = MEDIA_URL + "static/skaaltec_test9/IMU/" + file
+#             general_data.append(kinematic.get_variables(input_file=input_file, calibration_file=calibration_file))
+
+#         number_of_movements = 0
+#         nom = []
+#         average_duration = 0
+#         dur = []
+#         upper_dur = []
+#         lower_dur = []
+#         std_duration = 0
+#         average_mean_velocity = 0
+#         mean_vel = []
+#         upper_mean_vel = []
+#         lower_mean_vel = []
+#         std_mean_velocity = 0
+#         average_max_velocity = 0
+#         max_vel = []
+#         upper_max_vel = []
+#         lower_max_vel = []
+#         std_max_velocity = 0
+#         average_zero_crossings = 0
+#         zero_c = []
+#         upper_zero_c = []
+#         lower_zero_c = []
+#         std_zero_crossings = 0
+#         average_distance_traveled = 0
+#         distance_t = []
+#         upper_distance_t = []
+#         lower_distance_t = []
+#         std_distance_traveled = 0
+#         average_max_acceleration = 0
+#         max_acc = []
+#         upper_max_acc = []
+#         lower_max_acc = []
+#         std_max_acceleration = 0
+
+#         for i in range(len(general_data)):
+#             number_of_movements += (1/len(general_data))*(general_data[i].NumberofMovements)
+#             nom.append(general_data[i].NumberofMovements)
+#             average_duration += (1/len(general_data))*(general_data[i].Avg_Duration)
+#             dur.append(general_data[i].Avg_Duration)
+#             std_duration += (1/len(general_data))*(general_data[i].Std_Duration)
+#             upper_dur.append(general_data[i].Avg_Duration + general_data[i].Std_Duration)
+#             lower_dur.append(general_data[i].Avg_Duration - general_data[i].Std_Duration)
+#             average_mean_velocity += (1/len(general_data))*(general_data[i].Avg_Mean_Velocity)
+#             mean_vel.append(general_data[i].Avg_Mean_Velocity)
+#             std_mean_velocity += (1/len(general_data))*(general_data[i].Std_Mean_Velocity)
+#             upper_mean_vel.append(general_data[i].Avg_Mean_Velocity + general_data[i].Std_Mean_Velocity)
+#             lower_mean_vel.append(general_data[i].Avg_Mean_Velocity - general_data[i].Std_Mean_Velocity)
+#             average_max_velocity += (1/len(general_data))*(general_data[i].Avg_Max_Velocity)
+#             max_vel.append(general_data[i].Avg_Max_Velocity)
+#             upper_max_vel.append(general_data[i].Avg_Max_Velocity + general_data[i].Std_Max_Velocity)
+#             lower_max_vel.append(general_data[i].Avg_Max_Velocity - general_data[i].Std_Max_Velocity)
+#             std_max_velocity += (1/len(general_data))*(general_data[i].Std_Max_Velocity)
+#             average_zero_crossings += (1/len(general_data))*(general_data[i].Avg_Zero_Crossings)
+#             zero_c.append(general_data[i].Avg_Zero_Crossings)
+#             upper_zero_c.append(general_data[i].Avg_Zero_Crossings + general_data[i].Std_Zero_Crossings)
+#             lower_zero_c.append(general_data[i].Avg_Zero_Crossings - general_data[i].Std_Zero_Crossings)
+#             std_zero_crossings += (1/len(general_data))*(general_data[i].Std_Zero_Crossings)
+#             average_distance_traveled += (1/len(general_data))*(general_data[i].Avg_Distance_Traveled)
+#             distance_t.append(general_data[i].Avg_Distance_Traveled)
+#             std_distance_traveled += (1/len(general_data))*(general_data[i].Std_Distance_Traveled)
+#             upper_distance_t.append(general_data[i].Avg_Distance_Traveled + general_data[i].Std_Distance_Traveled)
+#             lower_distance_t.append(general_data[i].Avg_Distance_Traveled - general_data[i].Std_Distance_Traveled)
+#             average_max_acceleration += (1/len(general_data))*(general_data[i].Avg_Max_Acceleration)
+#             max_acc.append(general_data[i].Avg_Max_Acceleration)
+#             std_max_acceleration += (1/len(general_data))*(general_data[i].Std_Max_Acceleration)
+#             upper_max_acc.append(general_data[i].Avg_Max_Acceleration + general_data[i].Std_Max_Acceleration)
+#             lower_max_acc.append(general_data[i].Avg_Max_Acceleration - general_data[i].Std_Max_Acceleration)
+
+
+#         general_data={}
+#         general_data['average_number_of_movements'] = round(number_of_movements)
+#         general_data['average_distance_traveled'] = round(average_distance_traveled, 2)
+#         general_data['average_duration'] = round(average_duration, 2)
+#         general_data['average_max_acceleration'] = round(average_max_acceleration, 2)
+#         general_data['average_zero_crossings'] = round(average_zero_crossings, 2)
+#         general_data['average_max_velocity'] = round(average_max_velocity, 2)
+#         general_data['average_mean_velocity'] = round(average_mean_velocity, 2)
+#         general_data['std_distance_traveled'] = round(std_distance_traveled, 2)
+#         general_data['std_duration'] = round(std_duration, 2)
+#         general_data['std_max_acceleration'] = round(std_max_acceleration, 2)
+#         general_data['std_max_velocity'] = round(std_max_velocity, 2)
+#         general_data['std_mean_velocity'] = round(std_mean_velocity, 2)
+#         general_data['std_zero_crossings'] = round(std_zero_crossings, 2)
+
+#         dict_dur = {"dates":dates, 
+#                     "dur": dur, 
+#                     'upper': upper_dur,
+#                     'lower': lower_dur}
+#         dict_mean_vel = {"dates":dates,
+#                         "mean_vel":mean_vel,
+#                         'upper':upper_mean_vel,
+#                         'lower':lower_mean_vel}
+#         dict_max_vel = {"dates":dates, 
+#                         "max_vel":max_vel,
+#                         'upper':upper_max_vel,
+#                         'lower':lower_max_vel}
+#         dict_zero_c = {"dates":dates,
+#                     "zero_c":zero_c,
+#                     'upper':upper_zero_c,
+#                     'lower':lower_zero_c}
+#         dict_distance_t = {"dates":dates,
+#                         "distance_t":distance_t,
+#                         'upper':upper_distance_t,
+#                         'lower':lower_distance_t}
+#         dict_max_acc = {"dates": dates,
+#                         "max_acc":max_acc,
+#                         'upper': upper_max_acc,
+#                         'lower': lower_max_acc}
+#         dict_nom = {"dates":dates, 
+#                     "nom": nom}
+        
+#         context = {'patient_id':patient.id,
+#                 'patient_name': patient.name + " " + patient.surname,
+#                 'timestamps': timestamps,
+#                 'general_data':general_data,
+#                 "duration": dict_dur,
+#                 "mean_velocity": dict_mean_vel,
+#                 "max_velocity": dict_max_vel,
+#                 "zero_crossings":dict_zero_c,
+#                 "distance_traveled": dict_distance_t,
+#                 "max_acceleration": dict_max_acc,
+#                 "number_of_movements":dict_nom,
+#                 "size":size }
+
+#         return JsonResponse(context)
+
+# @login_required
+# def analysis_dashboard(request):
+#     return render(request, 'skaaltec_test9/analysis_dashboard.html')
+        
+# ##############################################################################################################
+
+# @login_required
+# def upload_dashboard(request):
+#     form = AnalysisForm(request.POST or None, request.FILES or None)
+#     data = {}
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         print("inside request ajax")
+#         if form.is_valid():
+#             print("form is valid")
+#             new_upload = form.save(commit=False)
+#             if 'patient_id' in request.POST:
+#                 patient_id = request.POST['patient_id']
+#             print(patient_id, " = patient_id")
+#             print(form.cleaned_data.get('date'), " = date")
+#             patient = get_object_or_404(Patient, pk=patient_id)
+#             print(patient)
+#             therapist = get_object_or_404(Therapist, user = request.user)
+#             print(therapist)
+#             patientAndTherapist = get_object_or_404(PatientHasTherapist, patient=patient, therapist=therapist)
+#             print(patientAndTherapist)
+#             new_upload.analysis_code = analysis_code_generator("imu", patientAndTherapist.patient.id, form.cleaned_data.get('date'))
+#             new_upload.patientAndTherapist = patientAndTherapist
+#             new_upload.date = form.cleaned_data.get('date')
+#             new_upload.data_file = request.FILES['data_file']
+#             data['date'] = form.cleaned_data.get("date")
+#             data['status'] = 'ok'
+#             new_upload.save()
+#             return JsonResponse(data)
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, "skaaltec_test9/upload_dashboard.html", context)
+
+# @login_required
+# def load_patients_upload(request):
+#     therapist = get_object_or_404(Therapist, user=request.user)
+#     print(therapist)
+#     patient_list = PatientHasTherapist.objects.filter(therapist=therapist)
+#     print(patient_list)
+#     patients = []
+#     for patient in patient_list:
+#         patients.append(get_object_or_404(Patient, id = patient.patient.id))
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         data = []
+#         for patient in patients:
+#             item = {
+#                 'id':patient.id,
+#                 'patient_name':patient.name + " " + patient.surname,
+#                 'age': patient.age,
+#                 'height': patient.height,
+#                 'weight': patient.weight
+#             }
+#             data.append(item)
+        
+#         context = {
+#             'data':data,
+#         }
+#         return JsonResponse(context)
+    
+# @login_required
+# def load_session_upload(request, patient_pk):
+#     therapist = get_object_or_404(Therapist, user=request.user)
+#     patient = get_object_or_404(Patient, pk=patient_pk)
+#     patientHasTherapist = get_object_or_404(PatientHasTherapist, patient=patient, therapist=therapist)
+#     sessions = []
+#     session_list = list(Session.objects.filter(patientAndTherapist = patientHasTherapist).order_by("-date"))
+#     print(session_list)
+#     for session in session_list:
+#         print("session completed = ", session.completed)
+#         if not session.completed:
+#             print("inside session not complete!")
+#             sessions.append(get_object_or_404(Session, id = session.id))
+#         print("next\n")
+
+#     print("sessions: ", sessions, "\n")
+
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         size = len(sessions)
+#         data = []
+#         today = datetime.datetime.now(pytz.UTC)
+#         for session in sessions:
+#             item = {
+#                 'id':session.id,
+#                 'patient': session.patientAndTherapist.patient.name + " " + session.patientAndTherapist.patient.surname,
+#                 'therapist': session.patientAndTherapist.therapist.name + " " + session.patientAndTherapist.therapist.surname,
+#                 'completed': session.completed,
+#                 'color_text': 'black' if session.date > today else 'red',
+#                 'date': ":".join(str(session.date).split(":")[0:2])
+#             }
+#             data.append(item)
+
+#         context = {
+#             'data':data,
+#             'size': size,
+#         }
+#         return JsonResponse(context)
+    
+# ##############################################################################################################
+
+# @login_required
+# def messages_dashboard(request):
+#     form = MessageForm(request.POST or None)
+#     data = {}
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         print("inside xml request")
+#         print(request.POST)
+#         if form.is_valid():
+#             print('form is valid')
+#             new_message = form.save(commit=False)
+
+#             if 'sender_id' in request.POST:
+#                 sender_id = request.POST['sender_id']
+
+#             print(sender_id)
+
+#             patient = get_object_or_404(Patient, pk=sender_id)
+#             print(patient)
+            
+#             therapist = get_object_or_404(Therapist, user = request.user)
+#             print(therapist)
+
+#             patientAndTherapist = get_object_or_404(PatientHasTherapist, patient=patient, therapist=therapist)
+#             print(patientAndTherapist)
+
+#             new_message.sender = therapist.name + " " + therapist.surname
+#             print("new_message.sender:", new_message.sender)
+#             new_message.receiver = patient.name + " " + patient.surname
+#             print("new_message.recceiver:", new_message.receiver)
+#             new_message.text = form.cleaned_data.get('text')
+#             print("new_message.text:", new_message.text)
+#             new_message.new_message = True
+#             print("new_message.new_message:", new_message.new_message)
+#             new_message.patientAndTherapist = patientAndTherapist
+#             print("new_message.patientAndTherapist:", new_message.patientAndTherapist)
+
+#             data['status'] = 'ok'
+#             new_message.save()
+#             return JsonResponse(data)
+#         else:
+#             # Display form errors to the user
+#             for field, errors in form.errors.items():
+#                 for error in errors:
+#                     print(error, " is the error from the field ", field)
+#     context = {
+#         'form':form
+#     }
+#     return render(request, "skaaltec_test9/messages_dashboard.html", context)
+
+
+# @login_required
+# def load_messages(request):
+#     therapist = get_object_or_404(Therapist, user=request.user)
+#     print(therapist)
+#     patientsHaveTherapist = PatientHasTherapist.objects.filter(therapist=therapist)
+#     new_messages_list = []
+#     total_count = 0
+#     for patientHasTherapist in patientsHaveTherapist:
+#         message_list = Message.objects.filter(patientAndTherapist = patientHasTherapist).order_by("date")
+#         count = 0
+#         temp_list = []
+#         for message in message_list:
+#             temp_list.append(get_object_or_404(Message, id = message.id))
+#             if message.new_message and message.sender == message.patientAndTherapist.patient.name + " " + message.patientAndTherapist.patient.surname:
+#                 count += 1
+#         last_message = temp_list[-1]
+#         print(last_message)
+#         new_messages_list.append({
+#             'id':last_message.id,
+#             'patient_id': last_message.patientAndTherapist.patient.id,
+#             'sender': last_message.sender,
+#             'patient': last_message.patientAndTherapist.patient.name + " " + last_message.patientAndTherapist.patient.surname,
+#             'therapist': last_message.patientAndTherapist.therapist.name + " " + last_message.patientAndTherapist.therapist.surname,
+#             'text': last_message.textMessage if len(last_message.textMessage)<75 else last_message.textMessage[0:75] + "...",
+#             'count_new': count,
+#             'date': ":".join(str(last_message.date).split(":")[0:2])
+#         })
+#     total_count += count
+
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         size = total_count
+#         data = new_messages_list
+
+#         context = {
+#             'data':data,
+#             'size': size,
+#         }
+#         return JsonResponse(context)
+
+# @login_required
+# def load_chat(request, sender_id):
+#     therapist = get_object_or_404(Therapist, user = request.user)
+#     patient = get_object_or_404(Patient, pk=sender_id)
+#     patientAndTherapist = get_object_or_404(PatientHasTherapist, patient=patient, therapist=therapist)
+#     messages = Message.objects.filter(patientAndTherapist=patientAndTherapist).order_by('date')
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         data = []
+#         for message in messages:
+#             message.new_message = False
+#             message.save(update_fields=['new_message'])
+#             data.append({
+
+#                 'sender': message.sender,
+#                 'receiver': message.receiver,
+#                 'patient_name': message.patientAndTherapist.patient.name + " " + message.patientAndTherapist.patient.surname,
+#                 'therapist_name': message.patientAndTherapist.therapist.name + " " + message.patientAndTherapist.therapist.surname,
+#                 'text': message.textMessage,
+#                 'date': ":".join(str(message.date).split(":")[0:2])
+
+#             })
+        
+#         context = {
+#             'data':data,
+#         }
+#         return JsonResponse(context)
+
+# ##############################################################################################################
+
+# @login_required
+# def sessions_dashboard(request):
+#     form = SessionForm(request.POST or None)
+#     data = {}
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         print("inside xml request")
+#         print(request.POST)
+#         if form.is_valid():
+#             print("Form is valid already")
+#             new_session = form.save(commit=False)
+#             if 'patient_id' in request.POST:
+#                 patient_id = request.POST['patient_id']
+#             patient = get_object_or_404(Patient, pk=patient_id)
+#             therapist = get_object_or_404(Therapist, user = request.user)
+#             patientAndTherapist = get_object_or_404(PatientHasTherapist, patient=patient, therapist=therapist)
+
+#             new_session.date = form.cleaned_data.get('date')
+#             new_session.patientAndTherapist = patientAndTherapist
+            
+#             data['status'] = 'ok'
+#             new_session.save()
+#             return JsonResponse(data)
+
+#     context = {
+#         'form': form, 
+#     }
+#     return render(request, 'skaaltec_test9/sessions_dashboard.html', context)
+
+# @login_required
+# def load_patients_session(request):
+#     therapist = get_object_or_404(Therapist, user=request.user)
+#     print(therapist)
+#     patient_list = PatientHasTherapist.objects.filter(therapist=therapist)
+#     print(patient_list)
+#     patients = []
+#     for patient in patient_list:
+#         patients.append(get_object_or_404(Patient, id = patient.patient.id))
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         data = []
+#         for patient in patients:
+#             item = {
+#                 'id': patient.id,
+#                 'patient_name': patient.name + " " + patient.surname,
+#                 'age': patient.age,
+#                 'height': patient.height,
+#                 'weight': patient.weight
+#             }
+#             data.append(item)
+        
+#         context = {
+#             'data':data,
+#         }
+#         return JsonResponse(context)
+
+# @login_required
+# def load_sessions_session(request, patient_pk):
+#     therapist = get_object_or_404(Therapist, user=request.user)
+#     patient = get_object_or_404(Patient, pk=patient_pk)
+#     patientHasTherapist = get_object_or_404(PatientHasTherapist, patient=patient, therapist=therapist)
+#     sessions = []
+#     session_list = list(Session.objects.filter(patientAndTherapist = patientHasTherapist).order_by("-date"))
+#     print(session_list)
+#     for session in session_list:
+#         print("session completed = ", session.completed)
+#         if not session.completed:
+#             print("inside session not complete!")
+#             sessions.append(get_object_or_404(Session, id = session.id))
+#         print("next\n")
+
+#     print("sessions: ", sessions, "\n")
+
+#     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+#         size = len(sessions)
+#         data = []
+#         today = datetime.datetime.now(pytz.UTC)
+#         for session in sessions:
+#             item = {
+#                 'id':session.id,
+#                 'patient': session.patientAndTherapist.patient.name + " " + session.patientAndTherapist.patient.surname,
+#                 'therapist': session.patientAndTherapist.therapist.name + " " + session.patientAndTherapist.therapist.surname,
+#                 'completed': session.completed,
+#                 'color_text': 'black' if session.date > today else 'red',
+#                 'date': ":".join(str(session.date).split(":")[0:2])
+#             }
+#             data.append(item)
+
+#         context = {
+#             'data':data,
+#             'size': size,
+#         }
+#         return JsonResponse(context)
+
+# ##############################################################################################################
+
+
+def login_patient(request):
+    if request.method == 'GET':
+        return render(request, 'skaaltec_test9/login_patient.html', {'form_in': AuthenticationForm()})
+    else:
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request, 'skaaltec_test9/login_patient.html', {'form_in': AuthenticationForm(), 'error': 'Username and Password did not match!'})
+        else:
+            try:
+                patient = get_object_or_404(Patient, user=user)
+                if patient:
+                    login(request, user)
+                    return redirect("main")
+            except:
+                return render(request, 'skaaltec_test9/login_patient.html', {'form_in': AuthenticationForm(), 'error': 'Username and Password did not match!'})
+            
+###############################################################################################################
+##### NEW DASHBOARD, DELETE ALL THE REST LATER! ###############################################################
+###############################################################################################################
+
+
+@login_required
+def therapist_dashboard(request):
+    form = SessionForm(request.POST or None)
+    data = {}
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        print("inside xml request")
+        print(request.POST)
+        if form.is_valid():
+            print("Form is valid already")
+            new_session = form.save(commit=False)
+            if 'patient_id' in request.POST:
+                patient_id = request.POST['patient_id']
+            patient = get_object_or_404(Patient, pk=patient_id)
+            therapist = get_object_or_404(Therapist, user = request.user)
+            patientAndTherapist = get_object_or_404(PatientHasTherapist, patient=patient, therapist=therapist)
+
+            new_session.date = form.cleaned_data.get('date')
+            new_session.patientAndTherapist = patientAndTherapist
+            
+            data['status'] = 'ok'
+            new_session.save()
+            return JsonResponse(data)
+
+    context = {
+        'form': form, 
+    }
+    return render(request, "skaaltec_test9/therapist_dashboard.html", context)
+
+
+@login_required
+def load_patients_td(request):
+    therapist = get_object_or_404(Therapist, user=request.user)
+    patient_list = PatientHasTherapist.objects.filter(therapist=therapist)
+    patients = []
+    for patient in patient_list:
+        patients.append(get_object_or_404(Patient, id = patient.patient.id))
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        size = len(patients)
+        data = []
+        for patient in patients:
+            item = {
+                'id':patient.id,
+                'patient_name':patient.name + " " + patient.surname,
+                'age': patient.age,
+            }
+            data.append(item)
+        
+        context = {
+            'data':data,
+            'size': size,
+        }
+        return JsonResponse(context)
+    
+@login_required
+def load_admin_td(request):
+    therapist = get_object_or_404(Therapist, user=request.user)
+    patient_list = PatientHasTherapist.objects.filter(therapist=therapist)
+    patients = []
+    sessions_total = 0
+    sessions_completed = 0
+    messages_count = 0
+    for patient in patient_list:
+        patients.append(get_object_or_404(Patient, id = patient.patient.id))
+        sessions = Session.objects.filter(patientAndTherapist = patient)
+        sessions_total += len(sessions)
+        for session in sessions:
+            if session.completed:
+                sessions_completed += 1
+        messages = Message.objects.filter(patientAndTherapist = patient)
+        for message in messages:
+            if message.sender != therapist.name and message.new_message:
+                messages_count += 1
+    analyses = Analysis.objects.all().order_by("date")
+    dates = []
+    for analysis in analyses:
+        if analysis.date not in dates:
+            dates.append(analysis.date)
+    analyses_count = []
+    for date in dates:
+        analyses_count.append(len(Analysis.objects.filter(date=date)))
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        patients_size = len(patients)
+        
+        context = {
+            'patients_size': patients_size,
+            'sessions_total': sessions_total,
+            'sessions_completed': sessions_completed,
+            'messages_count': messages_count,
+            'dates': dates,
+            'analyses_count': analyses_count
+        }
+        return JsonResponse(context)
+    
+@login_required
+def load_admin_info_td(request):
+    therapist = get_object_or_404(Therapist, user=request.user)
+    patient_list = PatientHasTherapist.objects.filter(therapist=therapist)
+    sessions = []
+    messages = []
+    total_count = 0
+    for patientAndTherapist in patient_list:
+        sessions_patient = Session.objects.filter(patientAndTherapist = patientAndTherapist)
+        messages_list = Message.objects.filter(patientAndTherapist = patientAndTherapist).order_by("date")
+        count_message = 0
+        temporary_message_list = []
+        for session in sessions_patient:
+            sessions.append({
+                'title': session.patientAndTherapist.patient.name + " " + session.patientAndTherapist.patient.surname,
+                'start': session.date,
+            })
+        for message in messages_list:
+            temporary_message_list.append(get_object_or_404(Message, id = message.id))
+            if message.new_message and message.sender == message.patientAndTherapist.patient.name + " " + message.patientAndTherapist.patient.surname:
+                count_message += 1
+        last_message = temporary_message_list[-1]
+        date = datetime.strptime(last_message.date.strftime('%Y-%m-%d %H:%M'), '%Y-%m-%d %H:%M')
+        messages.append({
+            'id':last_message.id,
+            'patient_id': last_message.patientAndTherapist.patient.id,
+            'sender': last_message.sender,
+            'patient': last_message.patientAndTherapist.patient.name + " " + last_message.patientAndTherapist.patient.surname,
+            'therapist': last_message.patientAndTherapist.therapist.name + " " + last_message.patientAndTherapist.therapist.surname,
+            'text': last_message.textMessage if len(last_message.textMessage)<75 else last_message.textMessage[0:75] + "...",
+            'count_new': count_message,
+            'date': date
+        })
+        if len(messages) > 0:
+            messages = sorted(messages, key=lambda x: x['date'], reverse=True)
+        total_count += count_message
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        data = {
+            'therapist_name': therapist.name + " " + therapist.surname,
+            'therapist_mail': therapist.mail,
+            'therapist_phone': therapist.phoneNumber,
+            'sessions': sessions,
+            'messages':messages,
+            'total_count': total_count
+        }
+
+        context = {
+            'data':data,
+        }
+        return JsonResponse(context)
+
+@login_required
+def load_analysis_td(request, patient_pk):
+    therapist = get_object_or_404(Therapist, user=request.user)
+    patient = get_object_or_404(Patient, pk=patient_pk)
+    patient_list = PatientHasTherapist.objects.filter(therapist=therapist)
+    for element in patient_list:
+        if patient == element.patient:
+            patientAndTherapist = element
+            print("Fino a qui tutto bene")
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        sessions_list = Session.objects.filter(patientAndTherapist=patientAndTherapist)
+        sessions = []
+        for element in sessions_list:
+            sessions.append({
+                'title': element.patientAndTherapist.patient.name + " " + element.patientAndTherapist.patient.surname,
+                'start': element.date
+            })
+            patient_info = {
+                'name': patient.name + " " + patient.surname,
+                'email': patient.mail,
+                'phoneNumber': patient.phoneNumber,
+                'age': patient.age,
+                'weight': patient.weight,
+                'height': patient.height
+            }
+        list_of_files = os.listdir(MEDIA_URL + "static/skaaltec_test9/IMU/")
+        size = Analysis.objects.filter(patientAndTherapist=patientAndTherapist).count()
+        list_of_patient_files = patient_data(list_of_files, int(patient_pk))
+        date_files = extract_dates(list_of_patient_files)
+        dates = list(sorted(date_files.keys()))
+        timestamps = []
+        for date in dates:
+            element = datetime.strptime(date,"%Y-%m-%d")
+            timestamps.append(datetime.timestamp(element))
+        files = list(sorted(date_files.values()))
+        calibration_file = MEDIA_URL + "static/skaaltec_test9/IMU/calibration.csv"
+        
+        general_data = []
+        for file in files:
+            print(file)
+            kinematic = Kinematics()
+            input_file = MEDIA_URL + "static/skaaltec_test9/IMU/" + file
+            general_data.append(kinematic.get_variables(input_file=input_file, calibration_file=calibration_file))
+
+        number_of_movements = 0
+        nom = []
+        average_duration = 0
+        dur = []
+        upper_dur = []
+        lower_dur = []
+        std_duration = 0
+        average_mean_velocity = 0
+        mean_vel = []
+        upper_mean_vel = []
+        lower_mean_vel = []
+        std_mean_velocity = 0
+        average_max_velocity = 0
+        max_vel = []
+        upper_max_vel = []
+        lower_max_vel = []
+        std_max_velocity = 0
+        average_zero_crossings = 0
+        zero_c = []
+        upper_zero_c = []
+        lower_zero_c = []
+        std_zero_crossings = 0
+        average_distance_traveled = 0
+        distance_t = []
+        upper_distance_t = []
+        lower_distance_t = []
+        std_distance_traveled = 0
+        average_max_acceleration = 0
+        max_acc = []
+        upper_max_acc = []
+        lower_max_acc = []
+        std_max_acceleration = 0
+
+        for i in range(len(general_data)):
+            number_of_movements += (1/len(general_data))*(general_data[i].NumberofMovements)
+            nom.append(general_data[i].NumberofMovements)
+            average_duration += (1/len(general_data))*(general_data[i].Avg_Duration)
+            dur.append(general_data[i].Avg_Duration)
+            std_duration += (1/len(general_data))*(general_data[i].Std_Duration)
+            upper_dur.append(general_data[i].Avg_Duration + general_data[i].Std_Duration)
+            lower_dur.append(general_data[i].Avg_Duration - general_data[i].Std_Duration)
+            average_mean_velocity += (1/len(general_data))*(general_data[i].Avg_Mean_Velocity)
+            mean_vel.append(general_data[i].Avg_Mean_Velocity)
+            std_mean_velocity += (1/len(general_data))*(general_data[i].Std_Mean_Velocity)
+            upper_mean_vel.append(general_data[i].Avg_Mean_Velocity + general_data[i].Std_Mean_Velocity)
+            lower_mean_vel.append(general_data[i].Avg_Mean_Velocity - general_data[i].Std_Mean_Velocity)
+            average_max_velocity += (1/len(general_data))*(general_data[i].Avg_Max_Velocity)
+            max_vel.append(general_data[i].Avg_Max_Velocity)
+            upper_max_vel.append(general_data[i].Avg_Max_Velocity + general_data[i].Std_Max_Velocity)
+            lower_max_vel.append(general_data[i].Avg_Max_Velocity - general_data[i].Std_Max_Velocity)
+            std_max_velocity += (1/len(general_data))*(general_data[i].Std_Max_Velocity)
+            average_zero_crossings += (1/len(general_data))*(general_data[i].Avg_Zero_Crossings)
+            zero_c.append(general_data[i].Avg_Zero_Crossings)
+            upper_zero_c.append(general_data[i].Avg_Zero_Crossings + general_data[i].Std_Zero_Crossings)
+            lower_zero_c.append(general_data[i].Avg_Zero_Crossings - general_data[i].Std_Zero_Crossings)
+            std_zero_crossings += (1/len(general_data))*(general_data[i].Std_Zero_Crossings)
+            average_distance_traveled += (1/len(general_data))*(general_data[i].Avg_Distance_Traveled)
+            distance_t.append(general_data[i].Avg_Distance_Traveled)
+            std_distance_traveled += (1/len(general_data))*(general_data[i].Std_Distance_Traveled)
+            upper_distance_t.append(general_data[i].Avg_Distance_Traveled + general_data[i].Std_Distance_Traveled)
+            lower_distance_t.append(general_data[i].Avg_Distance_Traveled - general_data[i].Std_Distance_Traveled)
+            average_max_acceleration += (1/len(general_data))*(general_data[i].Avg_Max_Acceleration)
+            max_acc.append(general_data[i].Avg_Max_Acceleration)
+            std_max_acceleration += (1/len(general_data))*(general_data[i].Std_Max_Acceleration)
+            upper_max_acc.append(general_data[i].Avg_Max_Acceleration + general_data[i].Std_Max_Acceleration)
+            lower_max_acc.append(general_data[i].Avg_Max_Acceleration - general_data[i].Std_Max_Acceleration)
+
+
+        general_data={}
+        general_data['average_number_of_movements'] = round(number_of_movements)
+        general_data['average_distance_traveled'] = round(average_distance_traveled, 2)
+        general_data['average_duration'] = round(average_duration, 2)
+        general_data['average_max_acceleration'] = round(average_max_acceleration, 2)
+        general_data['average_zero_crossings'] = round(average_zero_crossings, 2)
+        general_data['average_max_velocity'] = round(average_max_velocity, 2)
+        general_data['average_mean_velocity'] = round(average_mean_velocity, 2)
+        general_data['std_distance_traveled'] = round(std_distance_traveled, 2)
+        general_data['std_duration'] = round(std_duration, 2)
+        general_data['std_max_acceleration'] = round(std_max_acceleration, 2)
+        general_data['std_max_velocity'] = round(std_max_velocity, 2)
+        general_data['std_mean_velocity'] = round(std_mean_velocity, 2)
+        general_data['std_zero_crossings'] = round(std_zero_crossings, 2)
+
+        dict_dur = {"dates":dates, 
+                    "dur": dur, 
+                    'upper': upper_dur,
+                    'lower': lower_dur}
+        dict_mean_vel = {"dates":dates,
+                        "mean_vel":mean_vel,
+                        'upper':upper_mean_vel,
+                        'lower':lower_mean_vel}
+        dict_max_vel = {"dates":dates, 
+                        "max_vel":max_vel,
+                        'upper':upper_max_vel,
+                        'lower':lower_max_vel}
+        dict_zero_c = {"dates":dates,
+                    "zero_c":zero_c,
+                    'upper':upper_zero_c,
+                    'lower':lower_zero_c}
+        dict_distance_t = {"dates":dates,
+                        "distance_t":distance_t,
+                        'upper':upper_distance_t,
+                        'lower':lower_distance_t}
+        dict_max_acc = {"dates": dates,
+                        "max_acc":max_acc,
+                        'upper': upper_max_acc,
+                        'lower': lower_max_acc}
+        dict_nom = {"dates":dates, 
+                    "nom": nom}
+        
+        context = {'patient_id':patient.id,
+                'patient_name': patient.name + " " + patient.surname,
+                'timestamps': timestamps,
+                'general_data':general_data,
+                "duration": dict_dur,
+                "mean_velocity": dict_mean_vel,
+                "max_velocity": dict_max_vel,
+                "zero_crossings":dict_zero_c,
+                "distance_traveled": dict_distance_t,
+                "max_acceleration": dict_max_acc,
+                "number_of_movements":dict_nom,
+                "sessions": sessions,
+                'patient_info': patient_info,
+                "size":size }
+
+        return JsonResponse(context)
+
+@login_required
+def load_sessions_td(request, patient_pk):
+    therapist = get_object_or_404(Therapist, user=request.user)
+    patient = get_object_or_404(Patient, pk=patient_pk)
+    patient_list = PatientHasTherapist.objects.filter(therapist=therapist)
+    patientSessions = []
+    otherPatientsSessions = []
+    for patientAndTherapist in patient_list:
+        if patientAndTherapist.patient == patient:
+            sessions_patient = Session.objects.filter(patientAndTherapist = patientAndTherapist)
+            for session in sessions_patient:
+                patientSessions.append({
+                    'title': session.patientAndTherapist.patient.name + " " + session.patientAndTherapist.patient.surname,
+                    'start': session.date,
+                })
+        else:
+            sessions_patient = Session.objects.filter(patientAndTherapist = patientAndTherapist)
+            for session in sessions_patient:
+                otherPatientsSessions.append({
+                    'title': session.patientAndTherapist.patient.name + " " + session.patientAndTherapist.patient.surname,
+                    'start': session.date,
+                })
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        data = {
+            'patientSessions': patientSessions,
+            'otherPatientsSessions': otherPatientsSessions
+        }
+
+        context = {
+            'data':data,
+        }
+        return JsonResponse(context)

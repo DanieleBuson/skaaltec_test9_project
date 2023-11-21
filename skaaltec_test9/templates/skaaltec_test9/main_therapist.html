@@ -1,0 +1,159 @@
+{% extends 'base_therapist.html' %}
+{% load static %}
+
+    
+
+{% block scripts %}
+    <script src="{% static 'skaaltec_test9/main_therapist.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'style_dashboard.css' %}">
+{% endblock scripts %}
+
+{% block title %}
+    Therapist Dashboard
+{% endblock title %}
+
+
+
+{% block content %}
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="{% url 'main_therapist' %}">Main Dashboard</a>
+        <a href="{% url 'analysis_dashboard' %}">Analysis</a>
+        <a href="{% url 'upload_dashboard' %}">Upload Data</a>
+        <a href="{% url 'messages_dashboard' %}">Message</a>
+        <a href="{% url 'sessions_dashboard' %}">Book a session</a>
+        <hr style="color: hsl(356, 81%, 95%);">
+        <div style="text-align: center;">
+            {% if user.is_authenticated %}
+            <p style="color: hsl(356, 81%, 95%);">Logged in as {{ user.username }}</p>
+            <form method="POST" action="{% url 'logout_user' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light btn-block background-radial-gradient text-light rounded-3 mx-3"><i>Logout</i></button>
+            </form>
+            {% endif %}
+        </div>
+    </div> 
+ 
+<div id="main" class="webapp">
+
+    <div class="row mx-2 complementary-background border border-light rounded-total">
+
+        <div class="col-3 my-1">
+            <a id="menuButton" type="button" class="btn btn-light btn-block background-radial-gradient text-light rounded-3 mx-3" onclick="openNav()" style="font-size: 18;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list mx-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>Portal Menu 
+            </a> 
+        </div>
+
+    </div>
+    
+  
+  
+
+    
+    <div class="row gx-2 rounded-total">
+        
+        <div class="col-xl-8">
+            <div class="container border border-light complementary-background my-2 rounded-total" style="height: 750px;">
+                <div class="row">
+                    <div class="col-xl-12 my-2">
+                        <br>
+                        <h1 class="mx-2">Patients</h1>
+                        <hr class="mx-2">
+                        <div class="mx-2">
+                            <div class="search-wrapper">
+                                <input type="search" id="search" placeholder="Search by name" data-search style="width: 40%;">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="bg-overflow rounded-total border border-light" style="height: 400px; overflow: auto;">
+                            <div class="row m-1" id="patient-info-box">
+                                <div id="spinner-box" class="center">
+                                    <div class="d-flex align-items-center ">
+                                        <strong role="status">Loading...</strong>
+                                        <div class="spinner-border ms-auto" aria-hidden="true"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-3">
+                            <div id="end-box" class="center">
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 " >
+            
+            <div class="container my-2 complementary-background border border-light rounded-total" style="height: 340px;">
+                <div class="row">
+                    <div class="col-xl-12 my-2">
+                        <div class="row m-3" style="justify-content: space-around;">
+                            <h1>Messages</h1>
+                            <hr>
+                            <div id="message-count-box" class="center">
+                                
+                            </div>
+                        </div>
+                        <div class="bg-overflow border border-light rounded-total" style="height: 150px; overflow: auto;">
+                            <div class="row mx-1" id="message-info-box">
+                                <div id="spinner-message-box" class="center">
+                                    <div class="d-flex align-items-center ">
+                                        <strong role="status">Loading...</strong>
+                                        <div class="spinner-border ms-auto" aria-hidden="true"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="complementary-background my-2 border border-light rounded-total" style="height: 400px;">
+                <div class="row">
+                    <div class="col-xl-12 my-2">
+                        <div class="row m-3" style="justify-content: space-around;">
+                            <h1>Sessions</h1>
+                            <hr>
+                            <div id="session-count-box" class="center">
+                                
+                            </div>
+                        </div>
+                        <div class="bg-overflow border border-light rounded-total" style="height: 180px; overflow: auto;">
+                            <div class="row mx-1" id="session-info-box">
+                                <div id="spinner-session-box" class="center">
+                                    <div class="d-flex align-items-center ">
+                                        <strong role="status">Loading...</strong>
+                                        <div class="spinner-border ms-auto" aria-hidden="true"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+
+
+</div>
+  
+  
+{% endblock content %}
+
+
+
+
+
+
+
+

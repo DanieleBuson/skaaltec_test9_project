@@ -28,7 +28,45 @@
         <img width="50" src="{% static 'skaaltec.png' %}">
       </div>
       <nav class="navbar navbar-expand-md
-                bg-light navbar-light m-4 rounded-3 topnav">
+                bg-light navbar-light m-4 rounded-3 topnav webapp">
+
+          <button class="navbar-toggler m-2"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#mynav">
+              <span class="navbar-toggler-icon">
+              </span>
+          </button>
+          <div class="container collapse navbar-collapse" id="mynav" style="justify-content: space-between;">
+                <div class="navbar-nav ml-auto text-center ">
+                  <div class="row">
+                    <div class="webapp mt-2" style="text-align: center;">
+                      <img width="50" src="{% static 'skaaltec.png' %}">
+                    </div>
+                    <h3 class="mt-1">SKAALTEC</h3>
+                  </div>
+                </div>
+              <ul class="navbar-nav ml-auto text-center ">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'main' %}" id="home"> Home </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'smartVNS' %}" id="solu"> SmartVNS </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'aboutus' %}" id="team"> About us </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'news' %}" id="team"> News </a>
+                </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'contactus' %}" id="cont"> Contact Us </a>
+                  </li>
+                  
+              </ul>
+          </div>
+      </nav>
+      <nav class="navbar navbar-expand-md
+                bg-light navbar-light m-4 rounded-3 topnav mobile">
 
           <button class="navbar-toggler m-2"
                   data-bs-toggle="collapse"
@@ -66,7 +104,7 @@
           </div>
       </nav>
     
-        <div class="container-fluid">
+        <div class="container-fluid" style="position: relative;">
             {% block content %}
     
             {% endblock %}
@@ -130,7 +168,7 @@
                     Products
                   </h6>
                   <p class="footer-p">
-                    <a href="#" class="text-reset">Smart VNS</a>
+                    <a href="{% url 'smartVNS' %}" class="text-reset">Smart VNS</a>
                   </p>
                   <p class="footer-p">
                     <a href="#" class="text-reset">Personalised Plan</a>
@@ -145,14 +183,14 @@
                     Portals
                   </h6>
                   <p class="footer-p">
-                    <a href="#" class="text-reset">Therapists</a>
+                    <a href="{% url 'login_therapist' %}" class="text-reset">Therapists</a>
                   </p>
                   <p class="footer-p">
-                    <a href="#" class="text-reset">Patients</a>
+                    <a href="{% url 'login_patient' %}" class="text-reset">Patients</a>
                   </p>
-                  <p class="footer-p">
+                  <!-- <p class="footer-p">
                     <a href="#" class="text-reset">Other</a>
-                  </p>
+                  </p> -->
                 </div>
                 <!-- Grid column -->
         
