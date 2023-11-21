@@ -6,4 +6,4 @@ db.sqlite3
 .vscode
 package-lock.json
 package.json
-imu_*
+media/skaaltec_test9/IMU/imu_*
