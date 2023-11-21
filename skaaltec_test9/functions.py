@@ -318,7 +318,7 @@ class Kinematics:
         Session.Std_Max_Acceleration = np.round(np.std(max_acceleration),2)
         return Session
     
-list_of_files = os.listdir("/home/daniele/Scrivania/ETH_Thesis/webapp_test3_project/skaaltec_test3/static/skaaltec_test3/IMU/")
+list_of_files = os.listdir("media/static/skaaltec_test9/IMU/")
 # this function works only in the case of data in the form specified (imu_id_{{ id }}_date_{{ date }}-{{ time }}.csv)
 def patient_data(list_of_files, patient_pk):
     list_of_patient_files = []
