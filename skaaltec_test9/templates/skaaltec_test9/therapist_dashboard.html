@@ -145,9 +145,9 @@
                                                 
                             <img src="{% static 'skaaltec.png' %}"
                             style="width: 185px;" alt="logo" class="my-3">
-                            <h1>Upload Data</h1>
+                            <h1>New session</h1>
                             <hr>
-                            <div class="card-body" id="upload-box">
+                            <div class="card-body" id="booking-box">
                                 <form id="book-form">
                                     
                                     <div id="book-alert-box">
@@ -160,7 +160,7 @@
                                     </div>
                 
                                     <div class="pt-1 mb-5 pb-1" style="text-align: center;">
-                                        <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Upload</i></button>
+                                        <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Book</i></button>
                                     </div>
                 
                                 </form>
@@ -240,6 +240,38 @@
                         
                     </div>
                 </div>           
+            </div>
+
+            <div id="upload" class="not-visible">
+
+                <div id="upload-data" class="col-xl-12 my-3 rounded-total shadow">
+                    <div style="text-align: center;">
+                                            
+                        <img src="{% static 'skaaltec.png' %}"
+                        style="width: 185px;" alt="logo" class="my-3">
+                        <h1>Upload new data</h1>
+                        <hr>
+                        <div class="card-body" id="upload-box">
+                            <form id="upload-form">
+                                
+                                <div id="upload-alert-box">
+                                </div> 
+                                <div class="form-outline m-4">
+                                    
+                                    {% csrf_token %}
+                                    <table class="center">{{ uform|crispy }}</table>
+                                    
+                                </div>
+            
+                                <div class="pt-1 mb-5 pb-1" style="text-align: center;">
+                                    <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Upload</i></button>
+                                </div>
+            
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -368,9 +400,9 @@
                                                 
                             <img src="{% static 'skaaltec.png' %}"
                             style="width: 185px;" alt="logo" class="my-3">
-                            <h1>Upload Data</h1>
+                            <h1>New session</h1>
                             <hr>
-                            <div class="card-body" id="upload-box">
+                            <div class="card-body" id="booking-box">
                                 <form id="book-form-t">
                                     
                                     <div id="book-alert-box-t">
@@ -383,7 +415,7 @@
                                     </div>
                 
                                     <div class="pt-1 mb-5 pb-1" style="text-align: center;">
-                                        <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Upload</i></button>
+                                        <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Book</i></button>
                                     </div>
                 
                                 </form>
@@ -461,6 +493,38 @@
                 </div>           
             </div>
             
+            <div id="upload-t" class="not-visible">
+
+                <div id="upload-data" class="col-md-12 my-3 rounded-total shadow">
+                    <div style="text-align: center;">
+                                            
+                        <img src="{% static 'skaaltec.png' %}"
+                        style="width: 185px;" alt="logo" class="my-3">
+                        <h1>Upload new data</h1>
+                        <hr>
+                        <div class="card-body" id="upload-box">
+                            <form id="upload-form-t">
+                                
+                                <div id="upload-alert-box-t">
+                                </div> 
+                                <div class="form-outline m-4">
+                                    
+                                    {% csrf_token %}
+                                    <table class="center">{{ uform|crispy }}</table>
+                                    
+                                </div>
+            
+                                <div class="pt-1 mb-5 pb-1" style="text-align: center;">
+                                    <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Upload</i></button>
+                                </div>
+            
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>
@@ -626,7 +690,7 @@
                                                 
                             <img src="{% static 'skaaltec.png' %}"
                             style="width: 150px;" alt="logo" class="my-3">
-                            <h1>Upload Data</h1>
+                            <h1>New session</h1>
                             <hr>
                             <div class="card-body" id="upload-box">
                                 <form id="book-form-m">
@@ -653,9 +717,40 @@
 
         </div>
 
+        <div id="upload-m" class="not-visible">
+
+            <div id="upload-data" class="col-xs-12 my-3 rounded-total shadow">
+                <div style="text-align: center;">
+                                        
+                    <img src="{% static 'skaaltec.png' %}"
+                    style="width: 150px;" alt="logo" class="my-3">
+                    <h1>Upload new data</h1>
+                    <hr>
+                    <div class="card-body" id="upload-box">
+                        <form id="upload-form-m">
+                            
+                            <div id="upload-alert-box-m">
+                            </div> 
+                            <div class="form-outline m-4">
+                                
+                                {% csrf_token %}
+                                <table class="center">{{ uform|crispy }}</table>
+                                
+                            </div>
+        
+                            <div class="pt-1 mb-5 pb-1" style="text-align: center;">
+                                <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Upload</i></button>
+                            </div>
+        
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </div>
-  
   
 {% endblock content %}
 

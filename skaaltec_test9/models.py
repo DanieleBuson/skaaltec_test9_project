@@ -67,7 +67,8 @@ class Session(models.Model):
     
 def update_filename(instance, filename):
     path = STATIC_URL + "skaaltec_test9/IMU/"
-    filename = "imu_id_" + str(instance.patientAndTherapist.patient.id) + "_date_" + str(instance.date).replace("-", "") + "-" + datetime.datetime.now().strftime("%H:%M:%S") + ".csv"
+    filename = "imu_id_" + str(instance.patientAndTherapist.patient.id) + "_date_" + str(instance.date).split(" ")[0].replace("-", "") + "-" + str(datetime.datetime.now().strftime("%H:%M:%S")).replace(":", "") + ".csv"
+    print("filename is: ", filename)
     return os.path.join(path, filename)
 
 class Analysis(models.Model):

@@ -5,18 +5,21 @@ var skaalendarBox = document.getElementById("skaalendar")
 var messagesBox = document.getElementById("messages")
 var analysisBox = document.getElementById("analysis")
 var sessionsBox = document.getElementById("sessions")
+var uploadBox = document.getElementById("upload")
 
 var adminTabletBox = document.getElementById("admin-t")
 var skaalendarTabletBox = document.getElementById("skaalendar-t")
 var messagesTabletBox = document.getElementById("messages-t")
 var analysisTabletBox = document.getElementById("analysis-t")
 var sessionsTabletBox = document.getElementById("sessions-t")
+var uploadTabletBox = document.getElementById("upload-t")
 
 var adminMobileBox = document.getElementById("admin-m")
 var skaalendarMobileBox = document.getElementById("skaalendar-m")
 var messagesMobileBox = document.getElementById("messages-m")
 var analysisMobileBox = document.getElementById("analysis-m")
 var sessionsMobileBox = document.getElementById("sessions-m")
+var uploadMobileBox = document.getElementById("upload-m")
 
 url = window.location.href
 
@@ -221,7 +224,9 @@ const loadPatients = () => {
                         if (analysisBox.classList.contains("not-visible")){
                             analysisBox.classList.remove("not-visible")
                         }
-                        
+                        if (uploadBox.classList.contains("not-visible")){
+                            uploadBox.classList.remove("not-visible")
+                        }
                     });
 
                     var sessionLink = document.getElementById(`session-${element.id}`)
@@ -241,6 +246,9 @@ const loadPatients = () => {
                         }
                         if (!analysisBox.classList.contains("not-visible")){
                             analysisBox.classList.add("not-visible")
+                        }
+                        if (!uploadBox.classList.contains("not-visible")){
+                            uploadBox.classList.add("not-visible")
                         }
                         if (document.getElementById(`ics-${element.id}`).classList.contains("not-visible")){
                             document.getElementById(`ics-${element.id}`).classList.remove("not-visible")
@@ -272,6 +280,9 @@ const loadPatients = () => {
                         }
                         if (!analysisBox.classList.contains("not-visible")){
                             analysisBox.classList.add("not-visible")
+                        }
+                        if (!uploadBox.classList.contains("not-visible")){
+                            uploadBox.classList.add("not-visible")
                         }
                         if (!document.getElementById(`ics-${element.id}`).classList.contains("not-visible")){
                             document.getElementById(`ics-${element.id}`).classList.add("not-visible")
@@ -318,6 +329,9 @@ const loadPatients = () => {
                         if (analysisTabletBox.classList.contains("not-visible")){
                             analysisTabletBox.classList.remove("not-visible")
                         }
+                        if (uploadTabletBox.classList.contains("not-visible")){
+                            uploadTabletBox.classList.remove("not-visible")
+                        }
                         
                     });
 
@@ -338,6 +352,9 @@ const loadPatients = () => {
                         }
                         if (!analysisTabletBox.classList.contains("not-visible")){
                             analysisTabletBox.classList.add("not-visible")
+                        }
+                        if (!uploadTabletBox.classList.contains("not-visible")){
+                            uploadTabletBox.classList.add("not-visible")
                         }
                         if (document.getElementById(`ics-${element.id}-t`).classList.contains("not-visible")){
                             document.getElementById(`ics-${element.id}-t`).classList.remove("not-visible")
@@ -369,6 +386,9 @@ const loadPatients = () => {
                         }
                         if (!analysisTabletBox.classList.contains("not-visible")){
                             analysisTabletBox.classList.add("not-visible")
+                        }
+                        if (!uploadTabletBox.classList.contains("not-visible")){
+                            uploadTabletBox.classList.add("not-visible")
                         }
                         if (!document.getElementById(`ics-${element.id}-t`).classList.contains("not-visible")){
                             document.getElementById(`ics-${element.id}-t`).classList.add("not-visible")
@@ -415,7 +435,9 @@ const loadPatients = () => {
                         if (analysisMobileBox.classList.contains("not-visible")){
                             analysisMobileBox.classList.remove("not-visible")
                         }
-                        
+                        if (uploadMobileBox.classList.contains("not-visible")){
+                            uploadMobileBox.classList.remove("not-visible")
+                        }
                     });
 
                     var sessionLinkMobile = document.getElementById(`session-${element.id}-m`)
@@ -435,6 +457,9 @@ const loadPatients = () => {
                         }
                         if (!analysisMobileBox.classList.contains("not-visible")){
                             analysisMobileBox.classList.add("not-visible")
+                        }
+                        if (!uploadMobileBox.classList.contains("not-visible")){
+                            uploadMobileBox.classList.add("not-visible")
                         }
                         if (document.getElementById(`ics-${element.id}-m`).classList.contains("not-visible")){
                             document.getElementById(`ics-${element.id}-m`).classList.remove("not-visible")
@@ -466,6 +491,9 @@ const loadPatients = () => {
                         }
                         if (!analysisMobileBox.classList.contains("not-visible")){
                             analysisMobileBox.classList.add("not-visible")
+                        }
+                        if (!uploadMobileBox.classList.contains("not-visible")){
+                            uploadMobileBox.classList.add("not-visible")
                         }
                         if (!document.getElementById(`ics-${element.id}-m`).classList.contains("not-visible")){
                             document.getElementById(`ics-${element.id}-m`).classList.add("not-visible")
@@ -4182,23 +4210,7 @@ const loadSessions = (patientId) => {
 }
 
 
-// book a new session when needed.
-
-var bookAlertBox = document.getElementById('book-alert-box')
-var bookForm = document.getElementById("book-form")
-try {
-    document.getElementById("id_date").setAttribute("id", "id_date_desktop")
-    var date = document.getElementById("id_date_desktop")
-} catch (error) {
-    console.log(error)
-} finally{
-    var date = document.getElementById("id_date_desktop")
-}
-
-
-// check always before
-var csrf = document.getElementsByName("csrfmiddlewaretoken")[0]
-
+//handle alerts
 const handleAlerts = (type, text) => {
     bookAlertBox.innerHTML = `
     <div class="alert alert-${type}" role="alert">
@@ -4217,6 +4229,38 @@ const handleAlerts = (type, text) => {
     `
 }
 
+const handleAlertsUpload = (type, text) => {
+    uploadAlertBox.innerHTML = `
+    <div class="alert alert-${type}" role="alert">
+        ${text}
+    </div>
+    `
+    uploadAlertBoxTablet.innerHTML = `
+    <div class="alert alert-${type}" role="alert">
+        ${text}
+    </div>
+    `
+    // bookAlertBoxMobile.innerHTML = `
+    // <div class="alert alert-${type}" role="alert">
+    //     ${text}
+    // </div>
+    // `
+}
+
+// book | desktop
+var bookAlertBox = document.getElementById('book-alert-box')
+var bookForm = document.getElementById("book-form")
+try {
+    document.getElementById("id_date").setAttribute("id", "id_date_desktop")
+    var date = document.getElementById("id_date_desktop")
+} catch (error) {
+    console.log(error)
+} finally{
+    var date = document.getElementById("id_date_desktop")
+}
+
+var csrf = document.getElementsByName("csrfmiddlewaretoken")[0]
+
 bookForm.addEventListener('submit', e=>{
     e.preventDefault()
 
@@ -4224,6 +4268,7 @@ bookForm.addEventListener('submit', e=>{
     fd.append('csrfmiddlewaretoken', csrf.value)
     fd.append('date', date.value)
     fd.append('patient_id', selectedPatient)
+    fd.append('type', "book")
     $.ajax({
         type:'POST', 
         url: url,
@@ -4250,6 +4295,62 @@ bookForm.addEventListener('submit', e=>{
     })
 })
 
+// upload | desktop
+var uploadAlertBox = document.getElementById('upload-alert-box')
+var uploadForm = document.getElementById("upload-form")
+try {
+    document.getElementById("id_date").setAttribute("id", "id_date_desktop_upload")
+    var dateUpload = document.getElementById("id_date_desktop_upload")
+    document.getElementById("id_data_file").setAttribute("id", "id_data_file_desktop_upload")
+    var dataFileUpload = document.getElementById("id_data_file_desktop_upload")
+} catch (error) {
+    console.log(error)
+} finally{
+    var dateUpload = document.getElementById("id_date_desktop_upload")
+    var dataFileUpload = document.getElementById("id_data_file_desktop_upload")
+}
+
+var csrfUpload = document.getElementsByName("csrfmiddlewaretoken")[1]
+
+uploadForm.addEventListener('submit', e=>{
+    e.preventDefault()
+
+    var fd = new FormData()
+    fd.append('csrfmiddlewaretoken', csrfUpload.value)
+    fd.append('date', dateUpload.value)
+    fd.append('data_file', dataFileUpload.files[0])
+    fd.append('patient_id', selectedPatient);
+    fd.append('type', "upload")
+    $.ajax({
+        type:'POST', 
+        url: url,
+        enctype: 'multipart/form-data',
+        data: fd,
+        success: function(response){
+            var successText = `
+                successfully saved file from ${response.date}
+            `
+            handleAlertsUpload('success', successText)
+
+            setTimeout(()=> {
+                uploadAlertBox.innerHTML = ""
+                dateUpload.value=""
+                dataFileUpload.value=""
+                loadAnalysis(selectedPatient)
+            }, 1000)
+        },
+        error:function(error){
+            handleAlerts('danger', 'ups, something went wrong')
+            console.log(error)
+        },
+        cache:false,
+        contentType:false,
+        processData:false,
+    })
+})
+
+
+// Book | tablet
 var bookAlertBoxTablet = document.getElementById('book-alert-box-t')
 var bookFormTablet = document.getElementById("book-form-t")
 try {
@@ -4261,8 +4362,7 @@ try {
     var dateT = document.getElementById("id_date_tablet")
 }
 
-// check always before
-var csrfTablet = document.getElementsByName("csrfmiddlewaretoken")[1]
+var csrfTablet = document.getElementsByName("csrfmiddlewaretoken")[2]
 
 bookFormTablet.addEventListener('submit', e=>{
     e.preventDefault()
@@ -4297,7 +4397,63 @@ bookFormTablet.addEventListener('submit', e=>{
     })
 })
 
+// upload | tablet
 
+var uploadAlertBoxTablet = document.getElementById('upload-alert-box-t')
+var uploadFormTablet = document.getElementById("upload-form-t")
+try {
+    document.getElementById("id_date").setAttribute("id", "id_date_tablet_upload")
+    var dateUploadTablet = document.getElementById("id_date_tablet_upload")
+    document.getElementById("id_data_file").setAttribute("id", "id_data_file_tablet_upload")
+    var dataFileUploadTablet = document.getElementById("id_data_file_tablet_upload")
+} catch (error) {
+    console.log(error)
+} finally{
+    var dateUploadTablet = document.getElementById("id_date_tablet_upload")
+    var dataFileUploadTablet = document.getElementById("id_data_file_tablet_upload")
+}
+
+var csrfUploadTablet = document.getElementsByName("csrfmiddlewaretoken")[3]
+
+uploadFormTablet.addEventListener('submit', e=>{
+    e.preventDefault()
+
+    var fd = new FormData()
+    fd.append('csrfmiddlewaretoken', csrfUploadTablet.value)
+    fd.append('date', dateUploadTablet.value)
+    fd.append('data_file', dataFileUploadTablet.files[0])
+    fd.append('patient_id', selectedPatient);
+    fd.append('type', "upload")
+    $.ajax({
+        type:'POST', 
+        url: url,
+        enctype: 'multipart/form-data',
+        data: fd,
+        success: function(response){
+            var successText = `
+                successfully saved file from ${response.date}
+            `
+            handleAlertsUpload('success', successText)
+
+            setTimeout(()=> {
+                uploadAlertBoxTablet.innerHTML = ""
+                dateUploadTablet.value=""
+                dataFileUploadTablet.value=""
+                loadAnalysis(selectedPatient)
+            }, 1000)
+        },
+        error:function(error){
+            handleAlerts('danger', 'ups, something went wrong')
+            console.log(error)
+        },
+        cache:false,
+        contentType:false,
+        processData:false,
+    })
+})
+
+
+// book | mobile
 var bookAlertBoxMobile = document.getElementById('book-alert-box-m')
 var bookFormMobile = document.getElementById("book-form-m")
 try {
@@ -4309,8 +4465,7 @@ try {
     var dateM = document.getElementById("id_date_mobile")
 }
 
-// check always before
-var csrfMobile = document.getElementsByName("csrfmiddlewaretoken")[2]
+var csrfMobile = document.getElementsByName("csrfmiddlewaretoken")[3]
 
 
 bookFormMobile.addEventListener('submit', e=>{
@@ -4333,6 +4488,60 @@ bookFormMobile.addEventListener('submit', e=>{
                 bookAlertBoxMobile.innerHTML = ""
                 dateM.value=""
                 loadSessions(selectedPatient)
+            }, 1000)
+        },
+        error:function(error){
+            handleAlerts('danger', 'ups, something went wrong')
+            console.log(error)
+        },
+        cache:false,
+        contentType:false,
+        processData:false,
+    })
+})
+
+// upload | mobile
+var uploadAlertBoxMobile = document.getElementById('upload-alert-box-m')
+var uploadFormMobile = document.getElementById("upload-form-m")
+try {
+    document.getElementById("id_date").setAttribute("id", "id_date_mobile_upload")
+    var dateUploadMobile = document.getElementById("id_date_mobile_upload")
+    document.getElementById("id_data_file").setAttribute("id", "id_data_file_mobile_upload")
+    var dataFileUploadMobile = document.getElementById("id_data_file_mobile_upload")
+} catch (error) {
+    console.log(error)
+} finally{
+    var dateUploadMobile = document.getElementById("id_date_mobile_upload")
+    var dataFileUploadMobile = document.getElementById("id_data_file_mobile_upload")
+}
+
+var csrfUploadMobile = document.getElementsByName("csrfmiddlewaretoken")[5]
+
+uploadFormMobile.addEventListener('submit', e=>{
+    e.preventDefault()
+
+    var fd = new FormData()
+    fd.append('csrfmiddlewaretoken', csrfUploadMobile.value)
+    fd.append('date', dateUploadMobile.value)
+    fd.append('data_file', dataFileUploadMobile.files[0])
+    fd.append('patient_id', selectedPatient);
+    fd.append('type', "upload")
+    $.ajax({
+        type:'POST', 
+        url: url,
+        enctype: 'multipart/form-data',
+        data: fd,
+        success: function(response){
+            var successText = `
+                successfully saved file from ${response.date}
+            `
+            handleAlertsUpload('success', successText)
+
+            setTimeout(()=> {
+                uploadAlertBoxMobile.innerHTML = ""
+                dateUploadMobile.value=""
+                dataFileUploadMobile.value=""
+                loadAnalysis(selectedPatient)
             }, 1000)
         },
         error:function(error){

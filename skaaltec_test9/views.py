@@ -709,12 +709,10 @@ def login_patient(request):
 @login_required
 def therapist_dashboard(request):
     form = SessionForm(request.POST or None)
+    uForm = AnalysisForm(request.POST or None, request.FILES or None)
     data = {}
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        print("inside xml request")
-        print(request.POST)
-        if form.is_valid():
-            print("Form is valid already")
+        if form.is_valid() and request.POST['type'] == "book":
             new_session = form.save(commit=False)
             if 'patient_id' in request.POST:
                 patient_id = request.POST['patient_id']
@@ -726,11 +724,28 @@ def therapist_dashboard(request):
             new_session.patientAndTherapist = patientAndTherapist
             
             data['status'] = 'ok'
+            data['date'] = new_session.date
             new_session.save()
+            return JsonResponse(data)
+        if uForm.is_valid() and request.POST['type'] == "upload":
+            new_upload = uForm.save(commit=False)
+            if 'patient_id' in request.POST:
+                patient_id = request.POST['patient_id']
+            patient = get_object_or_404(Patient, pk=patient_id)
+            therapist = get_object_or_404(Therapist, user = request.user)
+            patientAndTherapist = get_object_or_404(PatientHasTherapist, patient=patient, therapist=therapist)
+            new_upload.analysis_code = analysis_code_generator("imu", patientAndTherapist.patient.id, form.cleaned_data.get('date').strftime("%Y-%m-%d"))
+            new_upload.patientAndTherapist = patientAndTherapist
+            new_upload.date = form.cleaned_data.get('date')
+            new_upload.data_file = request.FILES['data_file']
+            data['date'] = form.cleaned_data.get("date")
+            data['status'] = 'ok'
+            new_upload.save()
             return JsonResponse(data)
 
     context = {
         'form': form, 
+        'uform': uForm,
     }
     return render(request, "skaaltec_test9/therapist_dashboard.html", context)
 
