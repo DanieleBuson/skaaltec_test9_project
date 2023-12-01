@@ -46,22 +46,35 @@
                   </div>
                 </div>
               <ul class="navbar-nav ml-auto text-center ">
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'main' %}" id="home"> Home </a>
+                  <li class="nav-item">  
+                    <a class="nav-link" href="{% url 'main' %}" id="home"> Home </a>
                   </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'smartVNS' %}" id="solu"> SmartVNS </a>
+                  <li class="nav-item">  
+                    <a class="nav-link" href="{% url 'smartVNS' %}" id="solu"> SmartVNS </a>
                   </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'aboutus' %}" id="team"> About us </a>
+                  <li class="nav-item">  
+                    <a class="nav-link" href="{% url 'aboutus' %}" id="team"> About us </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'news' %}" id="team"> News </a>
-                </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'contactus' %}" id="cont"> Contact Us </a>
                   </li>
-                  
+                  <li class="nav-item">  
+                    <a class="nav-link" href="{% url 'contactus' %}" id="cont"> Contact Us </a>
+                  </li>
+                  <li class="nav-item">
+                    {% if user.is_authenticated %}
+              
+                      <form method="POST" action="{% url 'logout_user' %}">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-light btn-block gradient-custom-2 text-white"><i>Logout</i></button>
+                      </form>
+              
+                  {% else %}
+              
+                      <a href="{% url 'login_user' %}" class="btn btn-light btn-block gradient-custom-2 text-white"><i>Login</i></a>
+              
+                  {% endif %}
+                  </li>
               </ul>
           </div>
       </nav>
@@ -183,10 +196,7 @@
                     Portals
                   </h6>
                   <p class="footer-p">
-                    <a href="{% url 'login_therapist' %}" class="text-reset">Therapists</a>
-                  </p>
-                  <p class="footer-p">
-                    <a href="{% url 'login_patient' %}" class="text-reset">Patients</a>
+                    <a href="{% url 'login_user' %}" class="text-reset">Portal Login</a>
                   </p>
                   <!-- <p class="footer-p">
                     <a href="#" class="text-reset">Other</a>

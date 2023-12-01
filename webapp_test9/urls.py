@@ -32,10 +32,11 @@ urlpatterns = [
     path('contactus/', views.contactus, name='contactus'),
 
     # General logout
+    path('login/', views.login_user, name='login_user'),
     path('logout/', views.logout_user, name='logout_user'),
 
     # Therapist portal
-    path('login_therapist/', views.login_therapist, name='login_therapist'),
+    # path('login_therapist/', views.login_therapist, name='login_therapist'),
     # path('main_therapist/', views.main_therapist, name='main_therapist'),
     # path('main_therapist/patients_data/', views.patients_data, name="patients_data"),
     # path('main_therapist/load_messages_therapist/', views.load_messages_therapist, name="load_messages_therapist"),
@@ -60,10 +61,15 @@ urlpatterns = [
     path('therapist_dashboard/load_admin_info/', views.load_admin_info_td, name="load_admin_info_td"), 
     path('therapist_dashboard/load_analysis/<int:patient_pk>', views.load_analysis_td, name="load_analysis_td"), 
     path('therapist_dashboard/load_sessions/<int:patient_pk>', views.load_sessions_td, name="load_sessions_td"),
+    path('therapist_dashboard/load_messages/<int:patient_pk>', views.load_messages_td, name="load_messages_td"),
     
     # Patient portal
-    path('login_patient/', views.login_patient, name='login_patient'),
-    
+    # path('login_patient/', views.login_patient, name='login_patient'),
+    path('patient_dashboard/', views.patient_dashboard, name="patient_dashboard"),   
+    path('patient_dashboard/load_info/', views.load_info_pd, name="load_info_pd"),  
+    path('patient_dashboard/load_analysis/', views.load_analysis_pd, name="load_analysis_pd"), 
+    path('patient_dashboard/load_messages/', views.load_messages_pd, name="load_messages_pd"), 
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

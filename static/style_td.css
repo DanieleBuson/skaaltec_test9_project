@@ -97,6 +97,35 @@
         cursor: not-allowed;
     }
 
+    .dashboard-button2 {
+        background-color: rgb(192, 0, 14);
+        color: #ffffff;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .dashboard-button2:hover {
+        background-color: rgba(192, 0, 14, 0.7);;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .dashboard-button2:active {
+        background-color: rgba(192, 0, 14, 0.5);;
+    }
+    
+    .dashboard-button2:focus {
+        outline: none;
+    }
+    
+    .dashboard-button2:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
     .fc-toolbar-title{
         font-family: 'Maven Pro';
     }
@@ -119,9 +148,8 @@
 
     /* Make the icon black */
     .dropdown-toggle svg {
-    fill: black;
-    }
-  
+        fill: black;
+    }  
     
 }
 
@@ -240,6 +268,35 @@
     fill: black;
     }
 
+    .dashboard-button2 {
+        background-color: rgb(192, 0, 14);
+        color: #ffffff;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .dashboard-button2:hover {
+        background-color: rgba(192, 0, 14, 0.7);;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .dashboard-button2:active {
+        background-color: rgba(192, 0, 14, 0.5);;
+    }
+    
+    .dashboard-button2:focus {
+        outline: none;
+    }
+    
+    .dashboard-button2:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
 }
 
 
@@ -258,6 +315,9 @@
         border-radius: 30px 30px 30px 30px;
     }
 
+    h1{
+        font-size: 26;
+    }
 
     .patient-info-tablet {
         display: flex;
@@ -356,6 +416,35 @@
     /* Make the icon black */
     .dropdown-toggle svg {
     fill: black;
+    }
+
+    .dashboard-button2 {
+        background-color: rgb(192, 0, 14);
+        color: #ffffff;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .dashboard-button2:hover {
+        background-color: rgba(192, 0, 14, 0.7);;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .dashboard-button2:active {
+        background-color: rgba(192, 0, 14, 0.5);;
+    }
+    
+    .dashboard-button2:focus {
+        outline: none;
+    }
+    
+    .dashboard-button2:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
     }
 }
 
@@ -565,4 +654,12 @@
   .active-patient{
     color: rgb(192, 0, 14);
     font-weight: bolder;
+}
+
+.not-working{
+    pointer-events: none;
+}
+
+.selected{
+    background-color: #dddd;
 }

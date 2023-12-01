@@ -39,9 +39,10 @@ class MessageForm(forms.ModelForm):
 
         widgets = {
             'textMessage': forms.TextInput(
-                attrs={'placeholder':'Type your message...', 'class': 'form-control'}
+                attrs={'placeholder':'Type your message...', 'class': 'form-control'},
             )
         }
+
 
 class SessionForm(forms.ModelForm):
 

@@ -305,9 +305,6 @@
                                         and expand your reach with the SmartVNS therapist portal - the ultimate solution for 
                                         modern healthcare professionals.
                                     </p>
-                                    <div style="text-align: center;">
-                                        <a href="{% url 'login_therapist' %}" class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Go to Therapist Portal</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -330,12 +327,14 @@
                                         patient portal, designed to simplify your experience and empower you to achieve your 
                                         health goals.
                                     </p>
-                                    <div style="text-align: center;">
-                                        <a href="{% url 'login_patient' %}" class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Go to Patient Portal</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div style="text-align: center;">
+                        <a href="{% url 'login_user' %}" class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Go to Login</a>
                     </div>
                 </div>
             </div>
@@ -367,9 +366,6 @@
                         modern healthcare professionals.
                     </p>
                     <br>
-                    <div style="text-align: center;">
-                        <a href="{% url 'login_therapist' %}" class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Go to Therapist Portal</a>
-                    </div>
                 </div>
             </div>
 
@@ -395,9 +391,12 @@
                         health goals.
                     </p>
                     <br>
-                    <div style="text-align: center;">
-                        <a href="{% url 'login_patient' %}" class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Go to Patient Portal</a>
-                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div style="text-align: center;">
+                    <a href="{% url 'login_user' %}" class="btn btn-light btn-block gradient-custom-2 text-white rounded-3">Go to Portal</a>
                 </div>
             </div>
         </div>
