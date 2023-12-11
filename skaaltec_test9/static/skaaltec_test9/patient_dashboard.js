@@ -1621,11 +1621,11 @@ var bookAlertBox = document.getElementById('book-alert-box')
 var bookForm = document.getElementById("book-form")
 try {
     document.getElementById("id_date").setAttribute("id", "id_date_desktop")
-    var date = document.getElementById("id_date_desktop")
+    var dateDesktop = document.getElementById("id_date_desktop")
 } catch (error) {
     console.log(error)
 } finally{
-    var date = document.getElementById("id_date_desktop")
+    var dateDesktop = document.getElementById("id_date_desktop")
 }
 
 csrfBook = document.getElementsByName("csrfmiddlewaretoken")[3]
@@ -1635,13 +1635,14 @@ bookForm.addEventListener('submit', e=>{
 
     var fd = new FormData()
     fd.append('csrfmiddlewaretoken', csrfBook.value)
-    fd.append('date', date.value)
+    fd.append('date', dateDesktop.value)
     fd.append('type', "book")
     $.ajax({
         type:'POST', 
         url: url,
         data: fd,
         success: function(response){
+            console.log(response)
             var successText = `
                 successfully saved file from ${response.date}
             `
@@ -1649,7 +1650,7 @@ bookForm.addEventListener('submit', e=>{
 
             setTimeout(() => {
                 bookAlertBox.innerHTML = ""
-                date.value=""
+                dateDesktop.value=""
                 loadInformation()
             }, 1500)
         },
@@ -1667,21 +1668,22 @@ bookForm.addEventListener('submit', e=>{
 var messageForm = document.getElementById("m-form")
 try {
     document.getElementById("id_textMessage").setAttribute("id", "id_textMessage_desktop")
-    var message = document.getElementById("id_textMessage_desktop")
+    var messageDesktop = document.getElementById("id_textMessage_desktop")
 } catch (error) {
     console.log(error)
 } finally{
-    var message = document.getElementById("id_textMessage_desktop")
+    var messageDesktop = document.getElementById("id_textMessage_desktop")
 }
 
 var csrfMessage = document.getElementsByName("csrfmiddlewaretoken")[2]
+console.log(csrfMessage)
 
 messageForm.addEventListener('submit', e=>{
     e.preventDefault()
 
     var fd = new FormData()
     fd.append('csrfmiddlewaretoken', csrfMessage.value)
-    fd.append('textMessage', message.value)
+    fd.append('textMessage', messageDesktop.value)
     fd.append('type', "message")
     $.ajax({
         type:'POST', 
@@ -1689,9 +1691,9 @@ messageForm.addEventListener('submit', e=>{
         enctype: 'application/x-www-form-urlencoded', 
         data: fd,
         success: function(response){
-
+            console.log(response)
             setTimeout(()=> {
-                message.value=""
+                messageDesktop.value=""
                 loadMessages()
             }, 250)
         },
@@ -1708,11 +1710,11 @@ messageForm.addEventListener('submit', e=>{
 var messageFormTablet = document.getElementById("m-form-t")
 try {
     document.getElementById("id_textMessage").setAttribute("id", "id_textMessage_tablet")
-    var message = document.getElementById("id_textMessage_tablet")
+    var messageTablet = document.getElementById("id_textMessage_tablet")
 } catch (error) {
     console.log(error)
 } finally{
-    var message = document.getElementById("id_textMessage_tablet")
+    var messageTablet = document.getElementById("id_textMessage_tablet")
 }
 
 var csrfMessageTablet = document.getElementsByName("csrfmiddlewaretoken")[4]
@@ -1722,7 +1724,7 @@ messageFormTablet.addEventListener('submit', e=>{
 
     var fd = new FormData()
     fd.append('csrfmiddlewaretoken', csrfMessageTablet.value)
-    fd.append('textMessage', message.value)
+    fd.append('textMessage', messageTablet.value)
     fd.append('type', "message")
     $.ajax({
         type:'POST', 
@@ -1732,7 +1734,7 @@ messageFormTablet.addEventListener('submit', e=>{
         success: function(response){
 
             setTimeout(()=> {
-                message.value=""
+                messageTablet.value=""
                 loadMessages()
             }, 250)
         },
@@ -1750,11 +1752,11 @@ var bookAlertBoxTablet = document.getElementById('book-alert-box-t')
 var bookFormTablet = document.getElementById("book-form-t")
 try {
     document.getElementById("id_date").setAttribute("id", "id_date_tablet")
-    var date = document.getElementById("id_date_tablet")
+    var dateTablet = document.getElementById("id_date_tablet")
 } catch (error) {
     console.log(error)
 } finally{
-    var date = document.getElementById("id_date_tablet")
+    var dateTablet = document.getElementById("id_date_tablet")
 }
 
 csrfBookTablet = document.getElementsByName("csrfmiddlewaretoken")[5]
@@ -1764,7 +1766,7 @@ bookFormTablet.addEventListener('submit', e=>{
 
     var fd = new FormData()
     fd.append('csrfmiddlewaretoken', csrfBookTablet.value)
-    fd.append('date', date.value)
+    fd.append('date', dateTablet.value)
     fd.append('type', "book")
     $.ajax({
         type:'POST', 
@@ -1779,7 +1781,7 @@ bookFormTablet.addEventListener('submit', e=>{
 
             setTimeout(() => {
                 bookAlertBoxTablet.innerHTML = ""
-                date.value = ""
+                dateTablet.value = ""
                 loadInformation()
             }, 1500)
         },
@@ -1797,11 +1799,11 @@ bookFormTablet.addEventListener('submit', e=>{
 var messageFormMobile = document.getElementById("m-form-m")
 try {
     document.getElementById("id_textMessage").setAttribute("id", "id_textMessage_mobile")
-    var message = document.getElementById("id_textMessage_mobile")
+    var messageMobile = document.getElementById("id_textMessage_mobile")
 } catch (error) {
     console.log(error)
 } finally{
-    var message = document.getElementById("id_textMessage_mobile")
+    var messageMobile = document.getElementById("id_textMessage_mobile")
 }
 
 var csrfMessageMobile = document.getElementsByName("csrfmiddlewaretoken")[6]
@@ -1811,7 +1813,7 @@ messageFormMobile.addEventListener('submit', e=>{
 
     var fd = new FormData()
     fd.append('csrfmiddlewaretoken', csrfMessageMobile.value)
-    fd.append('textMessage', message.value)
+    fd.append('textMessage', messageMobile.value)
     fd.append('type', "message")
     $.ajax({
         type:'POST', 
@@ -1819,9 +1821,8 @@ messageFormMobile.addEventListener('submit', e=>{
         enctype: 'application/x-www-form-urlencoded', 
         data: fd,
         success: function(response){
-
             setTimeout(()=> {
-                message.value=""
+                messageMobile.value=""
                 loadMessages()
             }, 250)
         },
@@ -1839,11 +1840,11 @@ var bookAlertBoxMobile = document.getElementById('book-alert-box-m')
 var bookFormMobile = document.getElementById("book-form-m")
 try {
     document.getElementById("id_date").setAttribute("id", "id_date_mobile")
-    var date = document.getElementById("id_date_mobile")
+    var dateMobile = document.getElementById("id_date_mobile")
 } catch (error) {
     console.log(error)
 } finally{
-    var date = document.getElementById("id_date_mobile")
+    var dateMobile = document.getElementById("id_date_mobile")
 }
 
 csrfBookMobile = document.getElementsByName("csrfmiddlewaretoken")[7]
@@ -1853,14 +1854,13 @@ bookFormMobile.addEventListener('submit', e=>{
 
     var fd = new FormData()
     fd.append('csrfmiddlewaretoken', csrfBookMobile.value)
-    fd.append('date', date.value)
+    fd.append('date', dateMobile.value)
     fd.append('type', "book")
     $.ajax({
         type:'POST', 
         url: url,
         data: fd,
         success: function(response){
-            console.log("inside the post")
             var successText = `
                 successfully saved file from ${response.date}
             `
@@ -1868,7 +1868,7 @@ bookFormMobile.addEventListener('submit', e=>{
 
             setTimeout(() => {
                 bookAlertBoxMobile.innerHTML = ""
-                date.value = ""
+                dateMobile.value = ""
                 loadInformation()
             }, 1500)
         },

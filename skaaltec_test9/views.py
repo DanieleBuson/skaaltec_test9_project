@@ -696,7 +696,9 @@ def patient_dashboard(request):
     patient = get_object_or_404(Patient, user = request.user)
     context = {}
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        print(request.POST)
         if form.is_valid() and request.POST['type'] == "book":
+            print("dentro Form")
             new_session = form.save(commit=False)
             patient = get_object_or_404(Patient, pk=patient.id)
             therapist_list = PatientHasTherapist.objects.filter(patient=patient)
@@ -716,6 +718,7 @@ def patient_dashboard(request):
                 }
                 return JsonResponse(context)
         if mForm.is_valid() and request.POST['type'] == "message":
+            print("dentro mForm")
             new_message = mForm.save(commit=False)
             patient = get_object_or_404(Patient, pk=patient.id)
             therapist_list = PatientHasTherapist.objects.filter(patient=patient)
