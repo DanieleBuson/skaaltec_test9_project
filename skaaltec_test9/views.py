@@ -1,17 +1,15 @@
 import os
-from operator import attrgetter
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import JsonResponse, FileResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
-from skaaltec_test9.functions import Kinematics, extract_dates, patient_data, analysis_code_generator
+from skaaltec_test9.functions import Kinematics, extract_dates, patient_data, analysis_code_generator, create_pdf
 from webapp_test9.settings import MEDIA_URL
 from .models import Analysis, News, Therapist, Patient, PatientHasTherapist, Message, Session
 from .forms import ContactForm, AnalysisForm, MessageForm, SessionForm
-import pytz
 
 
 # Create your views here.
@@ -983,6 +981,59 @@ def load_messages_pd(request):
                 'error_string': "more than just one, not yet implemented",
             }
             return JsonResponse(context)
+
+@login_required
+def donwload_pdf(request):
+    patient = get_object_or_404(Patient, user=request.user)
+    therapist_list = PatientHasTherapist.objects.filter(patient=patient)
+    list_of_files = os.listdir(MEDIA_URL + "static/skaaltec_test9/IMU/")
+    if len(therapist_list) == 1:
+        patientAndTherapist = therapist_list[0]
+        therapist = get_object_or_404(Therapist, pk=patientAndTherapist.therapist.id)
+        size = Analysis.objects.filter(patientAndTherapist=patientAndTherapist).count()  
+    elif len(therapist_list) > 1:
+        size = 0
+        for therapist in therapist_list:
+            patientAndTherapist = get_object_or_404(therapist=therapist, patient=patient)
+            size += Analysis.objects.filter(patientAndTherapist=patientAndTherapist).count()
+        return None
+    list_of_patient_files = patient_data(list_of_files, int(patient.id))
+    date_files = extract_dates(list_of_patient_files)
+    dates = list(sorted(date_files.keys()))
+    timestamps = []
+    for date in dates:
+        element = datetime.strptime(date,"%Y-%m-%d")
+        timestamps.append(datetime.timestamp(element))
+    files = list(sorted(date_files.values()))
+    calibration_file = MEDIA_URL + "static/skaaltec_test9/IMU/calibration.csv"
+    
+    general_data = []
+    for file in files:
+        print(file)
+        kinematic = Kinematics()
+        input_file = MEDIA_URL + "static/skaaltec_test9/IMU/" + file
+        general_data.append(kinematic.get_variables(input_file=input_file, calibration_file=calibration_file))
+    
+    number_of_movements = []
+    duration = []
+    mean_velocity = []
+    max_velocity = []
+    zero_crossings = []
+    distance_traveled = []
+    max_acceleration = []
+    for data in general_data:
+        number_of_movements.append(data.NumberofMovements)
+        duration.append(data.Avg_Duration)
+        mean_velocity.append(data.Avg_Mean_Velocity)
+        max_velocity.append(data.Avg_Max_Velocity)
+        zero_crossings.append(data.Avg_Zero_Crossings)
+        distance_traveled.append(data.Avg_Distance_Traveled)
+        max_acceleration.append(data.Avg_Max_Acceleration)
+
+    create_pdf(patient, therapist, dates, number_of_movements)
+    pdf_file = open(f"{patient.id}_therapy_report.pdf", 'rb')
+    
+    return FileResponse(pdf_file, as_attachment=True)
 
 ###############################################################################################################
 ##### NEW DASHBOARD, DELETE ALL THE REST LATER! ###############################################################

@@ -62,6 +62,7 @@ urlpatterns = [
     path('therapist_dashboard/load_analysis/<int:patient_pk>', views.load_analysis_td, name="load_analysis_td"), 
     path('therapist_dashboard/load_sessions/<int:patient_pk>', views.load_sessions_td, name="load_sessions_td"),
     path('therapist_dashboard/load_messages/<int:patient_pk>', views.load_messages_td, name="load_messages_td"),
+
     
     # Patient portal
     # path('login_patient/', views.login_patient, name='login_patient'),
@@ -69,6 +70,7 @@ urlpatterns = [
     path('patient_dashboard/load_info/', views.load_info_pd, name="load_info_pd"),  
     path('patient_dashboard/load_analysis/', views.load_analysis_pd, name="load_analysis_pd"), 
     path('patient_dashboard/load_messages/', views.load_messages_pd, name="load_messages_pd"), 
+    path('patient_dashboard/download_report/', views.donwload_pdf, name="download_pdf")
 
 ]
 

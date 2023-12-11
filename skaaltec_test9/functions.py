@@ -5,6 +5,11 @@ import pandas as pd
 from datetime import datetime
 import numpy as np
 from scipy import signal
+from fpdf import FPDF
+import plotly.graph_objs as go
+from plotly.subplots import make_subplots
+import datetime
+from webapp_test9.settings import BASE_DIR
 
 
 # code generators # 
@@ -44,9 +49,9 @@ def get_sensor_offsets(data_file = None, calibration_csv = None):
         match = re.search(pattern, data_file)
         time = match.group(1)
 
-        now_date = datetime.strptime(date, '%Y%m%d').date()
-        now_time = datetime.strptime(time, '%H%M%S').time()
-        now = datetime.combine(now_date, now_time)
+        now_date = datetime.datetime.strptime(date, '%Y%m%d').date()
+        now_time = datetime.datetime.strptime(time, '%H%M%S').time()
+        now = datetime.datetime.combine(now_date, now_time)
 
         try:
             device_row = calib_df[calib_df['Device_ID'] == device_ID]
@@ -341,7 +346,78 @@ def extract_dates(list_of_patient_files):
             continue
         else:
             date = file.split("_")[-1].split("-")[0]
-            exact_date = datetime.strptime(date, '%Y%m%d').date()
+            print(date)
+            exact_date = datetime.datetime.strptime(date, '%Y%m%d').date()
             dict_analysis[str(exact_date)] = file
     return dict_analysis
 
+
+
+def create_pdf(patient, therapist, dates, number_of_movements):
+    # Create PDF
+    pdf = FPDF()
+    pdf.add_page()
+
+    # Add logo
+    pdf.image("static/skaaltec.png", 10, 8, 33)
+
+    # Add therapist information
+    pdf.set_font("Arial", "B", 12)
+    pdf.cell(100)
+    pdf.cell(0, 10, "Therapist Information", ln=True)
+    pdf.ln(10)
+    pdf.cell(100)
+    pdf.cell(0, 10, f"Name: {therapist.name} {therapist.surname}", ln=True)
+    pdf.cell(100)
+    pdf.cell(0, 10, f"Email: {therapist.mail}", ln=True)
+    pdf.cell(100)
+    pdf.cell(0, 10, f"Phone: {therapist.phoneNumber}", ln=True)
+
+    # Add line to separate sections
+    pdf.ln(10)
+    pdf.line(10, pdf.get_y(), 200, pdf.get_y())
+    pdf.ln(10)
+
+    # Add patient information
+    pdf.set_font("Arial", "B", 12)
+    pdf.cell(100)
+    pdf.cell(0, 10, "Patient Information", ln=True)
+    pdf.ln(10)
+    pdf.cell(100)
+    pdf.cell(0, 10, f"Name: {patient.name} {patient.surname}", ln=True)
+    pdf.cell(100)
+    pdf.cell(0, 10, f"Age: {patient.age}", ln=True)
+    pdf.cell(100)
+    pdf.cell(0, 10, f"Email contact: {patient.mail}", ln=True)
+
+    # Add line to separate sections
+    pdf.ln(10)
+    pdf.line(10, pdf.get_y(), 200, pdf.get_y())
+    pdf.ln(10)
+
+    # Add Plotly graph
+    fig = make_subplots(rows=1, cols=1)
+    fig.add_trace(go.Scatter(x=dates, y=number_of_movements, mode='lines+markers', name='Number of Movements'))
+    fig.update_layout(width=500, height=250)
+    graph_filename = "graph.png"
+    fig.write_image(graph_filename)
+
+    pdf.image(graph_filename, x=10, y=pdf.get_y(), w=0, h=0)
+    pdf.ln(120)  # Adjust as needed
+
+    # Add definition
+    pdf.set_font("Arial", "", 12)
+    definition = "Number of movements in the context of sensors and healthcare refers to the count of physical actions or changes recorded by sensors. In the context of therapy for stroke patients, it helps monitor and analyze the patient's motor activities and progress."
+    pdf.multi_cell(0, 10, definition)
+
+    all_files = os.listdir(BASE_DIR)
+
+    # Iterate through the files and delete those with the specified name
+    for file in all_files:
+        if file == f"{patient.id}_therapy_report.pdf":
+            file_path = os.path.join(BASE_DIR, file)
+            os.remove(file_path)
+            print(f"Deleted file: {file_path}")
+
+    # Save the PDF
+    pdf.output(f"{patient.id}_therapy_report.pdf")

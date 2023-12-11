@@ -21,8 +21,8 @@
 {% block content %}
 
 <div id="desktop" class="desktop">
+
     <div class="row m-2 gx-5">
-        
         
         <div class="col-xl-8 my-1 shadow rounded-total">
 
@@ -159,127 +159,169 @@
             </div>
 
         </div>
+
     </div>
+
 </div>
 
 <div id="tablet" class="tablet">
-    <div class="row m-1">
+    <div class="row m-1">  
         
-        
-        <div class="col-md-9 my-1 rounded-total shadow">
-            <div id="admin-t" class="container rounded-total my-4">
-                <div class="mb-5">
-                    <h2 style="text-align: center;">ADMIN DASHBOARD</h2>
-                </div>
-                <div class="row gx-1 my-1">
-                    <div id="nop-box-t" class="col-md-4" style="display: flex; justify-content: center;">
-                        
-                    </div>
-                
-                    <div id="completed-box-gauge-t" class="col-md-4" style="display: flex; justify-content: center;">
-                        
-                    </div>
-                
-                    <div id="message-count-box-t" class="col-md-4" style="display: flex; justify-content: center;">
-                        
-                    </div>
-                </div>
-                <div class="row bg-light my-3 rounded-total" id="noa-box-t" style="display: flex; justify-content: center;">
+        <div class="col-md-8 my-1 rounded-total shadow">
+
+            <div class="row">
+
+                <div id="personal-info-t" class="col-md-5 mx-3 rounded-total shadow">
                     
-                </div>                
-            </div>
-            <div id="skaalendar-t" class="row my-4">
-                <div class="col-md-1"></div>
-                <div class="col-md-10 my-3">
-                    <div class="my-5">
-                        <h2 style="text-align: center;">SKAALENDAR</h2>
-                    </div>
-                    <div id='calendar-t' class="mb-3">
-                
-                    </div>
                 </div>
-                <div class="col-md-1"></div>
-            </div>
-            <div id="analysis-t" class="container my-4 not-visible">
-                <div class="row my-4">
-                
-                    <div class="col-xl-1"></div>
-                    <div class="col-xl-10 my-3">
-                        <div class="my-5">
-                            <h2 style="text-align: center;">ANALYSIS DASHBOARD</h2>
-                        </div>
-                    </div>
-                    <div class="col-xl-1"></div>
-                </div>
-                <div class="row">
-                    <div id="patient-analysis-info-t" class="col-md-6 my-2 rounded-total shadow">
+
+                <div id="patient-buttons-t" class="col-md-5 mx-3 rounded-total shadow">
+
+                    <div id="personal-buttons-t" class="m-2">
                         
                     </div>
-                    <div class="col-md-1"></div>
-                    <div id="patient-sessions-info-t" class="col-md-5 rounded-total shadow">
-                        <div id="sessions-list-calendar-t" class="m-2">
-                            
-                        </div>
-                    </div>
+
                 </div>
+
+            </div>
+            
+            <div id="analysis-t" class="container my-4">
+                
                 <div class="row mt-3">
+                
                     <div class="col-md-12 m-1">
+                
                         <h1>Number of Movements and Skaaltec Score</h1>
                         <br>
                         <div class="row">
+                
                             <div class="mx-2 col-md-5">
                                 <input type="search" id="search" placeholder="Insert the ideal number of movements" data-search-nom-t style="width: 100%;">
                             </div>
+                
                             <div id="error-input-nom-box-t" class="col-md-4 alert alert-danger not-visible" role="alert"></div>
+                
                         </div>
                         <br>
                         <div class="m-2 rounded-total">
+                
                             <div class="card-body">
                                 <h6 class="m-2 text-dark">Number of Movements | Skaaltec Score</h6>
                                 <div id="numberOfMovement-box-t">
                                     
                                 </div>
+                
                             </div>
+                
                         </div>
+                
                         <div class="row my-3" style="justify-content: space-around;">
-                            <h1>Other important parameters</h1>
+                            <h1>Important parameters</h1>
                             <hr>
                             <div class="rounded-total border border-white bg-overflow">
+                
                                 <div class="row">
+                
                                     <div style="height: 400px;">
+                
                                         <div id="otherGraphs-box-t" class="row flex-nowrap overflow-auto my-3">
                                             
                                         </div>
+                
                                     </div>
+                
                                 </div>
+                
                             </div>
                             
                         </div>
+
                     </div>
+
                 </div>
             </div>
-            <div id="sessions-t" class="container my-4 not-visible">
-                <div class="row my-4">
+
+            <div id="chat-t" class="container my-4 not-visible">
                 
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10 my-3">
-                        <div class="my-5">
-                            <h2 style="text-align: center;">SESSIONS DASHBOARD</h2>
-                            <h4 id="patient-name-session-t" style="color: grey; text-align: center;"></h4>
+                <div class="row my-3">
+
+                    <div class="col-md-12 my-2" style="height: 700px">
+                        
+                        <div style="display: flex; justify-content: space-between;">
+                            
+                            <div id="patient-name-chat-t"></div>
+                            
+                            <div>
+                                
+                                <button id="admin-link-t" class="dashboard-button m-1 rounded-3" style="text-decoration: none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                                        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+                                    </svg>
+                                </button>
+
+                            </div>
+                        
+                        </div>                        
+                        <hr>
+                        <div id="chat-box-t" class="rounded-total border border-dark" style="height:500px; overflow-y:auto; overflow-x: hidden;">
+
                         </div>
+                        <br>
+                        <div id="input-message-box-t">
+                            
+                            <div class="my-1">
+                                
+                                <form id="m-form-t" class="row" style="text-align: center; justify-content: center;">
+                                    
+                                    <div class="col-md-10 m-2">
+                                        {% csrf_token %}
+                                        {{ mform }}
+                                    </div>
+                                    
+                                    <div class="col-md-1 my-2">
+                                        <button type="submit" class="btn dashboard-button2 rounded-3 mx-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                               
+                                </form>
+                            
+                            </div>
+                        
+                        </div>                            
+                   
                     </div>
-                    <div class="col-md-1"></div>
+
                 </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="col-md-4 my-1">
+            
+            <div id="sessions-t" class="container my-4">
+                
                 <div class="row">
+                    
                     <div class="col-md-12 my-3">
+                       
                         <div id="calendar-sessions-t" class="my-2">
                             
                         </div>
+                    
                     </div>
+                
                 </div>
+                
                 <div class="row gx-3">
 
-                    <div id="book-session-t" class="col-md-6 my-2 rounded-total shadow">
+                    <div id="book-session-t" class="col-md-12 my-2 rounded-total shadow">
+                       
                         <div style="text-align: center;">
                                                 
                             <img src="{% static 'skaaltec.png' %}"
@@ -287,10 +329,12 @@
                             <h1>New session</h1>
                             <hr>
                             <div class="card-body" id="booking-box">
+                                
                                 <form id="book-form-t">
                                     
                                     <div id="book-alert-box-t">
                                     </div> 
+                               
                                     <div class="form-outline m-4">
                                         
                                         {% csrf_token %}
@@ -303,143 +347,13 @@
                                     </div>
                 
                                 </form>
+                            
                             </div>
-                        </div>
-                    </div>
-
-                    <div id="list-sessions-t" class="col-md-6 my-2">
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div id="chat-t" class="container my-4 not-visible">
-                <div class="row my-3">
-
-                    <div class="col-md-12 my-2" style="height: 700px">
-                        <div id="patient-name-chat-t"></div>
-                        <hr>
-                        <div id="chat-box-t" class="rounded-total border border-dark" style="height:500px; overflow-y:auto; overflow-x: hidden;">
-
-
-
-                        </div>
-                        <br>
-                        <div id="input-message-box-t">
-                            <div class="my-1">
-                                <form id="m-form-t" class="row" style="text-align: center; justify-content: center;">
-                                    <div class="col-md-10 m-2">
-                                        {% csrf_token %}
-                                        {{ mform }}
-                                    </div>
-                                    <div class="col-md-1 my-2">
-                                        <button type="submit" class="btn dashboard-button2 rounded-3 mx-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>                            
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-3 my-1">
-            <div id="therapist-t" class="container rounded-total shadow">
-                <div class="row rounded-total my-3">
-                    <div class="col-xl-12 my-3">
-                        <div class="centered-image-container">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div id="therapist-info-box-t">
                         
-                    </div>
-                </div>
-            </div>
-            <div class="container bg-light shadow rounded-total">
-                <div class="patient-info-tablet">
-                    <h1 style="font-size: 30;">Patient List</h1>
-                    <a onclick="toggleSearchBarTablet();" type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                        </svg>
-                    </a>
-                </div>
-                <div id="search-bar-box-tablet" class="not-visible my-2">
-                    <div class="search-wrapper">
-                        <input type="search" id="search-tablet" placeholder="Search by name" data-search-tablet style="width: 80%;">
-                    </div>
-                </div>  
-                <div style="height: 500px; overflow-y: auto; overflow-x: hidden;">
-                    <div id="patient-info-box-tablet" class="row">
-                        
-                    </div>
-                </div>           
-            </div>
-
-            <div id="messages-t" class="container shadow rounded-total mt-3">
-                <div class="patient-info-tablet">
-                    <h1>Messages</h1>
-                    <a onclick="toggleSearchBarMessageTablet();" type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                        </svg>
-                    </a>
-                </div>
-                <div id="search-bar-box-message-tablet" class="not-visible my-2">
-                    <div class="search-wrapper">
-                        <input type="search" id="search-message-tablet" placeholder="Search by name" data-search-messages-t style="width: 60%;">
-                    </div>
-                </div>  
-                <div style="height: 350px; overflow-y: auto; overflow-x: hidden;">
-                    <div id="message-info-box-t" class="row mx-2">
-                        
-                    </div>
-                </div>           
-            </div>
-            
-            <div id="upload-t" class="not-visible">
-
-                <div id="upload-data" class="col-md-12 my-3 rounded-total shadow">
-                    <div style="text-align: center;">
-                                            
-                        <img src="{% static 'skaaltec.png' %}"
-                        style="width: 185px;" alt="logo" class="my-3">
-                        <h1>Upload new data</h1>
-                        <hr>
-                        <div class="card-body" id="upload-box">
-                            <form id="upload-form-t">
-                                
-                                <div id="upload-alert-box-t">
-                                </div> 
-                                <div class="form-outline m-4">
-                                    
-                                    {% csrf_token %}
-                                    <table class="center">{{ uform|crispy }}</table>
-                                    
-                                </div>
-            
-                                <div class="pt-1 mb-5 pb-1" style="text-align: center;">
-                                    <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Upload</i></button>
-                                </div>
-            
-                            </form>
                         </div>
+                    
                     </div>
+                
                 </div>
 
             </div>
@@ -449,173 +363,63 @@
 </div>
 
 <div id="mobile" class="mobile">
+    
     <div class="row">
-        <div class="col-sm-12 m-1">
-            <div id="therapist-m" class="container rounded-total shadow my-3">
-                <div class="row rounded-total my-3">
-                    <div class="col-xl-12 my-3">
-                        <div class="centered-image-container">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div id="therapist-info-box-m">
+    
+        <div class="col-xs-12 my-1">
+    
+            <div class="row">
+    
+                <div id="personal-info-m" class="col-xs-12 rounded-total">
+                    
+                </div>
+    
+                <div id="patient-buttons-m" class="col-xs-12 rounded-total">
+    
+                    <div id="personal-buttons-m">
                         
                     </div>
-                </div>
-            </div>
-            <div class="container rounded-3 my-3 shadow">
-                <div id="patient_list_label_mobile" class="d-flex align-items-center justify-content-between">
-                    <h1>Patient List</h1>
-                    <a onclick="toggleSearchBarMobile();" type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                        </svg>
-                    </a>
-                </div>
-                <div id="patient-search-info-box" class="not-visible">
-                    <div id="search-bar-box-m" class="my-2">
-                        <div class="search-wrapper my-1">
-                            <input type="search" id="search-mobile" placeholder="Search by name" data-search-mobile style="width: 60%;">
-                        </div>
-                    </div>
-                    <div id="patient-info-box-mobile" class="my-1">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="admin-m" class="col-sm-12 m-1">
-            <div class="mb-5">
-                <h2 style="text-align: center;">ADMIN DASHBOARD</h2>
-            </div>
-            <div id="nop-box-m" class="my-1">
-                    
-            </div>
-        
-            <div id="completed-box-gauge-m" class="my-1">
                 
-            </div>
-        
-            <div id="message-count-box-m" class="my-1">
-                
-            </div>  
-
-            <div id="noa-box-m" class="bg-light rounded-total my-3">
-
-            </div> 
-        </div>
-
-        <div id="skaalendar-m" class="row my-4">
-            <div class="col-xs-1"></div>
-            <div class="col-xs-10 my-3">
-                <div class="my-5">
-                    <h2 style="text-align: center;">SKAALENDAR</h2>
                 </div>
-                <div id='calendar-m' class="mb-3">
             
-                </div>
             </div>
-            <div class="col-xs-1"></div>
+            
         </div>
 
-        <div id="messages-m" class="container shadow rounded-total mt-3">
-            <div class="patient-info-mobile">
-                <h1>Messages</h1>
-                <a onclick="toggleSearchBarMessageMobile();" type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </a>
-            </div>
-            <div id="search-bar-box-message-mobile" class="not-visible my-2">
-                <div class="search-wrapper">
-                    <input type="search" id="search-message" placeholder="Search by name" data-search-messages-m style="width: 60%;">
-                </div>
-            </div>  
-            <div style="height: 350px; overflow-y: auto; overflow-x: hidden;">
-                <div id="message-info-box-m" class="row my-2">
-                    
-                </div>
-            </div>           
-        </div>
+        <div id="analysis-m" class="container my-4">
 
-        <div id="analysis-m" class="container my-4 not-visible">
-            <div class="row">
-                <div id="patient-analysis-info-m" class="col-xs-6 my-2 rounded-total shadow">
-                    
-                </div>
-                <div class="col-xs-1"></div>
-                <div id="patient-sessions-info-m" class="col-xs-5 rounded-total shadow">
-                    <div id="sessions-list-calendar-m" class="m-2">
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-xs-12 m-1">
-                    <h1>Number of Movements and Skaaltec Score</h1>
-                    <br>
-                    <div class="row">
-                        <div class="mx-2 col-xs-5">
-                            <input type="search" id="search" placeholder="Insert the ideal number of movements" data-search-nom-m style="width: 60%;">
-                        </div>
-                        <div id="error-input-nom-box-m" class="m-2 alert alert-danger not-visible" role="alert" style="width: 60%;"></div>
-                    </div>
-                    <br>
-                    <div class="my-2 rounded-total">
-                        <div class="card-body">
-                            <h6 class="ml-2 text-dark">Number of Movements | Skaaltec Score</h6>
-                            <div id="numberOfMovement-box-m">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row my-3" style="justify-content: space-around;">
-                        <h1>Other important parameters</h1>
-                        <hr>
-                        <div class="rounded-total border border-white bg-overflow">
-                            <div id="otherGraphs-box-m" class="row my-2">
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="sessions-m"class="container my-4 not-visible">
-        
-            <div class="row">
-                <div class="col-xs-12" style="text-align: center;">
-                    <div class="my-5">
-                        <h2 style="text-align: center;">SESSIONS DASHBOARD</h2>
-                        <h4 id="patient-name-session-m" style="color: grey; text-align: center;"></h4>
-                    </div>
-                </div>
-                <div class="col-xs-12">
-                    
-                    <div id="calendar-sessions-m" class="my-2">
+            <div id="sessions-m" class="container my-4">
+            
+                <div class="row">
+                
+                    <div class="col-xs-12 my-3">
+                
+                        <div id="calendar-sessions-m" class="my-2">
                             
+                        </div>
+                
                     </div>
-
+                
                 </div>
-                <div class="col-xs-12">
-                    <div id="book-session-m">
+                
+                <div class="row gx-3">
+    
+                    <div id="book-session-m" class="col-xs-12 my-2 rounded-total shadow">
+                
                         <div style="text-align: center;">
                                                 
                             <img src="{% static 'skaaltec.png' %}"
-                            style="width: 150px;" alt="logo" class="my-3">
+                            style="width: 185px;" alt="logo" class="my-3">
                             <h1>New session</h1>
                             <hr>
-                            <div class="card-body" id="upload-box">
+                            <div class="card-body" id="booking-box">
+                
                                 <form id="book-form-m">
                                     
                                     <div id="book-alert-box-m">
+                
                                     </div> 
+                
                                     <div class="form-outline m-4">
                                         
                                         {% csrf_token %}
@@ -623,87 +427,131 @@
                                         
                                     </div>
                 
+                
                                     <div class="pt-1 mb-5 pb-1" style="text-align: center;">
-                                        <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Upload</i></button>
+                                        <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Book</i></button>
                                     </div>
                 
                                 </form>
+                
                             </div>
+                
                         </div>
+                
                     </div>
+                
                 </div>
-            </div>
-
-        </div>
-
-        <div id="upload-m" class="not-visible">
-
-            <div id="upload-data" class="col-xs-12 my-3 rounded-total shadow">
-                <div style="text-align: center;">
+    
+            </div>  
+                
+            <div class="row mt-3">
+                
+                <div class="col-xs-12 m-1">
+                
+                    <h1>Number of Movements and Skaaltec Score</h1>
+                    <br>
+                    <div class="m-2 rounded-total">
+                
+                        <div class="card-body">
+                            <h6 class="m-2 text-dark">Number of Movements | Skaaltec Score</h6>
+                            <div id="numberOfMovement-box-m">
+                                
+                            </div>
+                
+                        </div>
+                
+                    </div>
+                
+                    <div class="row my-3">
+                        <h1>Important parameters</h1>
+                        <hr>
+                        <div class="rounded-total border border-white bg-overflow">
+                
+                            <div class="row">
+                    
+                                <div>
+                    
+                                    <div id="otherGraphs-box-m" class="row flex-nowrap overflow-auto my-3">
                                         
-                    <img src="{% static 'skaaltec.png' %}"
-                    style="width: 150px;" alt="logo" class="my-3">
-                    <h1>Upload new data</h1>
-                    <hr>
-                    <div class="card-body" id="upload-box">
-                        <form id="upload-form-m">
-                            
-                            <div id="upload-alert-box-m">
-                            </div> 
-                            <div class="form-outline m-4">
-                                
-                                {% csrf_token %}
-                                <table class="center">{{ uform|crispy }}</table>
-                                
+                                    </div>
+                    
+                                </div>
+                    
                             </div>
-        
-                            <div class="pt-1 mb-5 pb-1" style="text-align: center;">
-                                <button id="submit-form-button" class="dashboard-button rounded-3" type="submit"><i>Upload</i></button>
-                            </div>
-        
-                        </form>
+                    
+                        </div>
+                        
+                    
                     </div>
-                </div>
+                
+                </div>    
+            
             </div>
+        
+        </div>          
 
-        </div>
-
-        <div id="chat-m" class="container my-4 not-visible">
+        <div id="chat-m" class="container my-4 not-visible" style="height: 750px">
+            
             <div class="row my-3">
 
-                <div class="col-xs-12 my-2" style="height: 700px">
-                    <div id="patient-name-chat-m"></div>
+                <div class="col-xs-12 my-2" style="height: 550px">
+                    
+                    <div style="display: flex; justify-content: space-between;">
+                    
+                        <div id="patient-name-chat-m"></div>
+                    
+                        <div>
+                            <button id="admin-link-m" class="dashboard-button m-1 rounded-3" style="text-decoration: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+                                </svg>
+                            </button>
+                    
+                        </div>
+                    
+                    </div>                        
                     <hr>
-                    <div id="chat-box-m" class="rounded-total border border-dark" style="height:500px; overflow-y:auto; overflow-x: hidden;">
+                    <div id="chat-box-m" class="rounded-total border border-dark" style="height:450px; overflow-y:auto; overflow-x: hidden;">
 
 
 
                     </div>
                     <br>
                     <div id="input-message-box-m">
+                        
                         <div class="my-1">
-                            <form id="m-form-m" class="row" style="text-align: center; justify-content: center;">
-                                <div class="my-2" style="width: 75%;">
+                        
+                            <form id="m-form-m" class="row  d-flex justify-content-around align-items-center mx-2">
+                        
+                                <div class="w-75">
                                     {% csrf_token %}
                                     {{ mform }}
                                 </div>
-                                <div class="my-2" style="width: 10%;">
-                                    <button type="submit" class="btn dashboard-button2 rounded-3 mx-1" >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                        
+                                <div class="w-25">
+                        
+                                    <button type="submit" class="btn dashboard-button2 rounded-3 mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
                                             <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
                                         </svg>
+                        
                                     </button>
+                        
                                 </div>
+                        
                             </form>
                         </div>
+                    
                     </div>                            
+                
                 </div>
 
             </div>
 
         </div>
-
+    
     </div>
+
 </div>
   
 {% endblock content %}
