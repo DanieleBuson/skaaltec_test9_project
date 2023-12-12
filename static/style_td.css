@@ -150,6 +150,65 @@
     .dropdown-toggle svg {
         fill: black;
     }  
+
+    .success-dashboard-button{
+        background-color: #198754;
+        color: #ffffff;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .success-dashboard-button:hover {
+        background-color: #1987549a;;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .success-dashboard-button:active {
+        background-color: #19875467;
+    }
+    
+    .success-dashboard-button:focus {
+        outline: none;
+    }
+    
+    .success-dashboard-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+
+    .danger-dashboard-button{
+        background-color: #dc3545;
+        color: #ffffff;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .danger-dashboard-button:hover {
+        background-color: #dc35468c;;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .danger-dashboard-button:active {
+        background-color: #dc35464d;
+    }
+    
+    .danger-dashboard-button:focus {
+        outline: none;
+    }
+    
+    .danger-dashboard-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
     
 }
 
@@ -280,12 +339,12 @@
     }
     
     .dashboard-button2:hover {
-        background-color: rgba(192, 0, 14, 0.7);;
+        background-color: rgba(192, 0, 14, 0.7);
     }
     
     /* Optional: Add more styles to make it even cooler */
     .dashboard-button2:active {
-        background-color: rgba(192, 0, 14, 0.5);;
+        background-color: rgba(192, 0, 14, 0.5);
     }
     
     .dashboard-button2:focus {
@@ -297,6 +356,64 @@
         cursor: not-allowed;
     }
 
+    .success-dashboard-button{
+        background-color: #198754;
+        color: #ffffff;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .success-dashboard-button:hover {
+        background-color: #198754;;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .success-dashboard-button:active {
+        background-color: #198754;
+    }
+    
+    .success-dashboard-button:focus {
+        outline: none;
+    }
+    
+    .success-dashboard-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+
+    .danger-dashboard-button{
+        background-color: #dc3545;
+        color: #ffffff;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .danger-dashboard-button:hover {
+        background-color: #dc35468c;;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .danger-dashboard-button:active {
+        background-color: #dc35464d;
+    }
+    
+    .danger-dashboard-button:focus {
+        outline: none;
+    }
+    
+    .danger-dashboard-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
 
 }
 
@@ -444,6 +561,65 @@
     }
     
     .dashboard-button2:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .success-dashboard-button{
+        background-color: #198754;
+        color: #ffffff;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .success-dashboard-button:hover {
+        background-color: #1987549a;;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .success-dashboard-button:active {
+        background-color: #19875467;
+    }
+    
+    .success-dashboard-button:focus {
+        outline: none;
+    }
+    
+    .success-dashboard-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+
+    .danger-dashboard-button{
+        background-color: #dc3545;
+        color: #ffffff;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .danger-dashboard-button:hover {
+        background-color: #dc35468c;;
+    }
+    
+    /* Optional: Add more styles to make it even cooler */
+    .danger-dashboard-button:active {
+        background-color: #dc35464d;
+    }
+    
+    .danger-dashboard-button:focus {
+        outline: none;
+    }
+    
+    .danger-dashboard-button:disabled {
         background-color: #ccc;
         cursor: not-allowed;
     }

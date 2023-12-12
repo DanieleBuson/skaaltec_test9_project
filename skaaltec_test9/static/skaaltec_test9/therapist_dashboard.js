@@ -69,6 +69,7 @@ var patientNameSession = document.getElementById("patient-name-session")
 var patientNameSessionTablet = document.getElementById("patient-name-session-t")
 var patientNameSessionMobile = document.getElementById("patient-name-session-m")
 var selectedPatient = 0
+var selectedSessionId = 0
 var analysisId = 0
 
 url = window.location.href
@@ -1582,10 +1583,10 @@ const loadAnalysis = (patientId, value=300) => {
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                     Average Duration</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="duration-info">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="duration-info-m">
                                     
                                 </div>
-                                <div class="h5 mb-0" id="duration-trend-info">
+                                <div class="h5 mb-0" id="duration-trend-info-m">
                                     
                                 </div>
                                 <div class="chart-line pt-4 pb-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
@@ -1600,10 +1601,10 @@ const loadAnalysis = (patientId, value=300) => {
                                 <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                     Average Velocity
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="mean-velocity-info">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="mean-velocity-info-m">
 
                                 </div>
-                                <div class="h5 mb-0" id="velocity-trend-info">
+                                <div class="h5 mb-0" id="velocity-trend-info-m">
                                     
                                 </div>
                             </div>
@@ -1617,10 +1618,10 @@ const loadAnalysis = (patientId, value=300) => {
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                     Average Maximal Velocity</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="max-velocity-info">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="max-velocity-info-m">
 
                                 </div>
-                                <div class="h5 mb-0" id="max-velocity-trend-info">
+                                <div class="h5 mb-0" id="max-velocity-trend-info-m">
                                     
                                 </div>
                             </div>
@@ -1634,10 +1635,10 @@ const loadAnalysis = (patientId, value=300) => {
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                     Average Zero Crossings</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="zero-crossings-info">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="zero-crossings-info-m">
 
                                 </div>
-                                <div class="h5 mb-0" id="zero-crossings-trend-info">
+                                <div class="h5 mb-0" id="zero-crossings-trend-info-m">
                                     
                                 </div>
                             </div>
@@ -1651,10 +1652,10 @@ const loadAnalysis = (patientId, value=300) => {
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                     Average Distance Traveled</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="distance-traveled-info">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="distance-traveled-info-m">
 
                                 </div>
-                                <div class="h5 mb-0" id="distance-traveled-trend-info">
+                                <div class="h5 mb-0" id="distance-traveled-trend-info-m">
                                     
                                 </div>
                             </div>
@@ -1668,10 +1669,10 @@ const loadAnalysis = (patientId, value=300) => {
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                     Average Maximal Acceleration</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="max-acceleration-info">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="max-acceleration-info-m">
 
                                 </div>
-                                <div class="h5 mb-0" id="max-acceleration-trend-info">
+                                <div class="h5 mb-0" id="max-acceleration-trend-info-m">
                                     
                                 </div>
                             </div>
@@ -1689,669 +1690,7 @@ const loadAnalysis = (patientId, value=300) => {
                 var ctx_zero_c = document.getElementById(`zeroCrossingsChart${response.patient_id}-m`)
                 var ctx_distance_t = document.getElementById(`distanceTraveledChart${response.patient_id}-m`)
                 var ctx_max_acc = document.getElementById(`maxAccelerationChart${response.patient_id}-m`)
-
-                //Number of Movements
-                var data =  {
-                    labels: number_of_movements_dates,
-                    datasets: [
-                    {
-                        fill:false,
-                        label: 'Ideal number of movements',
-                        data: expected,
-                        borderWidth: 1,
-                        yAxisID: 'y',
-                        borderColor: 'rgba(0, 0, 255, 1)',
-                        borderDash: [5, 5],
-                    },
-                    {
-                        fill:true,
-                        label: 'Number of Movements',
-                        data: number_of_movements_nom,
-                        borderWidth: 1,
-                        tension: 0.4,
-                        yAxisID: 'y',
-                        borderColor: 'rgba(26,115,252,1)',
-                        backgroundColor: 'rgba(26,115,252,0.4)'
-                    },
-                    {
-                        fill: true, 
-                        label: 'Movement score',
-                        data: score,
-                        borderWidth:1,
-                        tension:0.4,
-                        yAxisID: 'y1',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.4)'
-                    }]
-                }
-    
-                var config = {
-                    type: 'line',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        interaction: {
-                        mode: 'index',
-                        intersect: false,
-                        },
-                        stacked: false,
-                        scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                    
-                            // grid line settings
-                            grid: {
-                            drawOnChartArea: false, // only want the grid lines for one axis to show up
-                            },
-                        },
-                        }
-                    },
-                    };
-    
-                var numberOfMovementsChart = new Chart(
-                    ctx,
-                    config
-                )
-
-                //others
-
-                //duration
-                var durationInfo = document.getElementById("duration-info")
-                var durationInfoTrend = document.getElementById("duration-trend-info")
-                durationInfo.textContent = `${duration_avg} ± ${duration_std}`
-
-                function sum(array_elements){
-                    summation = 0
-                    for (i = 0; i < array_elements.length; i ++ ){
-                        summation += array_elements[i]
-                    }
-                    return summation
-                }
-                function array_mult(array_1, array_2){
-                    final_array = []
-                    if (array_1.length === array_2.length){
-                        for (i = 0; i < array_1.length; i ++){
-                            final_array.push(array_1[i] * array_2[i])
-                        }
-                        return final_array
-                    }
-                    else {
-                        return 0
-                    }
-                }
-                function squared_element(array_1) {
-                    final_array = []
-                    for (i=0; i < array_1.length; i++){
-                        final_array.push(array_1[i]**2)
-                    }
-                    return final_array
-                }
-
-                var n = timestamps.length
-                const a_duration = (n*sum(array_mult(duration_dur, timestamps)) - sum(duration_dur)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_duration = (sum(duration_dur)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, duration_dur)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_duration > 0){
-                    durationInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_duration < 0){
-                    durationInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_duration = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_duration.push(a_duration*timestamps[i] + b_duration)
-                }
-                
-                var data =  {
-                    labels: duration_dates,
-                    datasets: [
-                    {
-                        fill: false, 
-                        label: "Average duration",
-                        data: duration_dur,
-                        borderWidth: 1, 
-                        tension: 0.5
-                    },
-                    {
-                        fill: false, 
-                        label: "Duration trend",
-                        data: regression_points_duration,
-                        borderWidth: 1,
-                    }]
-                } 
-
-                const shadingArea_dur = {
-                    id: "shadingArea_dur",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (duration_dur[0] - duration_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (duration_dur[i] - duration_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (duration_upper[z] - duration_dur[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (duration_upper[0] - duration_dur[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: .2
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_dur]
-                }
-
-                const durationChart = new Chart(
-                    ctx_duration,
-                    config
-                )
-                
-                // // average velocity
-                var meanVelocityInfo = document.getElementById("mean-velocity-info")
-                var velocityInfoTrend = document.getElementById("velocity-trend-info")
-                meanVelocityInfo.textContent = `${mean_velocity_avg} ± ${mean_velocity_std}`
-
-                var n = timestamps.length
-                const a_velocity = (n*sum(array_mult(mean_velocity_mean_vel, timestamps)) - sum(mean_velocity_mean_vel)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_velocity = (sum(mean_velocity_mean_vel)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, mean_velocity_mean_vel)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                
-                if (a_velocity > 0){
-                    velocityInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_velocity < 0){
-                    velocityInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_velocity = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_velocity.push(a_velocity*timestamps[i] + b_velocity)
-                }
-                
-                var data =  {
-                    labels: mean_velocity_dates,
-                    datasets: [
-                    {
-                        fill: false,
-                        label: "Average velocity",
-                        data: mean_velocity_mean_vel,
-                        borderWidth: 1, 
-                        tension: 0.4
-                    },
-                    {
-                        fill: false,
-                        label: "Mean velocity trend",
-                        data: regression_points_velocity,
-                        borderWidth: 1
-                    }]
-                }
-
-                const shadingArea_mean_vel = {
-                    id: "shadingArea_mean_vel",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (mean_velocity_mean_vel[0] - mean_velocity_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (mean_velocity_mean_vel[i] - mean_velocity_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (mean_velocity_upper[z] - mean_velocity_mean_vel[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (mean_velocity_upper[0] - mean_velocity_mean_vel[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: 0.2
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_mean_vel]
-                }
-
-                const meanVelocityChart = new Chart(
-                    ctx_mean_vel,
-                    config
-                )
-
-                // // maximal velocity
-                var maxVelocityInfo = document.getElementById("max-velocity-info")
-                var maxVelocityInfoTrend = document.getElementById("max-velocity-trend-info")
-                maxVelocityInfo.textContent = `${max_velocity_avg} ± ${max_velocity_std}`
-
-                var n = timestamps.length
-                const a_max_velocity = (n*sum(array_mult(max_velocity_max_vel, timestamps)) - sum(max_velocity_max_vel)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_max_velocity = (sum(max_velocity_max_vel)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, max_velocity_max_vel)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_max_velocity > 0){
-                    maxVelocityInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_max_velocity < 0){
-                    maxVelocityInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_max_velocity = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_max_velocity.push(a_max_velocity*timestamps[i] + b_max_velocity)
-                }
-                
-                var data =  {
-                    labels: max_velocity_dates,
-                    datasets: [
-                    {
-                        fill:false,
-                        label: "Max velocity",
-                        data: max_velocity_max_vel,
-                        borderWidth: 1,
-                        tension: 0.4
-                    },
-                    {
-                        fill:false,
-                        label: "Max velocity trend",
-                        data: regression_points_max_velocity,
-                        borderWidth: 1,
-                    }]
-                }
-
-                const shadingArea_max_vel = {
-                    id: "shadingArea_max_vel",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (max_velocity_max_vel[0] - max_velocity_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (max_velocity_max_vel[i] - max_velocity_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (max_velocity_upper[z] - max_velocity_max_vel[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (max_velocity_upper[0] - max_velocity_max_vel[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: 0.5
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_max_vel]
-                }
-
-                const maxVelocityChart = new Chart(
-                    ctx_max_vel,
-                    config
-                )
-
-                // // zero crossings
-                var zeroCrossingsInfo = document.getElementById("zero-crossings-info")
-                var zeroCrossingsInfoTrend = document.getElementById("zero-crossings-trend-info")
-                zeroCrossingsInfo.textContent = `${zero_crossings_avg} ± ${zero_crossings_std}`
-                
-                var n = timestamps.length
-                const a_zero_crossings = (n*sum(array_mult(zero_crossings_zero_c, timestamps)) - sum(zero_crossings_zero_c)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_zero_crossings = (sum(zero_crossings_zero_c)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, zero_crossings_zero_c)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                
-
-                if (a_zero_crossings > 0){
-                    zeroCrossingsInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_zero_crossings < 0){
-                    zeroCrossingsInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_zero_crossings = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_zero_crossings.push(a_zero_crossings*timestamps[i] + b_zero_crossings)
-                }
-
-                var data =  {
-                    labels: zero_crossings_dates,
-                    datasets: [
-                    {
-                        fill: false,
-                        label: "Average zero crossings",
-                        data: zero_crossings_zero_c,
-                        borderWidth: 1,
-                        tension: 0.4
-                    },
-                    {
-                        fill: false, 
-                        label: "Zero crossings trend",
-                        data: regression_points_zero_crossings,
-                        borderWidth: 1,
-                    }]
-                }
-
-
-
-                const shadingArea_zero_c = {
-                    id: "shadingArea_zero_c",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (zero_crossings_zero_c[0] - zero_crossings_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (zero_crossings_zero_c[i] - zero_crossings_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (zero_crossings_upper[z] - zero_crossings_zero_c[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (zero_crossings_upper[0] - zero_crossings_zero_c[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false, 
-                                grace: 1
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_zero_c]
-                }
-
-                const zeroCrossingsChart = new Chart(
-                    ctx_zero_c,
-                    config
-                )
-
-                // // distance travelled
-                var distaceTraveledInfo = document.getElementById("distance-traveled-info")
-                var distanceTraveledInfoTrend = document.getElementById("distance-traveled-trend-info")
-                distaceTraveledInfo.textContent = `${distance_traveled_avg} ± ${distance_traveled_std}`
-                
-                var n = timestamps.length
-                const a_distance_traveled = (n*sum(array_mult(distance_traveled_distance_t, timestamps)) - sum(distance_traveled_distance_t)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_distance_traveled = (sum(distance_traveled_distance_t)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, distance_traveled_distance_t)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_distance_traveled > 0){
-                    distanceTraveledInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_distance_traveled < 0){
-                    distanceTraveledInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_distance_traveled = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_distance_traveled.push(a_distance_traveled*timestamps[i] + b_distance_traveled)
-                }
-
-                var data =  {
-                    labels: distance_traveled_dates,
-                    datasets: [
-                        {
-                            fill: false, 
-                            label: "Average distance traveled",
-                            data: distance_traveled_distance_t,
-                            borderWidth: 1,
-                            tension: 0.4
-                        },
-                        {
-                            fill: false, 
-                            label: "Distance traveled trend",
-                            data: regression_points_distance_traveled,
-                            borderWidth: 1
-                        }]
-                }
-
-                const shadingArea_distance_t = {
-                    id: "shadingArea_distance_t",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (distance_traveled_distance_t[0] - distance_traveled_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (distance_traveled_distance_t[i] - distance_traveled_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (distance_traveled_upper[z] - distance_traveled_distance_t[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (distance_traveled_upper[0] - distance_traveled_distance_t[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: .2,
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_distance_t]
-                }
-
-                const distanceTraveledChart = new Chart(
-                    ctx_distance_t,
-                    config
-                )
-
-
-                // // max acceleration 
-                var maxAccelerationInfo = document.getElementById("max-acceleration-info")
-                var maxAccelerationInfoTrend = document.getElementById("max-acceleration-trend-info")
-                maxAccelerationInfo.textContent = `${max_acceleration_avg} ± ${max_acceleration_std}`
-                
-                var n = timestamps.length
-                const a_max_acceleration = (n*sum(array_mult(max_acceleration_max_acc, timestamps)) - sum(max_acceleration_max_acc)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_max_acceleration = (sum(max_acceleration_max_acc)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, max_acceleration_max_acc)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_max_acceleration > 0){
-                    maxAccelerationInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_max_acceleration < 0){
-                    maxAccelerationInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_max_acceleration = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_max_acceleration.push(a_max_acceleration*timestamps[i] + b_max_acceleration)
-                }
-
-                var data =  {
-                    labels: max_acceleration_dates,
-                    datasets: [
-                    {
-                        fill:false,
-                        label: 'Max acceleration',
-                        data: max_acceleration_max_acc,
-                        borderWidth: 1,
-                        tension: 0.4
-                    },
-                    {
-                        fill: false,
-                        label: "Max acceleration trend",
-                        data: regression_points_max_acceleration,
-                        borderWidth: 1,
-                    }
-                    ]
-                }
-
-                const shadingArea_max_acc = {
-                    id: "shadingArea_max_acc",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (max_acceleration_max_acc[0] - max_acceleration_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (max_acceleration_max_acc[i] - max_acceleration_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (max_acceleration_upper[z] - max_acceleration_max_acc[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (max_acceleration_upper[0] - max_acceleration_max_acc[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: 1,
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_max_acc]
-                }
-
-                const maxAccelerationChart = new Chart(
-                    ctx_max_acc,
-                    config
-                )
-                    
+                var typeGraph = '-m' 
             }
             else if (screenWidth >=1306){
                 
@@ -2506,669 +1845,7 @@ const loadAnalysis = (patientId, value=300) => {
                 var ctx_zero_c = document.getElementById(`zeroCrossingsChart${response.patient_id}`)
                 var ctx_distance_t = document.getElementById(`distanceTraveledChart${response.patient_id}`)
                 var ctx_max_acc = document.getElementById(`maxAccelerationChart${response.patient_id}`)
-
-                //Number of Movements
-                var data =  {
-                    labels: number_of_movements_dates,
-                    datasets: [
-                    {
-                        fill:false,
-                        label: 'Ideal number of movements',
-                        data: expected,
-                        borderWidth: 1,
-                        yAxisID: 'y',
-                        borderColor: 'rgba(0, 0, 255, 1)',
-                        borderDash: [5, 5],
-                    },
-                    {
-                        fill:true,
-                        label: 'Number of Movements',
-                        data: number_of_movements_nom,
-                        borderWidth: 1,
-                        tension: 0.4,
-                        yAxisID: 'y',
-                        borderColor: 'rgba(26,115,252,1)',
-                        backgroundColor: 'rgba(26,115,252,0.4)'
-                    },
-                    {
-                        fill: true, 
-                        label: 'Movement score',
-                        data: score,
-                        borderWidth:1,
-                        tension:0.4,
-                        yAxisID: 'y1',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.4)'
-                    }]
-                }
-    
-                var config = {
-                    type: 'line',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        interaction: {
-                        mode: 'index',
-                        intersect: false,
-                        },
-                        stacked: false,
-                        scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                    
-                            // grid line settings
-                            grid: {
-                            drawOnChartArea: false, // only want the grid lines for one axis to show up
-                            },
-                        },
-                        }
-                    },
-                    };
-    
-                var numberOfMovementsChart = new Chart(
-                    ctx,
-                    config
-                )
-
-                //others
-
-                //duration
-                var durationInfo = document.getElementById("duration-info")
-                var durationInfoTrend = document.getElementById("duration-trend-info")
-                durationInfo.textContent = `${duration_avg} ± ${duration_std}`
-
-                function sum(array_elements){
-                    summation = 0
-                    for (i = 0; i < array_elements.length; i ++ ){
-                        summation += array_elements[i]
-                    }
-                    return summation
-                }
-                function array_mult(array_1, array_2){
-                    final_array = []
-                    if (array_1.length === array_2.length){
-                        for (i = 0; i < array_1.length; i ++){
-                            final_array.push(array_1[i] * array_2[i])
-                        }
-                        return final_array
-                    }
-                    else {
-                        return 0
-                    }
-                }
-
-                function squared_element(array_1) {
-                    final_array = []
-                    for (i=0; i < array_1.length; i++){
-                        final_array.push(array_1[i]**2)
-                    }
-                    return final_array
-                }
-
-                var n = timestamps.length
-                const a_duration = (n*sum(array_mult(duration_dur, timestamps)) - sum(duration_dur)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_duration = (sum(duration_dur)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, duration_dur)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_duration > 0){
-                    durationInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_duration < 0){
-                    durationInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_duration = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_duration.push(a_duration*timestamps[i] + b_duration)
-                }
-                
-                var data =  {
-                    labels: duration_dates,
-                    datasets: [
-                    {
-                        fill: false, 
-                        label: "Average duration",
-                        data: duration_dur,
-                        borderWidth: 1, 
-                        tension: 0.5
-                    },
-                    {
-                        fill: false, 
-                        label: "Duration trend",
-                        data: regression_points_duration,
-                        borderWidth: 1,
-                    }]
-                } 
-
-                const shadingArea_dur = {
-                    id: "shadingArea_dur",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (duration_dur[0] - duration_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (duration_dur[i] - duration_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (duration_upper[z] - duration_dur[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (duration_upper[0] - duration_dur[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: .2
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_dur]
-                }
-
-                const durationChart = new Chart(
-                    ctx_duration,
-                    config
-                )
-                
-                // // average velocity
-                var meanVelocityInfo = document.getElementById("mean-velocity-info")
-                var velocityInfoTrend = document.getElementById("velocity-trend-info")
-                meanVelocityInfo.textContent = `${mean_velocity_avg} ± ${mean_velocity_std}`
-
-                var n = timestamps.length
-                const a_velocity = (n*sum(array_mult(mean_velocity_mean_vel, timestamps)) - sum(mean_velocity_mean_vel)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_velocity = (sum(mean_velocity_mean_vel)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, mean_velocity_mean_vel)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                
-                if (a_velocity > 0){
-                    velocityInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_velocity < 0){
-                    velocityInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_velocity = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_velocity.push(a_velocity*timestamps[i] + b_velocity)
-                }
-                
-                var data =  {
-                    labels: mean_velocity_dates,
-                    datasets: [
-                    {
-                        fill: false,
-                        label: "Average velocity",
-                        data: mean_velocity_mean_vel,
-                        borderWidth: 1, 
-                        tension: 0.4
-                    },
-                    {
-                        fill: false,
-                        label: "Mean velocity trend",
-                        data: regression_points_velocity,
-                        borderWidth: 1
-                    }]
-                }
-
-                const shadingArea_mean_vel = {
-                    id: "shadingArea_mean_vel",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (mean_velocity_mean_vel[0] - mean_velocity_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (mean_velocity_mean_vel[i] - mean_velocity_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (mean_velocity_upper[z] - mean_velocity_mean_vel[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (mean_velocity_upper[0] - mean_velocity_mean_vel[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: 0.2
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_mean_vel]
-                }
-
-                const meanVelocityChart = new Chart(
-                    ctx_mean_vel,
-                    config
-                )
-
-                // // maximal velocity
-                var maxVelocityInfo = document.getElementById("max-velocity-info")
-                var maxVelocityInfoTrend = document.getElementById("max-velocity-trend-info")
-                maxVelocityInfo.textContent = `${max_velocity_avg} ± ${max_velocity_std}`
-
-                var n = timestamps.length
-                const a_max_velocity = (n*sum(array_mult(max_velocity_max_vel, timestamps)) - sum(max_velocity_max_vel)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_max_velocity = (sum(max_velocity_max_vel)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, max_velocity_max_vel)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_max_velocity > 0){
-                    maxVelocityInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_max_velocity < 0){
-                    maxVelocityInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_max_velocity = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_max_velocity.push(a_max_velocity*timestamps[i] + b_max_velocity)
-                }
-                
-                var data =  {
-                    labels: max_velocity_dates,
-                    datasets: [
-                    {
-                        fill:false,
-                        label: "Max velocity",
-                        data: max_velocity_max_vel,
-                        borderWidth: 1,
-                        tension: 0.4
-                    },
-                    {
-                        fill:false,
-                        label: "Max velocity trend",
-                        data: regression_points_max_velocity,
-                        borderWidth: 1,
-                    }]
-                }
-
-                const shadingArea_max_vel = {
-                    id: "shadingArea_max_vel",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (max_velocity_max_vel[0] - max_velocity_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (max_velocity_max_vel[i] - max_velocity_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (max_velocity_upper[z] - max_velocity_max_vel[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (max_velocity_upper[0] - max_velocity_max_vel[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: 0.5
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_max_vel]
-                }
-
-                const maxVelocityChart = new Chart(
-                    ctx_max_vel,
-                    config
-                )
-
-                // // zero crossings
-                var zeroCrossingsInfo = document.getElementById("zero-crossings-info")
-                var zeroCrossingsInfoTrend = document.getElementById("zero-crossings-trend-info")
-                zeroCrossingsInfo.textContent = `${zero_crossings_avg} ± ${zero_crossings_std}`
-                
-                var n = timestamps.length
-                const a_zero_crossings = (n*sum(array_mult(zero_crossings_zero_c, timestamps)) - sum(zero_crossings_zero_c)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_zero_crossings = (sum(zero_crossings_zero_c)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, zero_crossings_zero_c)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                
-
-                if (a_zero_crossings > 0){
-                    zeroCrossingsInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_zero_crossings < 0){
-                    zeroCrossingsInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_zero_crossings = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_zero_crossings.push(a_zero_crossings*timestamps[i] + b_zero_crossings)
-                }
-
-                var data =  {
-                    labels: zero_crossings_dates,
-                    datasets: [
-                    {
-                        fill: false,
-                        label: "Average zero crossings",
-                        data: zero_crossings_zero_c,
-                        borderWidth: 1,
-                        tension: 0.4
-                    },
-                    {
-                        fill: false, 
-                        label: "Zero crossings trend",
-                        data: regression_points_zero_crossings,
-                        borderWidth: 1,
-                    }]
-                }
-
-
-
-                const shadingArea_zero_c = {
-                    id: "shadingArea_zero_c",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (zero_crossings_zero_c[0] - zero_crossings_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (zero_crossings_zero_c[i] - zero_crossings_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (zero_crossings_upper[z] - zero_crossings_zero_c[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (zero_crossings_upper[0] - zero_crossings_zero_c[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false, 
-                                grace: 1
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_zero_c]
-                }
-
-                const zeroCrossingsChart = new Chart(
-                    ctx_zero_c,
-                    config
-                )
-
-                // // distance travelled
-                var distaceTraveledInfo = document.getElementById("distance-traveled-info")
-                var distanceTraveledInfoTrend = document.getElementById("distance-traveled-trend-info")
-                distaceTraveledInfo.textContent = `${distance_traveled_avg} ± ${distance_traveled_std}`
-                
-                var n = timestamps.length
-                const a_distance_traveled = (n*sum(array_mult(distance_traveled_distance_t, timestamps)) - sum(distance_traveled_distance_t)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_distance_traveled = (sum(distance_traveled_distance_t)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, distance_traveled_distance_t)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_distance_traveled > 0){
-                    distanceTraveledInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_distance_traveled < 0){
-                    distanceTraveledInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_distance_traveled = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_distance_traveled.push(a_distance_traveled*timestamps[i] + b_distance_traveled)
-                }
-
-                var data =  {
-                    labels: distance_traveled_dates,
-                    datasets: [
-                        {
-                            fill: false, 
-                            label: "Average distance traveled",
-                            data: distance_traveled_distance_t,
-                            borderWidth: 1,
-                            tension: 0.4
-                        },
-                        {
-                            fill: false, 
-                            label: "Distance traveled trend",
-                            data: regression_points_distance_traveled,
-                            borderWidth: 1
-                        }]
-                }
-
-                const shadingArea_distance_t = {
-                    id: "shadingArea_distance_t",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (distance_traveled_distance_t[0] - distance_traveled_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (distance_traveled_distance_t[i] - distance_traveled_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (distance_traveled_upper[z] - distance_traveled_distance_t[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (distance_traveled_upper[0] - distance_traveled_distance_t[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: .2,
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_distance_t]
-                }
-
-                const distanceTraveledChart = new Chart(
-                    ctx_distance_t,
-                    config
-                )
-
-
-                // // max acceleration 
-                var maxAccelerationInfo = document.getElementById("max-acceleration-info")
-                var maxAccelerationInfoTrend = document.getElementById("max-acceleration-trend-info")
-                maxAccelerationInfo.textContent = `${max_acceleration_avg} ± ${max_acceleration_std}`
-                
-                var n = timestamps.length
-                const a_max_acceleration = (n*sum(array_mult(max_acceleration_max_acc, timestamps)) - sum(max_acceleration_max_acc)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_max_acceleration = (sum(max_acceleration_max_acc)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, max_acceleration_max_acc)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_max_acceleration > 0){
-                    maxAccelerationInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_max_acceleration < 0){
-                    maxAccelerationInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_max_acceleration = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_max_acceleration.push(a_max_acceleration*timestamps[i] + b_max_acceleration)
-                }
-
-                var data =  {
-                    labels: max_acceleration_dates,
-                    datasets: [
-                    {
-                        fill:false,
-                        label: 'Max acceleration',
-                        data: max_acceleration_max_acc,
-                        borderWidth: 1,
-                        tension: 0.4
-                    },
-                    {
-                        fill: false,
-                        label: "Max acceleration trend",
-                        data: regression_points_max_acceleration,
-                        borderWidth: 1,
-                    }
-                    ]
-                }
-
-                const shadingArea_max_acc = {
-                    id: "shadingArea_max_acc",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (max_acceleration_max_acc[0] - max_acceleration_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (max_acceleration_max_acc[i] - max_acceleration_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (max_acceleration_upper[z] - max_acceleration_max_acc[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (max_acceleration_upper[0] - max_acceleration_max_acc[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: 1,
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_max_acc]
-                }
-
-                const maxAccelerationChart = new Chart(
-                    ctx_max_acc,
-                    config
-                )
+                var typeGraph = '' 
 
             }
             else{
@@ -3227,10 +1904,10 @@ const loadAnalysis = (patientId, value=300) => {
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                 Average Duration</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="duration-info">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="duration-info-t">
                                 
                             </div>
-                            <div class="h5 mb-0" id="duration-trend-info">
+                            <div class="h5 mb-0" id="duration-trend-info-t">
                                 
                             </div>
                             <div class="chart-line pt-4 pb-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
@@ -3243,10 +1920,10 @@ const loadAnalysis = (patientId, value=300) => {
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                 Average Velocity
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="mean-velocity-info">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="mean-velocity-info-t">
 
                             </div>
-                            <div class="h5 mb-0" id="velocity-trend-info">
+                            <div class="h5 mb-0" id="velocity-trend-info-t">
                                 
                             </div>
                             <div class="chart-line pt-4 pb-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
@@ -3258,10 +1935,10 @@ const loadAnalysis = (patientId, value=300) => {
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                 Average Maximal Velocity</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="max-velocity-info">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="max-velocity-info-t">
 
                             </div>
-                            <div class="h5 mb-0" id="max-velocity-trend-info">
+                            <div class="h5 mb-0" id="max-velocity-trend-info-t">
                                 
                             </div>
                             <div class="chart-line pt-4 pb-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
@@ -3273,10 +1950,10 @@ const loadAnalysis = (patientId, value=300) => {
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                 Average Zero Crossings</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="zero-crossings-info">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="zero-crossings-info-t">
 
                             </div>
-                            <div class="h5 mb-0" id="zero-crossings-trend-info">
+                            <div class="h5 mb-0" id="zero-crossings-trend-info-t">
                                 
                             </div>
                             <div class="chart-line pt-4 pb-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
@@ -3288,10 +1965,10 @@ const loadAnalysis = (patientId, value=300) => {
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                 Average Distance Traveled</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="distance-traveled-info">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="distance-traveled-info-t">
 
                             </div>
-                            <div class="h5 mb-0" id="distance-traveled-trend-info">
+                            <div class="h5 mb-0" id="distance-traveled-trend-info-t">
                                 
                             </div>
                             <div class="chart-line pt-4 pb-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
@@ -3303,10 +1980,10 @@ const loadAnalysis = (patientId, value=300) => {
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                 Average Maximal Acceleration</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="max-acceleration-info">
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="max-acceleration-info-t">
 
                             </div>
-                            <div class="h5 mb-0" id="max-acceleration-trend-info">
+                            <div class="h5 mb-0" id="max-acceleration-trend-info-t">
                                 
                             </div>
                             <div class="chart-line pt-4 pb-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
@@ -3323,671 +2000,669 @@ const loadAnalysis = (patientId, value=300) => {
                 var ctx_zero_c = document.getElementById(`zeroCrossingsChart${response.patient_id}-t`)
                 var ctx_distance_t = document.getElementById(`distanceTraveledChart${response.patient_id}-t`)
                 var ctx_max_acc = document.getElementById(`maxAccelerationChart${response.patient_id}-t`)
+                var typeGraph = '-t' 
 
-                //Number of Movements
-                var data =  {
-                    labels: number_of_movements_dates,
-                    datasets: [
-                    {
-                        fill:false,
-                        label: 'Ideal number of movements',
-                        data: expected,
-                        borderWidth: 1,
-                        yAxisID: 'y',
-                        borderColor: 'rgba(0, 0, 255, 1)',
-                        borderDash: [5, 5],
+            }
+            
+            //Number of Movements
+            var data =  {
+                labels: number_of_movements_dates,
+                datasets: [
+                {
+                    fill:false,
+                    label: 'Ideal number of movements',
+                    data: expected,
+                    borderWidth: 1,
+                    yAxisID: 'y',
+                    borderColor: 'rgba(0, 0, 255, 1)',
+                    borderDash: [5, 5],
+                },
+                {
+                    fill:true,
+                    label: 'Number of Movements',
+                    data: number_of_movements_nom,
+                    borderWidth: 1,
+                    tension: 0.4,
+                    yAxisID: 'y',
+                    borderColor: 'rgba(26,115,252,1)',
+                    backgroundColor: 'rgba(26,115,252,0.4)'
+                },
+                {
+                    fill: true, 
+                    label: 'Movement score',
+                    data: score,
+                    borderWidth:1,
+                    tension:0.4,
+                    yAxisID: 'y1',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.4)'
+                }]
+            }
+
+            var config = {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    interaction: {
+                    mode: 'index',
+                    intersect: false,
                     },
-                    {
-                        fill:true,
-                        label: 'Number of Movements',
-                        data: number_of_movements_nom,
-                        borderWidth: 1,
-                        tension: 0.4,
-                        yAxisID: 'y',
-                        borderColor: 'rgba(26,115,252,1)',
-                        backgroundColor: 'rgba(26,115,252,0.4)'
+                    stacked: false,
+                    scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
                     },
-                    {
-                        fill: true, 
-                        label: 'Movement score',
-                        data: score,
-                        borderWidth:1,
-                        tension:0.4,
-                        yAxisID: 'y1',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.4)'
-                    }]
-                }
-    
-                var config = {
-                    type: 'line',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        interaction: {
-                        mode: 'index',
-                        intersect: false,
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                
+                        // grid line settings
+                        grid: {
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
                         },
-                        stacked: false,
-                        scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                    
-                            // grid line settings
-                            grid: {
-                            drawOnChartArea: false, // only want the grid lines for one axis to show up
-                            },
-                        },
-                        }
                     },
-                    };
-    
-                var numberOfMovementsChart = new Chart(
-                    ctx,
-                    config
-                )
-
-                //others
-
-                //duration
-                var durationInfo = document.getElementById("duration-info")
-                var durationInfoTrend = document.getElementById("duration-trend-info")
-                durationInfo.textContent = `${duration_avg} ± ${duration_std}`
-
-                function sum(array_elements){
-                    summation = 0
-                    for (i = 0; i < array_elements.length; i ++ ){
-                        summation += array_elements[i]
                     }
-                    return summation
+                },
+                };
+
+            var numberOfMovementsChart = new Chart(
+                ctx,
+                config
+            )
+
+            //others
+
+            //duration
+            var durationInfo = document.getElementById(`duration-info${typeGraph}`)
+            var durationInfoTrend = document.getElementById(`duration-trend-info${typeGraph}`)
+            durationInfo.textContent = `${duration_avg} ± ${duration_std}`
+
+            function sum(array_elements){
+                summation = 0
+                for (i = 0; i < array_elements.length; i ++ ){
+                    summation += array_elements[i]
                 }
-                function array_mult(array_1, array_2){
-                    final_array = []
-                    if (array_1.length === array_2.length){
-                        for (i = 0; i < array_1.length; i ++){
-                            final_array.push(array_1[i] * array_2[i])
-                        }
-                        return final_array
-                    }
-                    else {
-                        return 0
-                    }
-                }
-
-                function squared_element(array_1) {
-                    final_array = []
-                    for (i=0; i < array_1.length; i++){
-                        final_array.push(array_1[i]**2)
+                return summation
+            }
+            function array_mult(array_1, array_2){
+                final_array = []
+                if (array_1.length === array_2.length){
+                    for (i = 0; i < array_1.length; i ++){
+                        final_array.push(array_1[i] * array_2[i])
                     }
                     return final_array
                 }
-
-                var n = timestamps.length
-                const a_duration = (n*sum(array_mult(duration_dur, timestamps)) - sum(duration_dur)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_duration = (sum(duration_dur)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, duration_dur)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_duration > 0){
-                    durationInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
+                else {
+                    return 0
                 }
-                else if(a_duration < 0){
-                    durationInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
+            }
+            function squared_element(array_1) {
+                final_array = []
+                for (i=0; i < array_1.length; i++){
+                    final_array.push(array_1[i]**2)
                 }
-
-                const regression_points_duration = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_duration.push(a_duration*timestamps[i] + b_duration)
-                }
-                
-                var data =  {
-                    labels: duration_dates,
-                    datasets: [
-                    {
-                        fill: false, 
-                        label: "Average duration",
-                        data: duration_dur,
-                        borderWidth: 1, 
-                        tension: 0.5
-                    },
-                    {
-                        fill: false, 
-                        label: "Duration trend",
-                        data: regression_points_duration,
-                        borderWidth: 1,
-                    }]
-                } 
-
-                const shadingArea_dur = {
-                    id: "shadingArea_dur",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (duration_dur[0] - duration_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (duration_dur[i] - duration_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (duration_upper[z] - duration_dur[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (duration_upper[0] - duration_dur[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: .2
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_dur]
-                }
-
-                const durationChart = new Chart(
-                    ctx_duration,
-                    config
-                )
-                
-                // // average velocity
-                var meanVelocityInfo = document.getElementById("mean-velocity-info")
-                var velocityInfoTrend = document.getElementById("velocity-trend-info")
-                meanVelocityInfo.textContent = `${mean_velocity_avg} ± ${mean_velocity_std}`
-
-                var n = timestamps.length
-                const a_velocity = (n*sum(array_mult(mean_velocity_mean_vel, timestamps)) - sum(mean_velocity_mean_vel)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_velocity = (sum(mean_velocity_mean_vel)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, mean_velocity_mean_vel)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                
-                if (a_velocity > 0){
-                    velocityInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_velocity < 0){
-                    velocityInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_velocity = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_velocity.push(a_velocity*timestamps[i] + b_velocity)
-                }
-                
-                var data =  {
-                    labels: mean_velocity_dates,
-                    datasets: [
-                    {
-                        fill: false,
-                        label: "Average velocity",
-                        data: mean_velocity_mean_vel,
-                        borderWidth: 1, 
-                        tension: 0.4
-                    },
-                    {
-                        fill: false,
-                        label: "Mean velocity trend",
-                        data: regression_points_velocity,
-                        borderWidth: 1
-                    }]
-                }
-
-                const shadingArea_mean_vel = {
-                    id: "shadingArea_mean_vel",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (mean_velocity_mean_vel[0] - mean_velocity_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (mean_velocity_mean_vel[i] - mean_velocity_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (mean_velocity_upper[z] - mean_velocity_mean_vel[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (mean_velocity_upper[0] - mean_velocity_mean_vel[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: 0.2
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_mean_vel]
-                }
-
-                const meanVelocityChart = new Chart(
-                    ctx_mean_vel,
-                    config
-                )
-
-                // // maximal velocity
-                var maxVelocityInfo = document.getElementById("max-velocity-info")
-                var maxVelocityInfoTrend = document.getElementById("max-velocity-trend-info")
-                maxVelocityInfo.textContent = `${max_velocity_avg} ± ${max_velocity_std}`
-
-                var n = timestamps.length
-                const a_max_velocity = (n*sum(array_mult(max_velocity_max_vel, timestamps)) - sum(max_velocity_max_vel)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_max_velocity = (sum(max_velocity_max_vel)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, max_velocity_max_vel)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_max_velocity > 0){
-                    maxVelocityInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_max_velocity < 0){
-                    maxVelocityInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_max_velocity = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_max_velocity.push(a_max_velocity*timestamps[i] + b_max_velocity)
-                }
-                
-                var data =  {
-                    labels: max_velocity_dates,
-                    datasets: [
-                    {
-                        fill:false,
-                        label: "Max velocity",
-                        data: max_velocity_max_vel,
-                        borderWidth: 1,
-                        tension: 0.4
-                    },
-                    {
-                        fill:false,
-                        label: "Max velocity trend",
-                        data: regression_points_max_velocity,
-                        borderWidth: 1,
-                    }]
-                }
-
-                const shadingArea_max_vel = {
-                    id: "shadingArea_max_vel",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (max_velocity_max_vel[0] - max_velocity_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (max_velocity_max_vel[i] - max_velocity_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (max_velocity_upper[z] - max_velocity_max_vel[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (max_velocity_upper[0] - max_velocity_max_vel[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: 0.5
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_max_vel]
-                }
-
-                const maxVelocityChart = new Chart(
-                    ctx_max_vel,
-                    config
-                )
-
-                // // zero crossings
-                var zeroCrossingsInfo = document.getElementById("zero-crossings-info")
-                var zeroCrossingsInfoTrend = document.getElementById("zero-crossings-trend-info")
-                zeroCrossingsInfo.textContent = `${zero_crossings_avg} ± ${zero_crossings_std}`
-                
-                var n = timestamps.length
-                const a_zero_crossings = (n*sum(array_mult(zero_crossings_zero_c, timestamps)) - sum(zero_crossings_zero_c)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_zero_crossings = (sum(zero_crossings_zero_c)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, zero_crossings_zero_c)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                
-
-                if (a_zero_crossings > 0){
-                    zeroCrossingsInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_zero_crossings < 0){
-                    zeroCrossingsInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_zero_crossings = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_zero_crossings.push(a_zero_crossings*timestamps[i] + b_zero_crossings)
-                }
-
-                var data =  {
-                    labels: zero_crossings_dates,
-                    datasets: [
-                    {
-                        fill: false,
-                        label: "Average zero crossings",
-                        data: zero_crossings_zero_c,
-                        borderWidth: 1,
-                        tension: 0.4
-                    },
-                    {
-                        fill: false, 
-                        label: "Zero crossings trend",
-                        data: regression_points_zero_crossings,
-                        borderWidth: 1,
-                    }]
-                }
-
-
-
-                const shadingArea_zero_c = {
-                    id: "shadingArea_zero_c",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (zero_crossings_zero_c[0] - zero_crossings_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (zero_crossings_zero_c[i] - zero_crossings_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (zero_crossings_upper[z] - zero_crossings_zero_c[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (zero_crossings_upper[0] - zero_crossings_zero_c[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false, 
-                                grace: 1
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_zero_c]
-                }
-
-                const zeroCrossingsChart = new Chart(
-                    ctx_zero_c,
-                    config
-                )
-
-                // // distance travelled
-                var distaceTraveledInfo = document.getElementById("distance-traveled-info")
-                var distanceTraveledInfoTrend = document.getElementById("distance-traveled-trend-info")
-                distaceTraveledInfo.textContent = `${distance_traveled_avg} ± ${distance_traveled_std}`
-                
-                var n = timestamps.length
-                const a_distance_traveled = (n*sum(array_mult(distance_traveled_distance_t, timestamps)) - sum(distance_traveled_distance_t)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_distance_traveled = (sum(distance_traveled_distance_t)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, distance_traveled_distance_t)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_distance_traveled > 0){
-                    distanceTraveledInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_distance_traveled < 0){
-                    distanceTraveledInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_distance_traveled = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_distance_traveled.push(a_distance_traveled*timestamps[i] + b_distance_traveled)
-                }
-
-                var data =  {
-                    labels: distance_traveled_dates,
-                    datasets: [
-                        {
-                            fill: false, 
-                            label: "Average distance traveled",
-                            data: distance_traveled_distance_t,
-                            borderWidth: 1,
-                            tension: 0.4
-                        },
-                        {
-                            fill: false, 
-                            label: "Distance traveled trend",
-                            data: regression_points_distance_traveled,
-                            borderWidth: 1
-                        }]
-                }
-
-                const shadingArea_distance_t = {
-                    id: "shadingArea_distance_t",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (distance_traveled_distance_t[0] - distance_traveled_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (distance_traveled_distance_t[i] - distance_traveled_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (distance_traveled_upper[z] - distance_traveled_distance_t[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (distance_traveled_upper[0] - distance_traveled_distance_t[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: .2,
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_distance_t]
-                }
-
-                const distanceTraveledChart = new Chart(
-                    ctx_distance_t,
-                    config
-                )
-
-
-                // // max acceleration 
-                var maxAccelerationInfo = document.getElementById("max-acceleration-info")
-                var maxAccelerationInfoTrend = document.getElementById("max-acceleration-trend-info")
-                maxAccelerationInfo.textContent = `${max_acceleration_avg} ± ${max_acceleration_std}`
-                
-                var n = timestamps.length
-                const a_max_acceleration = (n*sum(array_mult(max_acceleration_max_acc, timestamps)) - sum(max_acceleration_max_acc)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-                const b_max_acceleration = (sum(max_acceleration_max_acc)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, max_acceleration_max_acc)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
-
-                if (a_max_acceleration > 0){
-                    maxAccelerationInfoTrend.innerHTML = `
-                    <i style="color: green; font-size: small;">Trending Up</i>
-                    `
-                }
-                else if(a_max_acceleration < 0){
-                    maxAccelerationInfoTrend.innerHTML = `
-                    <i style="color: red; font-size: small;">Trending Down</i>
-                    `
-                }
-
-                const regression_points_max_acceleration = []
-                for (i = 0; i < timestamps.length; i ++){
-                    regression_points_max_acceleration.push(a_max_acceleration*timestamps[i] + b_max_acceleration)
-                }
-
-                var data =  {
-                    labels: max_acceleration_dates,
-                    datasets: [
-                    {
-                        fill:false,
-                        label: 'Max acceleration',
-                        data: max_acceleration_max_acc,
-                        borderWidth: 1,
-                        tension: 0.4
-                    },
-                    {
-                        fill: false,
-                        label: "Max acceleration trend",
-                        data: regression_points_max_acceleration,
-                        borderWidth: 1,
-                    }
-                    ]
-                }
-
-                const shadingArea_max_acc = {
-                    id: "shadingArea_max_acc",
-                    beforeDatasetsDraw(chart, args, pluginsOptions) {
-                        const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
-
-                        const tickHeight = y.height/y.max;
-
-                        ctx.save();
-                        const datapointsLength = chart.data.labels.length; 
-                        ctx.beginPath();
-                        ctx.fillStyle = 'rgba(26,115,252,0.4)'
-                        // ctx.strokeStyle = 'rgba(0,0,0,1)'
-                        ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (max_acceleration_max_acc[0] - max_acceleration_lower[0]));
-
-                        for (let i = 1; i < datapointsLength; i++){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (max_acceleration_max_acc[i] - max_acceleration_lower[i]));
-                        }
-
-                        for (let z = datapointsLength - 1; z > 0; z--){
-                            ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (max_acceleration_upper[z] - max_acceleration_max_acc[z]));
-                        }
-                        
-                        ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (max_acceleration_upper[0] - max_acceleration_max_acc[0]));
-
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.restore();
-                    }
-                    
-                }
-
-                var config = {
-                    type: 'line',
-                    data, 
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                                grace: 1,
-                            }
-                        }
-                    },
-                    plugins: [shadingArea_max_acc]
-                }
-
-                const maxAccelerationChart = new Chart(
-                    ctx_max_acc,
-                    config
-                )
+                return final_array
             }
 
+            var n = timestamps.length
+            const a_duration = (n*sum(array_mult(duration_dur, timestamps)) - sum(duration_dur)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+            const b_duration = (sum(duration_dur)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, duration_dur)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+
+            if (a_duration > 0){
+                durationInfoTrend.innerHTML = `
+                <i style="color: green; font-size: small;">Trending Up</i>
+                `
+            }
+            else if(a_duration < 0){
+                durationInfoTrend.innerHTML = `
+                <i style="color: red; font-size: small;">Trending Down</i>
+                `
+            }
+
+            const regression_points_duration = []
+            for (i = 0; i < timestamps.length; i ++){
+                regression_points_duration.push(a_duration*timestamps[i] + b_duration)
+            }
+            
+            var data =  {
+                labels: duration_dates,
+                datasets: [
+                {
+                    fill: false, 
+                    label: "Average duration",
+                    data: duration_dur,
+                    borderWidth: 1, 
+                    tension: 0.5
+                },
+                {
+                    fill: false, 
+                    label: "Duration trend",
+                    data: regression_points_duration,
+                    borderWidth: 1,
+                }]
+            } 
+
+            const shadingArea_dur = {
+                id: "shadingArea_dur",
+                beforeDatasetsDraw(chart, args, pluginsOptions) {
+                    const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
+
+                    const tickHeight = y.height/y.max;
+
+                    ctx.save();
+                    const datapointsLength = chart.data.labels.length; 
+                    ctx.beginPath();
+                    ctx.fillStyle = 'rgba(26,115,252,0.4)'
+                    // ctx.strokeStyle = 'rgba(0,0,0,1)'
+                    ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (duration_dur[0] - duration_lower[0]));
+
+                    for (let i = 1; i < datapointsLength; i++){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (duration_dur[i] - duration_lower[i]));
+                    }
+
+                    for (let z = datapointsLength - 1; z > 0; z--){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (duration_upper[z] - duration_dur[z]));
+                    }
+                    
+                    ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (duration_upper[0] - duration_dur[0]));
+
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+                
+            }
+
+            var config = {
+                type: 'line',
+                data, 
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grace: .2
+                        }
+                    }
+                },
+                plugins: [shadingArea_dur]
+            }
+
+            const durationChart = new Chart(
+                ctx_duration,
+                config
+            )
+            
+            // // average velocity
+            var meanVelocityInfo = document.getElementById(`mean-velocity-info${typeGraph}`)
+            var velocityInfoTrend = document.getElementById(`velocity-trend-info${typeGraph}`)
+            meanVelocityInfo.textContent = `${mean_velocity_avg} ± ${mean_velocity_std}`
+
+            var n = timestamps.length
+            const a_velocity = (n*sum(array_mult(mean_velocity_mean_vel, timestamps)) - sum(mean_velocity_mean_vel)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+            const b_velocity = (sum(mean_velocity_mean_vel)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, mean_velocity_mean_vel)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+            
+            if (a_velocity > 0){
+                velocityInfoTrend.innerHTML = `
+                <i style="color: green; font-size: small;">Trending Up</i>
+                `
+            }
+            else if(a_velocity < 0){
+                velocityInfoTrend.innerHTML = `
+                <i style="color: red; font-size: small;">Trending Down</i>
+                `
+            }
+
+            const regression_points_velocity = []
+            for (i = 0; i < timestamps.length; i ++){
+                regression_points_velocity.push(a_velocity*timestamps[i] + b_velocity)
+            }
+            
+            var data =  {
+                labels: mean_velocity_dates,
+                datasets: [
+                {
+                    fill: false,
+                    label: "Average velocity",
+                    data: mean_velocity_mean_vel,
+                    borderWidth: 1, 
+                    tension: 0.4
+                },
+                {
+                    fill: false,
+                    label: "Mean velocity trend",
+                    data: regression_points_velocity,
+                    borderWidth: 1
+                }]
+            }
+
+            const shadingArea_mean_vel = {
+                id: "shadingArea_mean_vel",
+                beforeDatasetsDraw(chart, args, pluginsOptions) {
+                    const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
+
+                    const tickHeight = y.height/y.max;
+
+                    ctx.save();
+                    const datapointsLength = chart.data.labels.length; 
+                    ctx.beginPath();
+                    ctx.fillStyle = 'rgba(26,115,252,0.4)'
+                    // ctx.strokeStyle = 'rgba(0,0,0,1)'
+                    ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (mean_velocity_mean_vel[0] - mean_velocity_lower[0]));
+
+                    for (let i = 1; i < datapointsLength; i++){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (mean_velocity_mean_vel[i] - mean_velocity_lower[i]));
+                    }
+
+                    for (let z = datapointsLength - 1; z > 0; z--){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (mean_velocity_upper[z] - mean_velocity_mean_vel[z]));
+                    }
+                    
+                    ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (mean_velocity_upper[0] - mean_velocity_mean_vel[0]));
+
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+                
+            }
+
+            var config = {
+                type: 'line',
+                data, 
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grace: 0.2
+                        }
+                    }
+                },
+                plugins: [shadingArea_mean_vel]
+            }
+
+            const meanVelocityChart = new Chart(
+                ctx_mean_vel,
+                config
+            )
+
+            // // maximal velocity
+            var maxVelocityInfo = document.getElementById(`max-velocity-info${typeGraph}`)
+            var maxVelocityInfoTrend = document.getElementById(`max-velocity-trend-info${typeGraph}`)
+            maxVelocityInfo.textContent = `${max_velocity_avg} ± ${max_velocity_std}`
+
+            var n = timestamps.length
+            const a_max_velocity = (n*sum(array_mult(max_velocity_max_vel, timestamps)) - sum(max_velocity_max_vel)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+            const b_max_velocity = (sum(max_velocity_max_vel)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, max_velocity_max_vel)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+
+            if (a_max_velocity > 0){
+                maxVelocityInfoTrend.innerHTML = `
+                <i style="color: green; font-size: small;">Trending Up</i>
+                `
+            }
+            else if(a_max_velocity < 0){
+                maxVelocityInfoTrend.innerHTML = `
+                <i style="color: red; font-size: small;">Trending Down</i>
+                `
+            }
+
+            const regression_points_max_velocity = []
+            for (i = 0; i < timestamps.length; i ++){
+                regression_points_max_velocity.push(a_max_velocity*timestamps[i] + b_max_velocity)
+            }
+            
+            var data =  {
+                labels: max_velocity_dates,
+                datasets: [
+                {
+                    fill:false,
+                    label: "Max velocity",
+                    data: max_velocity_max_vel,
+                    borderWidth: 1,
+                    tension: 0.4
+                },
+                {
+                    fill:false,
+                    label: "Max velocity trend",
+                    data: regression_points_max_velocity,
+                    borderWidth: 1,
+                }]
+            }
+
+            const shadingArea_max_vel = {
+                id: "shadingArea_max_vel",
+                beforeDatasetsDraw(chart, args, pluginsOptions) {
+                    const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
+
+                    const tickHeight = y.height/y.max;
+
+                    ctx.save();
+                    const datapointsLength = chart.data.labels.length; 
+                    ctx.beginPath();
+                    ctx.fillStyle = 'rgba(26,115,252,0.4)'
+                    // ctx.strokeStyle = 'rgba(0,0,0,1)'
+                    ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (max_velocity_max_vel[0] - max_velocity_lower[0]));
+
+                    for (let i = 1; i < datapointsLength; i++){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (max_velocity_max_vel[i] - max_velocity_lower[i]));
+                    }
+
+                    for (let z = datapointsLength - 1; z > 0; z--){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (max_velocity_upper[z] - max_velocity_max_vel[z]));
+                    }
+                    
+                    ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (max_velocity_upper[0] - max_velocity_max_vel[0]));
+
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+                
+            }
+
+            var config = {
+                type: 'line',
+                data, 
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grace: 0.5
+                        }
+                    }
+                },
+                plugins: [shadingArea_max_vel]
+            }
+
+            const maxVelocityChart = new Chart(
+                ctx_max_vel,
+                config
+            )
+
+            // // zero crossings
+            var zeroCrossingsInfo = document.getElementById(`zero-crossings-info${typeGraph}`)
+            var zeroCrossingsInfoTrend = document.getElementById(`zero-crossings-trend-info${typeGraph}`)
+            zeroCrossingsInfo.textContent = `${zero_crossings_avg} ± ${zero_crossings_std}`
+            
+            var n = timestamps.length
+            const a_zero_crossings = (n*sum(array_mult(zero_crossings_zero_c, timestamps)) - sum(zero_crossings_zero_c)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+            const b_zero_crossings = (sum(zero_crossings_zero_c)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, zero_crossings_zero_c)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+            
+
+            if (a_zero_crossings > 0){
+                zeroCrossingsInfoTrend.innerHTML = `
+                <i style="color: green; font-size: small;">Trending Up</i>
+                `
+            }
+            else if(a_zero_crossings < 0){
+                zeroCrossingsInfoTrend.innerHTML = `
+                <i style="color: red; font-size: small;">Trending Down</i>
+                `
+            }
+
+            const regression_points_zero_crossings = []
+            for (i = 0; i < timestamps.length; i ++){
+                regression_points_zero_crossings.push(a_zero_crossings*timestamps[i] + b_zero_crossings)
+            }
+
+            var data =  {
+                labels: zero_crossings_dates,
+                datasets: [
+                {
+                    fill: false,
+                    label: "Average zero crossings",
+                    data: zero_crossings_zero_c,
+                    borderWidth: 1,
+                    tension: 0.4
+                },
+                {
+                    fill: false, 
+                    label: "Zero crossings trend",
+                    data: regression_points_zero_crossings,
+                    borderWidth: 1,
+                }]
+            }
+
+            const shadingArea_zero_c = {
+                id: "shadingArea_zero_c",
+                beforeDatasetsDraw(chart, args, pluginsOptions) {
+                    const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
+
+                    const tickHeight = y.height/y.max;
+
+                    ctx.save();
+                    const datapointsLength = chart.data.labels.length; 
+                    ctx.beginPath();
+                    ctx.fillStyle = 'rgba(26,115,252,0.4)'
+                    // ctx.strokeStyle = 'rgba(0,0,0,1)'
+                    ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (zero_crossings_zero_c[0] - zero_crossings_lower[0]));
+
+                    for (let i = 1; i < datapointsLength; i++){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (zero_crossings_zero_c[i] - zero_crossings_lower[i]));
+                    }
+
+                    for (let z = datapointsLength - 1; z > 0; z--){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (zero_crossings_upper[z] - zero_crossings_zero_c[z]));
+                    }
+                    
+                    ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (zero_crossings_upper[0] - zero_crossings_zero_c[0]));
+
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+                
+            }
+
+            var config = {
+                type: 'line',
+                data, 
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false, 
+                            grace: 1
+                        }
+                    }
+                },
+                plugins: [shadingArea_zero_c]
+            }
+
+            const zeroCrossingsChart = new Chart(
+                ctx_zero_c,
+                config
+            )
+
+            // // distance travelled
+            var distaceTraveledInfo = document.getElementById(`distance-traveled-info${typeGraph}`)
+            var distanceTraveledInfoTrend = document.getElementById(`distance-traveled-trend-info${typeGraph}`)
+            distaceTraveledInfo.textContent = `${distance_traveled_avg} ± ${distance_traveled_std}`
+            
+            var n = timestamps.length
+            const a_distance_traveled = (n*sum(array_mult(distance_traveled_distance_t, timestamps)) - sum(distance_traveled_distance_t)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+            const b_distance_traveled = (sum(distance_traveled_distance_t)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, distance_traveled_distance_t)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+
+            if (a_distance_traveled > 0){
+                distanceTraveledInfoTrend.innerHTML = `
+                <i style="color: green; font-size: small;">Trending Up</i>
+                `
+            }
+            else if(a_distance_traveled < 0){
+                distanceTraveledInfoTrend.innerHTML = `
+                <i style="color: red; font-size: small;">Trending Down</i>
+                `
+            }
+
+            const regression_points_distance_traveled = []
+            for (i = 0; i < timestamps.length; i ++){
+                regression_points_distance_traveled.push(a_distance_traveled*timestamps[i] + b_distance_traveled)
+            }
+
+            var data =  {
+                labels: distance_traveled_dates,
+                datasets: [
+                    {
+                        fill: false, 
+                        label: "Average distance traveled",
+                        data: distance_traveled_distance_t,
+                        borderWidth: 1,
+                        tension: 0.4
+                    },
+                    {
+                        fill: false, 
+                        label: "Distance traveled trend",
+                        data: regression_points_distance_traveled,
+                        borderWidth: 1
+                    }]
+            }
+
+            const shadingArea_distance_t = {
+                id: "shadingArea_distance_t",
+                beforeDatasetsDraw(chart, args, pluginsOptions) {
+                    const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
+
+                    const tickHeight = y.height/y.max;
+
+                    ctx.save();
+                    const datapointsLength = chart.data.labels.length; 
+                    ctx.beginPath();
+                    ctx.fillStyle = 'rgba(26,115,252,0.4)'
+                    // ctx.strokeStyle = 'rgba(0,0,0,1)'
+                    ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (distance_traveled_distance_t[0] - distance_traveled_lower[0]));
+
+                    for (let i = 1; i < datapointsLength; i++){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (distance_traveled_distance_t[i] - distance_traveled_lower[i]));
+                    }
+
+                    for (let z = datapointsLength - 1; z > 0; z--){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (distance_traveled_upper[z] - distance_traveled_distance_t[z]));
+                    }
+                    
+                    ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (distance_traveled_upper[0] - distance_traveled_distance_t[0]));
+
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+                
+            }
+
+            var config = {
+                type: 'line',
+                data, 
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grace: .2,
+                        }
+                    }
+                },
+                plugins: [shadingArea_distance_t]
+            }
+
+            const distanceTraveledChart = new Chart(
+                ctx_distance_t,
+                config
+            )
+
+
+            // // max acceleration 
+            var maxAccelerationInfo = document.getElementById(`max-acceleration-info${typeGraph}`)
+            var maxAccelerationInfoTrend = document.getElementById(`max-acceleration-trend-info${typeGraph}`)
+            maxAccelerationInfo.textContent = `${max_acceleration_avg} ± ${max_acceleration_std}`
+            
+            var n = timestamps.length
+            const a_max_acceleration = (n*sum(array_mult(max_acceleration_max_acc, timestamps)) - sum(max_acceleration_max_acc)*sum(timestamps))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+            const b_max_acceleration = (sum(max_acceleration_max_acc)*sum(squared_element(timestamps)) - sum(timestamps)*sum(array_mult(timestamps, max_acceleration_max_acc)))/(n*sum(squared_element(timestamps))-sum(timestamps)**2)
+
+            if (a_max_acceleration > 0){
+                maxAccelerationInfoTrend.innerHTML = `
+                <i style="color: green; font-size: small;">Trending Up</i>
+                `
+            }
+            else if(a_max_acceleration < 0){
+                maxAccelerationInfoTrend.innerHTML = `
+                <i style="color: red; font-size: small;">Trending Down</i>
+                `
+            }
+
+            const regression_points_max_acceleration = []
+            for (i = 0; i < timestamps.length; i ++){
+                regression_points_max_acceleration.push(a_max_acceleration*timestamps[i] + b_max_acceleration)
+            }
+
+            var data =  {
+                labels: max_acceleration_dates,
+                datasets: [
+                {
+                    fill:false,
+                    label: 'Max acceleration',
+                    data: max_acceleration_max_acc,
+                    borderWidth: 1,
+                    tension: 0.4
+                },
+                {
+                    fill: false,
+                    label: "Max acceleration trend",
+                    data: regression_points_max_acceleration,
+                    borderWidth: 1,
+                }
+                ]
+            }
+
+            const shadingArea_max_acc = {
+                id: "shadingArea_max_acc",
+                beforeDatasetsDraw(chart, args, pluginsOptions) {
+                    const { ctx, chartArea: { top, bottom, left, right, width, height }, scales: { x, y } } = chart;
+
+                    const tickHeight = y.height/y.max;
+
+                    ctx.save();
+                    const datapointsLength = chart.data.labels.length; 
+                    ctx.beginPath();
+                    ctx.fillStyle = 'rgba(26,115,252,0.4)'
+                    // ctx.strokeStyle = 'rgba(0,0,0,1)'
+                    ctx.moveTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + tickHeight * (max_acceleration_max_acc[0] - max_acceleration_lower[0]));
+
+                    for (let i = 1; i < datapointsLength; i++){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[i].x, chart.getDatasetMeta(0).data[i].y + tickHeight * (max_acceleration_max_acc[i] - max_acceleration_lower[i]));
+                    }
+
+                    for (let z = datapointsLength - 1; z > 0; z--){
+                        ctx.lineTo(chart.getDatasetMeta(0).data[z].x, chart.getDatasetMeta(0).data[z].y - tickHeight * (max_acceleration_upper[z] - max_acceleration_max_acc[z]));
+                    }
+                    
+                    ctx.lineTo(chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - tickHeight * (max_acceleration_upper[0] - max_acceleration_max_acc[0]));
+
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+                
+            }
+
+            var config = {
+                type: 'line',
+                data, 
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grace: 1,
+                        }
+                    }
+                },
+                plugins: [shadingArea_max_acc]
+            }
+
+            const maxAccelerationChart = new Chart(
+                ctx_max_acc,
+                config
+            )
 
 
         },
@@ -4073,6 +2748,30 @@ function showCompleteCalendar(sessionPatient, sessionOthers, elementId, hh, hc, 
     calendar.render();
 }
 
+function showSessionsDropdown(sessionsToComplete, typeScreen){
+    document.getElementById(`dropdownSessionMenu${typeScreen}`).innerHTML = ""
+                
+    sessionsToComplete.forEach(session => {
+        document.getElementById(`dropdownSessionMenu${typeScreen}`).innerHTML += `
+            <li><a class="dropdown-item" id="session-update-${session.id}${typeScreen}">${session.title}</a></li>
+        `
+    })
+    sessionsToComplete.forEach(session => {
+        document.getElementById(`session-update-${session.id}${typeScreen}`).addEventListener('click', function(event){
+            event.preventDefault()
+
+            selectedSessionId = session.id
+            if (selectedSessionId != 0){
+                document.getElementById(`session-name-update${typeScreen}`).innerHTML = `
+                    What action do you want to take for session with date: "${session.title}"?
+                `
+                document.getElementById(`complete-button${typeScreen}`).classList.remove("not-visible")
+                document.getElementById(`delete-button${typeScreen}`).classList.remove("not-visible")
+            }
+        })
+    })
+}
+
 // load session dashboard for a specific patient
 const loadSessions = (patientId) => {
 
@@ -4085,17 +2784,21 @@ const loadSessions = (patientId) => {
             var screenWidth = window.innerWidth;
             var patient_sessions = response.data.patientSessions
             var other_patients_sessions = response.data.otherPatientsSessions
+            var sessionsToComplete = response.data.sessionsToComplete
             //create the calendar
             if (screenWidth <= 769){
                 showCompleteCalendar(patient_sessions, other_patients_sessions, 'calendar-sessions-m', 450, 430, views="dayGridMonth,listMonth")
+                showSessionsDropdown(sessionsToComplete, "-m")
             }
             else if (screenWidth >=1306){
                 showCompleteCalendar(patient_sessions, other_patients_sessions, 'calendar-sessions', 650, 630, views="dayGridMonth")
                 showCalendar(patient_sessions, 'list-sessions', 650, 630, "listMonth")
+                showSessionsDropdown(sessionsToComplete, "")
             }
             else{
                 showCompleteCalendar(patient_sessions, other_patients_sessions, 'calendar-sessions-t', 550, 530, views="dayGridMonth")
                 showCalendar(patient_sessions, 'list-sessions-t', 550, 530, "listMonth")
+                showSessionsDropdown(sessionsToComplete, "-t")
             }
         },
         error: function(error){
@@ -4244,27 +2947,12 @@ const handleAlerts = (element, type, text) => {
     `
 }
 
-// book | desktop
-var bookAlertBox = document.getElementById('book-alert-box')
-var bookForm = document.getElementById("book-form")
-try {
-    document.getElementById("id_date").setAttribute("id", "id_date_desktop")
-    var date = document.getElementById("id_date_desktop")
-} catch (error) {
-    console.log(error)
-} finally{
-    var date = document.getElementById("id_date_desktop")
-}
-
-var csrf = document.getElementsByName("csrfmiddlewaretoken")[2]
-
-bookForm.addEventListener('submit', e=>{
-    e.preventDefault()
-
+// book form function
+const bookFormFunction = (csrf, date, patient_id, alertElement) => {
     var fd = new FormData()
     fd.append('csrfmiddlewaretoken', csrf.value)
     fd.append('date', date.value)
-    fd.append('patient_id', selectedPatient)
+    fd.append('patient_id', patient_id)
     fd.append('type', "book")
     $.ajax({
         type:'POST', 
@@ -4274,49 +2962,30 @@ bookForm.addEventListener('submit', e=>{
             var successText = `
                 successfully saved file from ${response.date}
             `
-            handleAlerts(bookAlertBox, 'success', successText)
+            handleAlerts(alertElement, 'success', successText)
 
             setTimeout(() => {
-                bookAlertBox.innerHTML = ""
+                alertElement.innerHTML = ""
                 date.value=""
-                loadSessions(selectedPatient)
+                loadSessions(patient_id)
             }, 1000)
         },
         error:function(error){
-            handleAlerts(bookAlertBox, 'danger', 'ups, something went wrong')
+            handleAlerts(alertElement, 'danger', 'ups, something went wrong')
             console.log(error)
         },
         cache:false,
         contentType:false,
         processData:false,
     })
-})
-
-// upload | desktop
-var uploadAlertBox = document.getElementById('upload-alert-box')
-var uploadForm = document.getElementById("upload-form")
-try {
-    document.getElementById("id_date").setAttribute("id", "id_date_desktop_upload")
-    var dateUpload = document.getElementById("id_date_desktop_upload")
-    document.getElementById("id_data_file").setAttribute("id", "id_data_file_desktop_upload")
-    var dataFileUpload = document.getElementById("id_data_file_desktop_upload")
-} catch (error) {
-    console.log(error)
-} finally{
-    var dateUpload = document.getElementById("id_date_desktop_upload")
-    var dataFileUpload = document.getElementById("id_data_file_desktop_upload")
 }
-
-var csrfUpload = document.getElementsByName("csrfmiddlewaretoken")[4]
-
-uploadForm.addEventListener('submit', e=>{
-    e.preventDefault()
-
+//upload form function
+const uploadFormFunction = (csrf, dateUpload, dataFileUpload, patient_id, alertElement) => {
     var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfUpload.value)
+    fd.append('csrfmiddlewaretoken', csrf.value)
     fd.append('date', dateUpload.value)
     fd.append('data_file', dataFileUpload.files[0])
-    fd.append('patient_id', selectedPatient);
+    fd.append('patient_id', patient_id);
     fd.append('type', "upload")
     $.ajax({
         type:'POST', 
@@ -4327,46 +2996,30 @@ uploadForm.addEventListener('submit', e=>{
             var successText = `
                 successfully saved file from ${response.date}
             `
-            handleAlerts(uploadAlertBox, 'success', successText)
+            handleAlerts(alertElement, 'success', successText)
 
             setTimeout(()=> {
-                uploadAlertBox.innerHTML = ""
+                alertElement.innerHTML = ""
                 dateUpload.value=""
                 dataFileUpload.value=""
-                loadAnalysis(selectedPatient)
+                loadAnalysis(patient_id)
             }, 1000)
         },
         error:function(error){
-            handleAlerts(uploadAlertBox, 'danger', 'ups, something went wrong')
+            handleAlerts(alertElement, 'danger', 'ups, something went wrong')
             console.log(error)
         },
         cache:false,
         contentType:false,
         processData:false,
     })
-})
-
-
-// Messages | desktop
-var messageForm = document.getElementById("m-form")
-try {
-    document.getElementById("id_textMessage").setAttribute("id", "id_textMessage_desktop")
-    var message = document.getElementById("id_textMessage_desktop")
-} catch (error) {
-    console.log(error)
-} finally{
-    var message = document.getElementById("id_textMessage_desktop")
 }
-
-var csrfMessage = document.getElementsByName("csrfmiddlewaretoken")[3]
-
-messageForm.addEventListener('submit', e=>{
-    e.preventDefault()
-
+// messagePostFunction 
+const messagePostFunction = (csrf, message, patient_id) => {
     var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfMessage.value)
+    fd.append('csrfmiddlewaretoken', csrf.value)
     fd.append('textMessage', message.value)
-    fd.append('patient_id', selectedPatient);
+    fd.append('patient_id', patient_id);
     fd.append('type', "message")
     $.ajax({
         type:'POST', 
@@ -4377,7 +3030,7 @@ messageForm.addEventListener('submit', e=>{
 
             setTimeout(()=> {
                 message.value=""
-                loadMessages(selectedPatient)
+                loadMessages(patient_id)
             }, 250)
         },
         error:function(error){
@@ -4387,9 +3040,50 @@ messageForm.addEventListener('submit', e=>{
         contentType:false,
         processData:false,
     })
+}
+
+// book | desktop
+var bookAlertBox = document.getElementById('book-alert-box')
+var bookForm = document.getElementById("book-form")
+
+document.getElementById("id_date").setAttribute("id", "id_date_desktop")
+var date = document.getElementById("id_date_desktop")
+
+var csrf = document.getElementsByName("csrfmiddlewaretoken")[2]
+
+bookForm.addEventListener('submit', e=>{
+    e.preventDefault()
+    bookFormFunction(csrf, date, selectedPatient, bookAlertBox)
 })
 
+// Messages | desktop
+var messageForm = document.getElementById("m-form")
 
+document.getElementById("id_textMessage").setAttribute("id", "id_textMessage_desktop")
+var message = document.getElementById("id_textMessage_desktop")
+
+var csrfMessage = document.getElementsByName("csrfmiddlewaretoken")[3]
+
+messageForm.addEventListener('submit', e=>{
+    e.preventDefault()
+    messagePostFunction(csrfMessage, message, selectedPatient)
+})
+
+// upload | desktop
+var uploadAlertBox = document.getElementById('upload-alert-box')
+var uploadForm = document.getElementById("upload-form")
+
+document.getElementById("id_date").setAttribute("id", "id_date_desktop_upload")
+var dateUpload = document.getElementById("id_date_desktop_upload")
+document.getElementById("id_data_file").setAttribute("id", "id_data_file_desktop_upload")
+var dataFileUpload = document.getElementById("id_data_file_desktop_upload")
+
+var csrfUpload = document.getElementsByName("csrfmiddlewaretoken")[4]
+
+uploadForm.addEventListener('submit', e=>{
+    e.preventDefault()
+    uploadFormFunction(csrfUpload, dateUpload, dataFileUpload, selectedPatient, uploadAlertBox)
+})
 
 // Book | tablet
 var bookAlertBoxTablet = document.getElementById('book-alert-box-t')
@@ -4407,276 +3101,182 @@ var csrfTablet = document.getElementsByName("csrfmiddlewaretoken")[5]
 
 bookFormTablet.addEventListener('submit', e=>{
     e.preventDefault()
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfTablet.value)
-    fd.append('date', dateT.value)
-    fd.append('patient_id', selectedPatient)
-    $.ajax({
-        type:'POST', 
-        url: url,
-        data: fd,
-        success: function(response){
-            var successText = `
-                successfully saved file from ${response.date}
-            `
-            handleAlerts(bookAlertBoxTablet, 'success', successText)
-
-            setTimeout(() => {
-                bookAlertBoxTablet.innerHTML = ""
-                dateT.value=""
-                loadSessions(selectedPatient)
-            }, 1000)
-            
-        },
-        error:function(error){
-            handleAlerts(bookAlertBoxTablet, 'danger', 'ups, something went wrong')
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+    bookFormFunction(csrfTablet, dateT, selectedPatient, bookAlertBoxTablet)
 })
 
 // message | tablet
 var messageFormTablet = document.getElementById("m-form-t")
-try {
-    document.getElementById("id_textMessage").setAttribute("id", "id_textMessage_tablet")
-    var messageTablet = document.getElementById("id_textMessage_tablet")
-} catch (error) {
-    console.log(error)
-} finally{
-    var messageTablet = document.getElementById("id_textMessage_tablet")
-}
+
+document.getElementById("id_textMessage").setAttribute("id", "id_textMessage_tablet")
+var messageTablet = document.getElementById("id_textMessage_tablet")
 
 var csrfMessageTablet = document.getElementsByName("csrfmiddlewaretoken")[6]
 
 messageFormTablet.addEventListener('submit', e=>{
     e.preventDefault()
-
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfMessageTablet.value)
-    fd.append('textMessage', messageTablet.value)
-    fd.append('patient_id', selectedPatient);
-    fd.append('type', "message")
-    $.ajax({
-        type:'POST', 
-        url: url,
-        enctype: 'application/x-www-form-urlencoded', 
-        data: fd,
-        success: function(response){
-
-            setTimeout(()=> {
-                messageTablet.value=""
-                loadMessages(selectedPatient)
-            }, 250)
-        },
-        error:function(error){
-            console.log(fd)
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+    messagePostFunction(csrfMessageTablet, messageTablet, selectedPatient)
 })
 
 // upload | tablet
-
 var uploadAlertBoxTablet = document.getElementById('upload-alert-box-t')
 var uploadFormTablet = document.getElementById("upload-form-t")
-try {
-    document.getElementById("id_date").setAttribute("id", "id_date_tablet_upload")
-    var dateUploadTablet = document.getElementById("id_date_tablet_upload")
-    document.getElementById("id_data_file").setAttribute("id", "id_data_file_tablet_upload")
-    var dataFileUploadTablet = document.getElementById("id_data_file_tablet_upload")
-} catch (error) {
-    console.log(error)
-} finally{
-    var dateUploadTablet = document.getElementById("id_date_tablet_upload")
-    var dataFileUploadTablet = document.getElementById("id_data_file_tablet_upload")
-}
+
+document.getElementById("id_date").setAttribute("id", "id_date_tablet_upload")
+var dateUploadTablet = document.getElementById("id_date_tablet_upload")
+document.getElementById("id_data_file").setAttribute("id", "id_data_file_tablet_upload")
+var dataFileUploadTablet = document.getElementById("id_data_file_tablet_upload")
 
 var csrfUploadTablet = document.getElementsByName("csrfmiddlewaretoken")[7]
 
 uploadFormTablet.addEventListener('submit', e=>{
     e.preventDefault()
-
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfUploadTablet.value)
-    fd.append('date', dateUploadTablet.value)
-    fd.append('data_file', dataFileUploadTablet.files[0])
-    fd.append('patient_id', selectedPatient);
-    fd.append('type', "upload")
-    $.ajax({
-        type:'POST', 
-        url: url,
-        enctype: 'multipart/form-data',
-        data: fd,
-        success: function(response){
-            var successText = `
-                successfully saved file from ${response.date}
-            `
-            handleAlertsUpload('success', successText)
-
-            setTimeout(()=> {
-                uploadAlertBoxTablet.innerHTML = ""
-                dateUploadTablet.value=""
-                dataFileUploadTablet.value=""
-                loadAnalysis(selectedPatient)
-            }, 1000)
-        },
-        error:function(error){
-            handleAlerts('danger', 'ups, something went wrong')
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+    uploadFormFunction(csrfUploadTablet, dateUploadTablet, dataFileUploadTablet, selectedPatient, uploadAlertBoxTablet)
 })
-
 
 // book | mobile
 var bookAlertBoxMobile = document.getElementById('book-alert-box-m')
 var bookFormMobile = document.getElementById("book-form-m")
-try {
-    document.getElementById("id_date").setAttribute("id", "id_date_mobile")
-    var dateM = document.getElementById("id_date_mobile")
-} catch (error) {
-    console.log(error)
-} finally{
-    var dateM = document.getElementById("id_date_mobile")
-}
+
+document.getElementById("id_date").setAttribute("id", "id_date_mobile")
+var dateM = document.getElementById("id_date_mobile")
 
 var csrfMobile = document.getElementsByName("csrfmiddlewaretoken")[8]
 
-
 bookFormMobile.addEventListener('submit', e=>{
     e.preventDefault()
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfMobile.value)
-    fd.append('date', dateM.value)
-    fd.append('patient_id', selectedPatient)
-    $.ajax({
-        type:'POST', 
-        url: url,
-        data: fd,
-        success: function(response){
-            var successText = `
-                successfully saved file from ${response.date}
-            `
-            handleAlerts('success', successText)
-
-            setTimeout(() => {
-                bookAlertBoxMobile.innerHTML = ""
-                dateM.value=""
-                loadSessions(selectedPatient)
-            }, 1000)
-        },
-        error:function(error){
-            handleAlerts('danger', 'ups, something went wrong')
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+    bookFormFunction(csrfMobile, dateM, selectedPatient, bookAlertBoxMobile)
 })
 
 // message | mobile
 var messageFormMobile = document.getElementById("m-form-m")
-try {
-    document.getElementById("id_textMessage").setAttribute("id", "id_textMessage_mobile")
-    var messageMobile = document.getElementById("id_textMessage_mobile")
-} catch (error) {
-    console.log(error)
-} finally{
-    var messageMobile = document.getElementById("id_textMessage_mobile")
-}
+
+document.getElementById("id_textMessage").setAttribute("id", "id_textMessage_mobile")
+var messageMobile = document.getElementById("id_textMessage_mobile")
 
 var csrfMessageMobile = document.getElementsByName("csrfmiddlewaretoken")[9]
 
 messageFormMobile.addEventListener('submit', e=>{
     e.preventDefault()
-
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfMessageMobile.value)
-    fd.append('textMessage', messageMobile.value)
-    fd.append('patient_id', selectedPatient);
-    fd.append('type', "message")
-    $.ajax({
-        type:'POST', 
-        url: url,
-        enctype: 'application/x-www-form-urlencoded', 
-        data: fd,
-        success: function(response){
-
-            setTimeout(()=> {
-                messageMobile.value=""
-                loadMessages(selectedPatient)
-            }, 250)
-        },
-        error:function(error){
-            console.log(fd)
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+    messagePostFunction(csrfMessageMobile, messageMobile, selectedPatient)
 })
 
 // upload | mobile
 var uploadAlertBoxMobile = document.getElementById('upload-alert-box-m')
 var uploadFormMobile = document.getElementById("upload-form-m")
-try {
-    document.getElementById("id_date").setAttribute("id", "id_date_mobile_upload")
-    var dateUploadMobile = document.getElementById("id_date_mobile_upload")
-    document.getElementById("id_data_file").setAttribute("id", "id_data_file_mobile_upload")
-    var dataFileUploadMobile = document.getElementById("id_data_file_mobile_upload")
-} catch (error) {
-    console.log(error)
-} finally{
-    var dateUploadMobile = document.getElementById("id_date_mobile_upload")
-    var dataFileUploadMobile = document.getElementById("id_data_file_mobile_upload")
-}
+document.getElementById("id_date").setAttribute("id", "id_date_mobile_upload")
+var dateUploadMobile = document.getElementById("id_date_mobile_upload")
+document.getElementById("id_data_file").setAttribute("id", "id_data_file_mobile_upload")
+var dataFileUploadMobile = document.getElementById("id_data_file_mobile_upload")
 
 var csrfUploadMobile = document.getElementsByName("csrfmiddlewaretoken")[10]
 
 uploadFormMobile.addEventListener('submit', e=>{
     e.preventDefault()
-
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfUploadMobile.value)
-    fd.append('date', dateUploadMobile.value)
-    fd.append('data_file', dataFileUploadMobile.files[0])
-    fd.append('patient_id', selectedPatient);
-    fd.append('type', "upload")
-    $.ajax({
-        type:'POST', 
-        url: url,
-        enctype: 'multipart/form-data',
-        data: fd,
-        success: function(response){
-            var successText = `
-                successfully saved file from ${response.date}
-            `
-            handleAlertsUpload('success', successText)
-
-            setTimeout(()=> {
-                uploadAlertBoxMobile.innerHTML = ""
-                dateUploadMobile.value=""
-                dataFileUploadMobile.value=""
-                loadAnalysis(selectedPatient)
-            }, 1000)
-        },
-        error:function(error){
-            handleAlerts('danger', 'ups, something went wrong')
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+    uploadFormFunction(csrfUploadMobile, dateUploadMobile, dataFileUploadMobile, selectedPatient, uploadAlertBoxMobile)
 })  
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function completeSessionPut(updatedData, typeScreen) {
+
+    var csrfToken = getCookie('csrftoken');
+
+    // Make sure the token is retrieved successfully
+    if (csrfToken === null) {
+        console.error('CSRF token not found.');
+        return;
+    }
+
+    $.ajax({
+        url: url + "complete_session/" + selectedSessionId,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(updatedData),
+        headers: { 'X-CSRFToken': csrfToken }, 
+        success: function(response) {
+            loadSessions(selectedPatient)
+            document.getElementById(`session-name-update${typeScreen}`).innerHTML=""
+            document.getElementById(`complete-button${typeScreen}`).classList.add("not-visible")
+            document.getElementById(`delete-button${typeScreen}`).classList.add("not-visible")
+        },
+        error: function(error) {
+            console.error('Error in update request:', error);
+        }
+    });
+}
+
+function deleteSession(typeScreen){
+
+    var csrfToken = getCookie('csrftoken');
+
+    // Make sure the token is retrieved successfully
+    if (csrfToken === null) {
+        console.error('CSRF token not found.');
+        return;
+    }
+
+    $.ajax({
+        url: url + "delete_session/" + selectedSessionId,
+        type: 'DELETE',
+        contentType: 'application/json',
+        headers: { 'X-CSRFToken': csrfToken }, 
+        success: function(response) {
+            loadSessions(selectedPatient)
+            document.getElementById(`session-name-update${typeScreen}`).innerHTML=""
+            document.getElementById(`complete-button${typeScreen}`).classList.add("not-visible")
+            document.getElementById(`delete-button${typeScreen}`).classList.add("not-visible")
+        },
+        error: function(error) {
+            console.error('Error in delete request:', error);
+        }
+    });
+}
+
+document.getElementById("complete-button").addEventListener('click', function(event){
+    event.preventDefault()
+
+    completeSessionPut({completed:"True"}, "")
+})
+
+document.getElementById("delete-button").addEventListener('click', function(event){
+    event.preventDefault()
+    
+    deleteSession("")
+})
+
+document.getElementById("complete-button-t").addEventListener('click', function(event){
+    event.preventDefault()
+
+    completeSessionPut({completed:"True"}, "-t")
+})
+
+document.getElementById("delete-button-t").addEventListener('click', function(event){
+    event.preventDefault()
+    
+    deleteSession("-t")
+})
+
+document.getElementById("complete-button-m").addEventListener('click', function(event){
+    event.preventDefault()
+
+    completeSessionPut({completed:"True"}, "-m")
+})
+
+document.getElementById("delete-button-m").addEventListener('click', function(event){
+    event.preventDefault()
+    
+    deleteSession("-m")
+})

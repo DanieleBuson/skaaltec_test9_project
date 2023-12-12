@@ -1615,42 +1615,52 @@ const handleAlerts = (component, type, text) => {
     `
 }
 
-//booking desktop
+// message form function
 
-var bookAlertBox = document.getElementById('book-alert-box')
-var bookForm = document.getElementById("book-form")
-try {
-    document.getElementById("id_date").setAttribute("id", "id_date_desktop")
-    var dateDesktop = document.getElementById("id_date_desktop")
-} catch (error) {
-    console.log(error)
-} finally{
-    var dateDesktop = document.getElementById("id_date_desktop")
+const sendMessageForm = (csrf, message) => {
+    var fd = new FormData()
+    fd.append('csrfmiddlewaretoken', csrf.value)
+    fd.append('textMessage', message.value)
+    fd.append('type', "message")
+    $.ajax({
+        type:'POST', 
+        url: url,
+        enctype: 'application/x-www-form-urlencoded', 
+        data: fd,
+        success: function(response){
+
+            setTimeout(()=> {
+                message.value=""
+                loadMessages()
+            }, 250)
+        },
+        error:function(error){
+            console.log(error)
+        },
+        cache:false,
+        contentType:false,
+        processData:false,
+    })
 }
 
-csrfBook = document.getElementsByName("csrfmiddlewaretoken")[3]
-
-bookForm.addEventListener('submit', e=>{
-    e.preventDefault()
-
+const bookSessionForm = (csrf, date, alertElement) => {
     var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfBook.value)
-    fd.append('date', dateDesktop.value)
+    fd.append('csrfmiddlewaretoken', csrf.value)
+    fd.append('date', date.value)
     fd.append('type', "book")
     $.ajax({
         type:'POST', 
         url: url,
         data: fd,
         success: function(response){
-            console.log(response)
             var successText = `
                 successfully saved file from ${response.date}
             `
-            handleAlerts(bookAlertBox, 'success', successText)
+            handleAlerts(alertElement, 'success', successText)
 
             setTimeout(() => {
-                bookAlertBox.innerHTML = ""
-                dateDesktop.value=""
+                alertElement.innerHTML = ""
+                date.value = ""
                 loadInformation()
             }, 1500)
         },
@@ -1662,7 +1672,7 @@ bookForm.addEventListener('submit', e=>{
         contentType:false,
         processData:false,
     })
-})
+}
 
 // message for therapist
 var messageForm = document.getElementById("m-form")
@@ -1680,30 +1690,27 @@ console.log(csrfMessage)
 
 messageForm.addEventListener('submit', e=>{
     e.preventDefault()
+    sendMessageForm(csrfMessage, messageDesktop)
+})
 
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfMessage.value)
-    fd.append('textMessage', messageDesktop.value)
-    fd.append('type', "message")
-    $.ajax({
-        type:'POST', 
-        url: url,
-        enctype: 'application/x-www-form-urlencoded', 
-        data: fd,
-        success: function(response){
-            console.log(response)
-            setTimeout(()=> {
-                messageDesktop.value=""
-                loadMessages()
-            }, 250)
-        },
-        error:function(error){
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+//booking desktop
+
+var bookAlertBox = document.getElementById('book-alert-box')
+var bookForm = document.getElementById("book-form")
+try {
+    document.getElementById("id_date").setAttribute("id", "id_date_desktop")
+    var dateDesktop = document.getElementById("id_date_desktop")
+} catch (error) {
+    console.log(error)
+} finally{
+    var dateDesktop = document.getElementById("id_date_desktop")
+}
+
+csrfBook = document.getElementsByName("csrfmiddlewaretoken")[3]
+
+bookForm.addEventListener('submit', e=>{
+    e.preventDefault()
+    bookSessionForm(csrfBook, dateDesktop, bookAlertBox)
 })
 
 //tablet message
@@ -1721,33 +1728,10 @@ var csrfMessageTablet = document.getElementsByName("csrfmiddlewaretoken")[4]
 
 messageFormTablet.addEventListener('submit', e=>{
     e.preventDefault()
-
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfMessageTablet.value)
-    fd.append('textMessage', messageTablet.value)
-    fd.append('type', "message")
-    $.ajax({
-        type:'POST', 
-        url: url,
-        enctype: 'application/x-www-form-urlencoded', 
-        data: fd,
-        success: function(response){
-
-            setTimeout(()=> {
-                messageTablet.value=""
-                loadMessages()
-            }, 250)
-        },
-        error:function(error){
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+    sendMessageForm(csrfMessageTablet, messageTablet)
 })
 
-// book a session
+// tablet booking
 var bookAlertBoxTablet = document.getElementById('book-alert-box-t')
 var bookFormTablet = document.getElementById("book-form-t")
 try {
@@ -1763,39 +1747,10 @@ csrfBookTablet = document.getElementsByName("csrfmiddlewaretoken")[5]
 
 bookFormTablet.addEventListener('submit', e=>{
     e.preventDefault()
-
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfBookTablet.value)
-    fd.append('date', dateTablet.value)
-    fd.append('type', "book")
-    $.ajax({
-        type:'POST', 
-        url: url,
-        data: fd,
-        success: function(response){
-            console.log("inside the post")
-            var successText = `
-                successfully saved file from ${response.date}
-            `
-            handleAlerts(bookAlertBoxTablet, 'success', successText)
-
-            setTimeout(() => {
-                bookAlertBoxTablet.innerHTML = ""
-                dateTablet.value = ""
-                loadInformation()
-            }, 1500)
-        },
-        error:function(error){
-            handleAlerts('danger', 'ups, something went wrong')
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+    bookSessionForm(csrfBookTablet, dateTablet, bookAlertBoxTablet)
 })
 
-//mobile message
+// mobile message
 var messageFormMobile = document.getElementById("m-form-m")
 try {
     document.getElementById("id_textMessage").setAttribute("id", "id_textMessage_mobile")
@@ -1810,32 +1765,10 @@ var csrfMessageMobile = document.getElementsByName("csrfmiddlewaretoken")[6]
 
 messageFormMobile.addEventListener('submit', e=>{
     e.preventDefault()
-
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfMessageMobile.value)
-    fd.append('textMessage', messageMobile.value)
-    fd.append('type', "message")
-    $.ajax({
-        type:'POST', 
-        url: url,
-        enctype: 'application/x-www-form-urlencoded', 
-        data: fd,
-        success: function(response){
-            setTimeout(()=> {
-                messageMobile.value=""
-                loadMessages()
-            }, 250)
-        },
-        error:function(error){
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+    sendMessageForm(csrfMessageMobile, messageMobile)
 })
 
-// book a session mobile
+// mobile booking
 var bookAlertBoxMobile = document.getElementById('book-alert-box-m')
 var bookFormMobile = document.getElementById("book-form-m")
 try {
@@ -1851,33 +1784,5 @@ csrfBookMobile = document.getElementsByName("csrfmiddlewaretoken")[7]
 
 bookFormMobile.addEventListener('submit', e=>{
     e.preventDefault()
-
-    var fd = new FormData()
-    fd.append('csrfmiddlewaretoken', csrfBookMobile.value)
-    fd.append('date', dateMobile.value)
-    fd.append('type', "book")
-    $.ajax({
-        type:'POST', 
-        url: url,
-        data: fd,
-        success: function(response){
-            var successText = `
-                successfully saved file from ${response.date}
-            `
-            handleAlerts(bookAlertBoxMobile, 'success', successText)
-
-            setTimeout(() => {
-                bookAlertBoxMobile.innerHTML = ""
-                dateMobile.value = ""
-                loadInformation()
-            }, 1500)
-        },
-        error:function(error){
-            handleAlerts('danger', 'ups, something went wrong')
-            console.log(error)
-        },
-        cache:false,
-        contentType:false,
-        processData:false,
-    })
+    bookSessionForm(csrfBookMobile, dateMobile, bookAlertBoxMobile)
 })

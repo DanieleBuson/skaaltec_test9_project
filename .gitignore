@@ -7,3 +7,4 @@ db.sqlite3
 package-lock.json
 package.json
 TODO
+media/static/skaaltec_test9/IMU/imu*.csv
