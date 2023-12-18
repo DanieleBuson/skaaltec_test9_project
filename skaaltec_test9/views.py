@@ -11,7 +11,7 @@ from skaaltec_test9.functions import Kinematics, extract_dates, patient_data, an
 from webapp_test9.settings import MEDIA_URL
 from .models import Analysis, News, Therapist, Patient, PatientHasTherapist, Message, Session
 from .forms import ContactForm, AnalysisForm, MessageForm, SessionForm
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
 
 
 # Create your views here.
