@@ -551,7 +551,12 @@ def load_admin_td(request):
             dates.append(analysis.date)
     analyses_count = []
     for date in dates:
-        analyses_count.append(len(Analysis.objects.filter(date=date)))
+        count = 0
+        analyses_temp = Analysis.objects.filter(date=date)
+        for analysis in analyses_temp:
+            if analysis.patientAndTherapist.therapist == therapist:
+                count += 1
+        analyses_count.append(count)
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         patients_size = len(patients)
