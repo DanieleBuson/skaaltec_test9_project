@@ -635,7 +635,6 @@ def load_analysis_td(request, patient_pk):
     for element in patient_list:
         if patient == element.patient:
             patientAndTherapist = element
-            print("Fino a qui tutto bene")
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         sessions_list = Session.objects.filter(patientAndTherapist=patientAndTherapist)
         sessions = []
@@ -644,14 +643,14 @@ def load_analysis_td(request, patient_pk):
                 'title': element.patientAndTherapist.patient.name + " " + element.patientAndTherapist.patient.surname,
                 'start': element.date
             })
-            patient_info = {
-                'name': patient.name + " " + patient.surname,
-                'email': patient.mail,
-                'phoneNumber': patient.phoneNumber,
-                'age': patient.age,
-                'weight': patient.weight,
-                'height': patient.height
-            }
+        patient_info = {
+            'name': patient.name + " " + patient.surname,
+            'email': patient.mail,
+            'phoneNumber': patient.phoneNumber,
+            'age': patient.age,
+            'weight': patient.weight,
+            'height': patient.height
+        }
         list_of_files = os.listdir(MEDIA_URL + "static/skaaltec_test9/IMU/")
         size = Analysis.objects.filter(patientAndTherapist=patientAndTherapist).count()
         list_of_patient_files = patient_data(list_of_files, int(patient_pk))
@@ -666,7 +665,6 @@ def load_analysis_td(request, patient_pk):
         
         general_data = []
         for file in files:
-            print(file)
             kinematic = Kinematics()
             input_file = MEDIA_URL + "static/skaaltec_test9/IMU/" + file
             general_data.append(kinematic.get_variables(input_file=input_file, calibration_file=calibration_file))
